@@ -1,56 +1,83 @@
-/* Tu definuj štýly pre stránku */
+html {
+  height: 100%;
+}
 body {
-  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at 56%, #f5f5f5 0%, #f2f2f2 99%);
+  font-family: "Ubuntu", sans-serif;
+}
+#example {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  margin-top: 100px;
+}
+ul.list {
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  list-style: none;
 }
-
-header {
-  background-color: #007bff;
-  color: white;
-  text-align: center;
-  padding: 20px 0;
-}
-
-.career-title {
-  font-size: 36px;
-  margin: 0;
-}
-
-.job-list {
+ul.list li {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 20px auto;
-  max-width: 1200px;
+  padding: 15px;
+  flex-direction: column;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 10px;
+  background-color: #fff;
+  border-left: 4px solid #fff;
+  transition: all 0.3s ease;
+  position: relative;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+}
+ul.list li .title {
+  font-weight: bold;
+  font-size: 18px;
+  position: relative;
+  z-index: 1;
+  line-height: 24px;
+}
+ul.list li .subtitle {
+  position: relative;
+  z-index: 1;
+  font-size: 14px;
+  opacity: 0.7;
 }
 
-.job-item {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 10px;
-  width: calc(33.33% - 20px);
+ul.list li:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  transition: width 0.3s ease;
 }
-
-.job-item h3 {
-  color: #007bff;
-  margin-top: 0;
+ul.list li:hover {
+  color: #fff;
 }
-
-.job-item p {
-  margin: 10px 0;
+ul.list li:hover:after {
+  width: 100%;
+  transition: width 0.3s ease;
 }
-
-.job-form {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
-  max-width: 600px;
+/* Shopping */
+ul.list li.shopping:after {
+  background: linear-gradient(102deg, #cc00c5 0%, #1061b7 100%);
 }
-
-/* Ďalšie štýly podľa potreby */
+ul.list li.shopping {
+  border-left-color: #cc00c5;
+}
+/* Personal */
+ul.list li.personal:after {
+  background: linear-gradient(102deg, #00cc88 0%, #1096b7 100%);
+}
+ul.list li.personal {
+  border-left-color: #00cc88;
+}
+/* Work */
+ul.list li.work:after {
+  background: linear-gradient(102deg, #fa5437 0%, #ed4618 100%);
+}
+ul.list li.work {
+  border-left-color: #fa5437;
+}
