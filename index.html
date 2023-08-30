@@ -2,37 +2,25 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Zoznam pracovných ponúk</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
-<body>
-  <header>
-    <h1 class="career-title">Kariera</h1>
-  </header>
-  <section class="job-list">
-    <!-- Tu sa zobrazia pracovné ponuky -->
-  </section>
-  <section class="job-form">
-    <h2>Pridať pracovnú ponuku</h2>
-    <form id="jobForm">
-      <label for="jobTitle">Nadpis:</label>
-      <input type="text" id="jobTitle" required>
-      
-      <label for="jobDescription">Popis:</label>
-      <textarea id="jobDescription" required></textarea>
-      
-      <label for="companyName">Názov firmy:</label>
-      <input type="text" id="companyName" required>
-      
-      <label for="phoneNumber">Telefónne číslo:</label>
-      <input type="tel" id="phoneNumber" required>
-      
-      <button type="submit">Pridať ponuku</button>
-    </form>
-  </section>
-  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
-  <script src="script.js"></script>
-</body>
+<div id="example">
+  <h1>Kariera</h1>
+  <ul class="list">
+    <li class="shopping">
+      <span class="title">Pick up Groceries for dinner</span>
+      <span class="subtitle">Shopping</span>
+    </li>
+    <li class="personal">
+      <span class="title">Design My Website</span>
+      <span class="subtitle">Personal</span>
+    </li>
+    <li class="work">
+      <span class="title">Meeting with San Francisco Team</span>
+      <span class="subtitle">Work</span>
+    </li>
+  </ul>
+</div>
+
 </html>
 
