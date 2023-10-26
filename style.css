@@ -1,0 +1,20 @@
+body {
+    background-color: black;
+    color: white;
+    text-align: center;
+  }
+  
+  .red-border {
+    border: 2px solid red;
+  }
+  
+  .center {
+    margin: 0 auto;
+    width: 50%;
+  }
+  
+  #countdown {
+    margin-top: 50px;
+    font-size: 40px;
+  }
+  
