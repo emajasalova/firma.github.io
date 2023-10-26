@@ -1,110 +1,33 @@
 <!DOCTYPE html>
 <html>
-<div id="example">
-  <h1>Kariera</h1>
-  <ul class="list">
-    <li class="shopping">
-      <span class="title">Einheit Group a.s.</span>
-      <span class="subtitle">Rozvozca Elektroniky /Tel:</span>
-      <span class="subtitle">Tel:724559</span>
-      <span class="subtitle">Odmena:31,400 kč</span>
-    </li>
-    <li class="personal">
-      <span class="title">Amazon</span>
-      <span class="subtitle">Pre záujem pošlite smsku na číslo 508836</span>
-     
-    </li>
-    <li class="work">
-      <span class="title">Moshi Lemons</span>
-      <span class="subtitle">Rozvozca Dokumentov /Tel:</span>
-      <span class="subtitle">Tel:469165</span>
-      <span class="subtitle">Odmena:38,500 kč</span>
-    </li>
-  </ul>
-</div>
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div id="header" class="center red-border">
+    <h2>Popis sútaže...</h2>
+    <img src="obrazok.png" alt="Obrazok" style="width:300px; height: auto;">
+  </div>
+  <div id="main-content" class="center">
+    <div id="countdown">
+      <h2 id="countdownText">Odpočet: 16 dní</h2>
+    </div>
+    <div id="participants">
+      <!-- Sem sa budú pridávať mená účastníkov -->
+    </div>
+  </div>
+  <div id="footer" class="center">
+    <form id="form" style="display:none;">
+      <input type="text" id="participantName" placeholder="Meno účastníka" required>
+      <button type="button" onclick="addParticipant()">Pridať</button>
+      <button type="button" onclick="removeParticipant()">Odstrániť</button>
+    </form>
+    <br>
+    <input type="password" id="password" placeholder="Zadajte heslo">
+    <button onclick="showForm()">Potvrdiť</button>
+  </div>
 
+  <script src="script.js"></script>
+</body>
 </html>
-<style>html {
-  height: 100%;
-}
-body {
-  background: radial-gradient(circle at 56%, #f5f5f5 0%, #f2f2f2 99%);
-  font-family: "Ubuntu", sans-serif;
-}
-#example {
-  width: 100%;
-  max-width: 400px;
-  margin: auto;
-  margin-top: 100px;
-}
-ul.list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-ul.list li {
-  display: flex;
-  padding: 15px;
-  flex-direction: column;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
-  margin-bottom: 10px;
-  background-color: #fff;
-  border-left: 4px solid #fff;
-  transition: all 0.3s ease;
-  position: relative;
-  cursor: pointer;
-  border-radius: 4px;
-  overflow: hidden;
-}
-ul.list li .title {
-  font-weight: bold;
-  font-size: 18px;
-  position: relative;
-  z-index: 1;
-  line-height: 24px;
-}
-ul.list li .subtitle {
-  position: relative;
-  z-index: 1;
-  font-size: 14px;
-  opacity: 0.7;
-}
 
-ul.list li:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0%;
-  height: 100%;
-  transition: width 0.3s ease;
-}
-ul.list li:hover {
-  color: #fff;
-}
-ul.list li:hover:after {
-  width: 100%;
-  transition: width 0.3s ease;
-}
-/* Shopping */
-ul.list li.shopping:after {
-  background: linear-gradient(102deg, #cc00c5 0%, #1061b7 100%);
-}
-ul.list li.shopping {
-  border-left-color: #cc00c5;
-}
-/* Personal */
-ul.list li.personal:after {
-  background: linear-gradient(102deg, #00cc88 0%, #1096b7 100%);
-}
-ul.list li.personal {
-  border-left-color: #00cc88;
-}
-/* Work */
-ul.list li.work:after {
-  background: linear-gradient(102deg, #fa5437 0%, #ed4618 100%);
-}
-ul.list li.work {
-  border-left-color: #fa5437;
-}
-</style>
