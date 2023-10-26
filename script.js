@@ -1,44 +1,11 @@
 const password = 'jamamleto';
-let participants = [];
+let participants = ['Meno1', 'Meno2', 'Meno3', 'Meno4', 'Meno5']; // Tu sú príklady existujúcich mená účastníkov
 
-function showForm() {
-  const input = document.getElementById('password').value;
-  if (input === password) {
-    document.getElementById('form').style.display = 'block';
-  } else {
-    alert('Nesprávne heslo!');
-  }
-}
-
-function addParticipant() {
-  const name = document.getElementById('participantName').value;
-  if (name) {
-    participants.push(name);
-    renderParticipants();
-    document.getElementById('participantName').value = '';
-  } else {
-    alert('Zadajte meno účastníka!');
-  }
-}
-
-function removeParticipant() {
-  const name = document.getElementById('participantName').value;
-  const index = participants.indexOf(name);
-  if (index > -1) {
-    participants.splice(index, 1);
-    renderParticipants();
-  }
-}
-
-function renderParticipants() {
-  const participantsDiv = document.getElementById('participants');
-  participantsDiv.innerHTML = '';
-  participants.forEach(participant => {
-    const p = document.createElement('p');
-    p.innerText = participant;
-    participantsDiv.appendChild(p);
-  });
-}
+// Pridanie ďalších účastníkov
+participants.push('Meno6');
+participants.push('Meno7');
+participants.push('Meno8');
+// Môžete pridať ďalšie mená účastníkov podľa potreby
 
 // Odpočet 16 dní
 const endDate = new Date();
@@ -65,3 +32,15 @@ const countdown = setInterval(function() {
     }
   }
 }, 1000);
+
+function renderParticipants() {
+  const participantsDiv = document.getElementById('participants');
+  participantsDiv.innerHTML = '';
+  participants.forEach(participant => {
+    const p = document.createElement('p');
+    p.innerText = participant;
+    participantsDiv.appendChild(p);
+  });
+}
+
+renderParticipants(); // Zavolanie funkcie renderParticipants pre zobrazenie účastníkov na stránke
