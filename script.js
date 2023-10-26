@@ -1,5 +1,5 @@
 const password = 'jamamleto';
-let participants = ['Meno1', 'Meno2', 'Meno3', 'Meno4', 'Meno5']; // Tu sú príklady existujúcich mená účastníkov
+let participants = ['Thomas Tayler', 'Volné Miesto']; // Tu sú príklady existujúcich mená účastníkov
 
 // Pridanie ďalších účastníkov
 participants.push('Meno6');
