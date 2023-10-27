@@ -2,9 +2,9 @@ const password = 'jamamleto';
 let participants = ['Thomas Tayler', 'Volné Miesto']; // Tu sú príklady existujúcich mená účastníkov
 
 // Pridanie ďalších účastníkov
-participants.push('Meno6');
-participants.push('Meno7');
-participants.push('Meno8');
+//participants.push('Meno6');
+//participants.push('Meno7');
+//participants.push('Meno8');
 // Môžete pridať ďalšie mená účastníkov podľa potreby
 
 
