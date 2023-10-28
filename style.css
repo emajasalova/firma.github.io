@@ -71,7 +71,8 @@ h4 {
 }
 
 .prizes img {
-    max-width: 100px; /* šírka obrázku */
+    width: 60px; /* upravená šírka obrázku */
+    height: auto; /* zachovať pomer strán obrázka */
     margin: 0 10px; /* okraj okolo obrázku */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* tieň okolo obrázku */
 }
