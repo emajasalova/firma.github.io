@@ -60,4 +60,19 @@ h4 {
     color: #EF6C00;
     font-weight: bold;
 }
+.prizes {
+    background-color: #E53935; /* červená farba */
+    padding: 10px;
+    border-radius: 5px;
+    margin: 20px 0; /* okraj na vrchu a spodku */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.prizes img {
+    max-width: 100px; /* šírka obrázku */
+    margin: 0 10px; /* okraj okolo obrázku */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* tieň okolo obrázku */
+}
 
