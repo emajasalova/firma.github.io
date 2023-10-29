@@ -10,6 +10,9 @@ let participants = ['Thomas Tayler', 'Volné Miesto']; // Tu sú príklady exist
 
 
 
+document.getElementById('contestButton').addEventListener('click', function() {
+    this.outerHTML = 'Pošlite 200 tisíc na účet Juraj Orlicka pre zapojenie do súťaže.';
+});
 
 
 function renderParticipants() {
