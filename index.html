@@ -14,6 +14,36 @@
 	<textarea id="message" type="text" placeholder="Úlohou vašej firmy bude"></textarea>
 	<input id="submit" onClick="thankYou()" type="submit" value="Potvrdiť">
 </form>
+	    <script>
+        function submitForm(event) {
+            event.preventDefault(); // Zabraňuje odoslaniu formulára bežným spôsobom
+
+            // Získanie údajov z formulára
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var message = document.getElementById('message').value;
+
+            // Vytvorenie objektu s údajmi na odoslanie
+            var data = {
+                content: `**Meno a Priezvisko:** ${name}\n**Email:** ${email}\n**Úlohou firmy:** ${message}`
+            };
+
+            // Odoslanie údajov na Discord pomocou AJAX
+            var webhookUrl = 'YOUR_DISCORD_WEBHOOK_URL'; // Nahraďte vlastným URL webhooku
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', webhookUrl, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(data));
+
+            // Zavolanie funkcie po odoslaní údajov (tu môžete zobraziť ďakovnú správu alebo inú akciu)
+            thankYou();
+        }
+
+        function thankYou() {
+            // Tu môžete pridať ďakovnú správu alebo inú akciu
+            alert('Ďakujeme za vašu žiadosť!');
+        }
+    </script>
 </body>
 </html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
