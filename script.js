@@ -1,3 +1,3 @@
 function thankYou() {
-    window.alert('Děkujeme za vaši žádost brzy ji provaříme a dáme vám vědět !');
+    return 'Děkujeme za vaši žádost. Brzy ji proveríme a dáme vám vědět!';
 }
