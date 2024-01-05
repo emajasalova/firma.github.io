@@ -1,28 +1,32 @@
-const password = 'jamamleto';
-let participants = ['Thomas Tayler', 'Volné Miesto']; // Tu sú príklady existujúcich mená účastníkov
+$("#contactForm").submit(function(event) 
+     {
+         /* stop form from submitting normally */
+         event.preventDefault();
 
-// Pridanie ďalších účastníkov
-//participants.push('Meno6');
-//participants.push('Meno7');
-//participants.push('Meno8');
-// Môžete pridať ďalšie mená účastníkov podľa potreby
+         /* get some values from elements on the page: */
+         var $form = $( this ),
+             $submit = $form.find( 'button[type="submit"]' ),
+             name_value = $form.find( 'input[name="name"]' ).val(),
+             email_value = $form.find( 'input[name="email"]' ).val(),
+             message_value = $form.find( 'textarea[name="message"]' ).val(),
+             url = $form.attr('action');
 
+         /* Send the data using post */
+         var posting = $.post( url, { 
+                           name: name_value, 
+                           email: email_value, 
+                           message: message_value 
+                       });
 
+         posting.done(function( data )
+         {
+             /* Put the results in a div */
+             $( "#contactResponse" ).html(data);
 
+             /* Change the button text. */
+             $submit.text('Sent, Thank you');
 
-document.getElementById('contestButton').addEventListener('click', function() {
-    this.outerHTML = 'Pošlite 200 tisíc na účet Juraj Orlicka pre zapojenie do súťaže.';
-});
-
-
-function renderParticipants() {
-  const participantsDiv = document.getElementById('participants');
-  participantsDiv.innerHTML = '';
-  participants.forEach(participant => {
-    const p = document.createElement('p');
-    p.innerText = participant;
-    participantsDiv.appendChild(p);
-  });
-}
-
-renderParticipants(); // Zavolanie funkcie renderParticipants pre zobrazenie účastníkov na stránke
+             /* Disable the button. */
+             $submit.attr("disabled", true);
+         });
+    });
