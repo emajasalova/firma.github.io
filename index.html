@@ -1,29 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Send</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Moja Stránka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Farba pozadia podobná Google */
+        }
+
+        header {
+            background-color: #4285f4; /* Farba pozadia hlavičky podobná Google */
+            padding: 20px;
+            text-align: center;
+        }
+
+        #logo {
+            max-width: 150px; /* Nastavená maximálna šírka loga */
+            height: auto;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px;
+            margin: 0 auto; /* Zarovnanie gridu na stred stránky */
+            max-width: 1200px; /* Nastavenie maximálnej šírky gridu */
+        }
+
+        .grid-item {
+            width: 100%;
+            padding-top: 56.25%; /* Pomer strán obrazových okien (16:9) */
+            position: relative;
+            background-color: #fff; /* Farba pozadia grid okna */
+            overflow: hidden;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .grid-item a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <form onsubmit="sendEmail(); reset(); return false;">
-            <h3>GET IN TOUCH</h3>
-            <input type="text" id="name" placeholder="Your Name..." required>
-            <input type="email" id="email" placeholder="Your Email..." required>
-            <input type="text" id="phone" placeholder="Your Phone No..." required>
-            <input type="text" id="address" placeholder="Your Address..." required>
-            <input type="text" id="subject" placeholder="Your Subject..." required>
-            <textarea name="message" id="message" rows="2" placeholder="How can we help you?" required></textarea>
-            <button type="submit">Send</button>
-        </form>
-    </div>
+   
+    <header>
+        <img id="logo" src="https://i.ibb.co/3Sn5cdx/s1iokzx9q0n91.png" alt="Moje Logo">
+    </header>
 
-    <script src="https://smtpjs.com/v3/smtp.js">
-    </script>
-    <script type="text/javascript" src="main.js">
-    </script>
+    <main>
+        <div class="grid-item">
+            <a href="https://www.youtube.com/">
+                <img src="https://i.ibb.co/gZvCpWp/yutub.webp" alt="Obrazok 1">
+            </a>
+        </div>
+        <div class="grid-item">
+            
+                <img src="https://i.ibb.co/9WsQzVF/stiahnu.png" alt="Obrazok 2">
+            </a>
+        </div>
+        <div class="grid-item">
+          
+                <img src="https://i.ibb.co/9WsQzVF/stiahnu.png" alt="Obrazok 3">
+            </a>
+        </div>
+        <div class="grid-item">
+            
+                <img src="https://i.ibb.co/9WsQzVF/stiahnu.png" alt="Obrazok 4">
+            </a>
+        </div>
+        <!-- ďalšie grid itemy môžeš pridávať podľa potreby -->
+    </main>
+
 </body>
 </html>
