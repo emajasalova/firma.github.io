@@ -34,39 +34,59 @@
             font-weight: 700;
         }
 
-        .job-table {
-            margin: 20px 0;
+        .job-listing {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-
-        thead {
-            background-color: #007bff;
-            color: white;
-        }
-
-        th, td {
-            padding: 15px;
-            text-align: left;
+        .job-card {
+            display: flex;
+            flex-direction: column;
             border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            position: relative;
         }
 
-        tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
+        .job-card h2 {
+            font-size: 1.5em;
+            margin: 0 0 10px;
         }
 
-        tbody tr:hover {
-            background-color: #f1f1f1;
+        .job-card p {
+            margin: 10px 0;
+            color: #666;
         }
 
-        th {
+        .job-details {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .job-details span {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .apply-button {
+            display: inline-block;
+            padding: 10px 20px;
             background-color: #007bff;
             color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
         }
     </style>
 </head>
@@ -74,43 +94,54 @@
     <div class="container">
         <h1>Pracovné ponuky</h1>
         
-        <div class="job-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Meno firmy</th>
-                        <th>Pracovná pozícia</th>
-                        <th>E-mail kontaktu</th>
-                        <th>Číslo kontaktu</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Trade Federation</td>
-                        <td>Kamionista</td>
-                        <td>ema.jasalova@post.ic</td>
-                        <td>508836</td>
-                    </tr>
-                    <tr>
-                        <td>White Company</td>
-                        <td>Rozvoz Dokumentov - 33 Tisic -8 min</td>
-                        <td>ema.jasalova@post.ic</td>
-                        <td>ema.jasalova@post.ic</td>
-                    </tr>
-                    <tr>
-                        <td>Lyo Group</td>
-                        <td>Rozvoz Sprunku - 50 Tisic - 13 minút</td>
-                        <td>raithor.velkatar@post.ic</td>
-                        <td>439766</td>
-                    </tr>
-                    <tr>
-                        <td>Lyo Group</td>
-                        <td>Kamionista</td>
-                        <td>raithor.velkatar@post.ic</td>
-                        <td>439766</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="job-listing">
+            <div class="job-card">
+                <h2>Kamionista</h2>
+                <p>Trade Federation</p>
+                <div class="job-details">
+                    <span>Prevoz</span>
+                    <span>Logistika</span>
+                </div>
+                <p>ema.jasalova@post.ic</p>
+                <p><strong>Číslo kontaktu:</strong> 508836</p>
+                <a href="#" class="apply-button">Kontakt</a>
+            </div>
+
+            <div class="job-card">
+                <h2>Rozvoz Dokumentov - 33 Tisic - 8 min</h2>
+                <p>White Company</p>
+                <div class="job-details">
+                    <span>Rozvoz</span>
+                    <span>Dokumenty</span>
+                </div>
+                <p>ema.jasalova@post.ic</p>
+                <p><strong>Číslo kontaktu:</strong> ema.jasalova@post.ic</p>
+                <a href="#" class="apply-button">Kontakt</a>
+            </div>
+
+            <div class="job-card">
+                <h2>Rozvoz Sprunku - 50 Tisic - 13 minút</h2>
+                <p>Lyo Group</p>
+                <div class="job-details">
+                    <span>Rozvoz</span>
+                    <span>Sprunk</span>
+                </div>
+                <p>raithor.velkatar@post.ic</p>
+                <p><strong>Číslo kontaktu:</strong> 439766</p>
+                <a href="#" class="apply-button">Kontakt</a>
+            </div>
+
+            <div class="job-card">
+                <h2>Kamionista</h2>
+                <p>Lyo Group</p>
+                <div class="job-details">
+                    <span>Prevoz</span>
+                    <span>Logistika</span>
+                </div>
+                <p>raithor.velkatar@post.ic</p>
+                <p><strong>Číslo kontaktu:</strong> 439766</p>
+                <a href="#" class="apply-button">Kontakt</a>
+            </div>
         </div>
     </div>
 </body>
