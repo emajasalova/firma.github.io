@@ -1,171 +1,117 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pracovné ponuky</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Kariera</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #ddd;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
         }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 30px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-weight: 700;
-        }
-
-        .job-listing {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .job-card {
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #ddd;
+        .sales-house {
+            background-color: #333;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 80%;
+            max-width: 900px;
         }
 
-        .job-card h2 {
-            font-size: 1.5em;
-            margin: 0 0 10px;
+        header {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-        .job-card p {
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        header .update {
             margin: 10px 0;
-            color: #666;
         }
 
-        .job-details {
+        header .update-time {
+            color: #4caf50;
+        }
+
+        header .notice {
+            font-size: 0.9em;
+            color: #aaa;
+        }
+
+        .sales-item {
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            margin-bottom: 10px;
+            align-items: center;
         }
 
-        .job-details span {
-            display: inline-block;
-            padding: 5px 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-            font-size: 0.9em;
-            color: #333;
+        .sales-item img {
+            max-width: 100%;
+            border-radius: 8px;
         }
 
-        .apply-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            position: absolute;
-            top: 20px;
-            right: 20px;
+        .item-details {
+            text-align: center;
+            margin-top: 20px;
         }
 
-        .top-offer {
-            background-color: #ffa500; /* Oranžová farba pre top ponuku */
-            color: white; /* Biely text */
-            border: 2px solid #e69500; /* O niečo tmavší odtieň oranžovej pre okraj */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Silnejší tieň pre zvýraznenie */
+        .item-details h2 {
+            font-size: 1.5em;
+            margin: 0;
         }
 
-        .top-offer .apply-button {
-            background-color: #e69500; /* Tmavší odtieň oranžovej pre tlačidlo */
+        .item-details .status {
+            color: #f00;
+            font-weight: bold;
+            margin: 10px 0;
         }
 
-        .top-offer .job-details span {
-            background-color: #ffbf60; /* Svetlejší odtieň oranžovej pre detaily */
+        .item-details .description {
+            margin: 10px 0;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .item-details .price {
+            font-weight: bold;
+            margin: 20px 0 0;
+            color: #4caf50;
+        }
+
+        .currency {
+            color: #ddd;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Pracovné ponuky</h1>
-        
-        <div class="job-listing">
-            <div class="job-card">
-                <h2>Kamionista</h2>
-                <p>Trade Federation</p>
-                <div class="job-details">
-                    <span>Prevoz</span>
-                    <span>Logistika</span>
+    <div class="sales-house">
+        <header>
+            <h1>Kariera</h1>
+            <p class="update">Online prodejní stránka <span class="update-time">aktualizace:</span></p>
+            <p class="notice">Všechny položky jsou dostupné k prodeji.</p>
+        </header>
+        <main>
+            <div class="sales-item">
+                <img src="Screenshot Capture - 2024-06-18 - 18-26-43.png" alt="Znehodnocená M16">
+                <div class="item-details">
+                    <h2>Znehodnocená Alarm</h2>
+                    <p class="status">kontakt ema.jasalo@post.ic</p>
+                    <p class="description">Alarm do domácnosti</p>
+                    <p class="price">Cena: <span class="currency">300 0000 kč</span></p>
                 </div>
-                <p>ema.jasalova@post.ic</p>
-                <p><strong>Číslo kontaktu:</strong> 508836</p>
             </div>
-
-            <div class="job-card top-offer">
-                <h2>Flok s.r.o - 40 tisic za 8 minut</h2>
-                <p>Flok s.r.o</p>
-                <div class="job-details">
-                    <span>Rozvoz</span>
-                    <span>rôzne</span>
-                </div>
-                <p>ema.jasalova@post.ic</p>
-                <p><strong>Číslo kontaktu:</strong> ema.jasalova@post.ic</p>
-                <a href="#" class="apply-button">TOP Ponuka</a>
-            </div>
-
-            <div class="job-card">
-                <h2>Rozvoz Sprunku - 50 Tisic - 13 minút</h2>
-                <p>Lyo Group</p>
-                <div class="job-details">
-                    <span>Rozvoz</span>
-                    <span>Sprunk</span>
-                </div>
-                <p>raithor.velkatar@post.ic</p>
-                <p><strong>Číslo kontaktu:</strong> 439766</p>
-            </div>
-            
-            <div class="job-card">
-                <h2>Rozvoz Dokumentov - 8 min 34 tisic</h2>
-                <p>White Company</p>
-                <div class="job-details">
-                    <span>Rozvoz</span>
-                    <span>Dokumenty</span>
-                </div>
-                <p>ema.jasalova@post.ic</p>
-                <p><strong>Číslo kontaktu:</strong> 508836</p>
-            </div>
-
-            <div class="job-card">
-                <h2>Kamionista</h2>
-                <p>Lyo Group</p>
-                <div class="job-details">
-                    <span>Prevoz</span>
-                    <span>Logistika</span>
-                </div>
-                <p>raithor.velkatar@post.ic</p>
-                <p><strong>Číslo kontaktu:</strong> 439766</p>
-            </div>
-        </div>
+        </main>
     </div>
 </body>
 </html>
+
