@@ -13,8 +13,10 @@
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
+            flex-direction: column;
             height: 100vh;
+            overflow-y: auto;
         }
 
         .sales-house {
@@ -24,6 +26,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 80%;
             max-width: 900px;
+            margin-bottom: 20px;
         }
 
         header {
@@ -96,7 +99,7 @@
 <body>
     <div class="sales-house">
         <header>
-            <h1>Alarm</h1>
+            <h1>Bezpečnostní Alarm</h1>
             <p class="update">Online prodejní stránka <span class="update-time">aktualizace:</span></p>
             <p class="notice">Všechny položky jsou dostupné k prodeji.</p>
         </header>
