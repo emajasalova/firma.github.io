@@ -1,1 +1,116 @@
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdw-3Ogfzlv1lexsSVejbE1yZpRqP7fTHQSApSvSSgPoj0xeA/viewform?embedded=true" width="800" height="800" frameborder="0" marginheight="0" marginwidth="0">Načítava sa…</iframe>
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garver Sales House</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #ddd;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .sales-house {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 80%;
+            max-width: 900px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        header .update {
+            margin: 10px 0;
+        }
+
+        header .update-time {
+            color: #4caf50;
+        }
+
+        header .notice {
+            font-size: 0.9em;
+            color: #aaa;
+        }
+
+        .sales-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sales-item img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .item-details {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .item-details h2 {
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        .item-details .status {
+            color: #f00;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .item-details .description {
+            margin: 10px 0;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .item-details .price {
+            font-weight: bold;
+            margin: 20px 0 0;
+            color: #4caf50;
+        }
+
+        .currency {
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="sales-house">
+        <header>
+            <h1>Kariera</h1>
+            <p class="update">Online prodejní stránka <span class="update-time">aktualizace</span></p>
+            <p class="notice">Všechny položky jsou dostupné k prodeji.</p>
+        </header>
+        <main>
+            <div class="sales-item">
+                <img src="https://i.imgur.com/CruDUiO.png" alt="Alarm do domu alebo kancelarie">
+                <div class="item-details">
+                    <h2>Alarm</h2>
+                    <p class="status">kontakt ema.jasalo@post.ic</p>
+                    <p class="description">Alarm do domu alebo kancelárie</p>
+                    <p class="price">Cena: <span class="currency">250 000 kč</span></p>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
