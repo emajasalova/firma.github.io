@@ -13,10 +13,17 @@
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             flex-direction: column;
-            height: 100vh;
-            overflow-y: auto;
+            min-height: 100vh;
+        }
+
+        .sales-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
         }
 
         .sales-house {
@@ -25,7 +32,6 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 80%;
-            max-width: 900px;
             margin-bottom: 20px;
         }
 
@@ -97,42 +103,43 @@
     </style>
 </head>
 <body>
-    <div class="sales-house">
-        <header>
-            <h1>Bezpečnostní Alarm</h1>
-            <p class="update">Online prodejní stránka <span class="update-time">aktualizace:</span></p>
-            <p class="notice">Všechny položky jsou dostupné k prodeji.</p>
-        </header>
-        <main>
-            <div class="sales-item">
-                <img src="https://i.imgur.com/sjUck7A.png" alt="Znehodnocená M16">
-                <div class="item-details">
-                    <h2>V predaji : Alarm</h2>
-                    <p class="status">kontakt: 508836  /  ema.jasalo@post.ic</p>
-                    <p class="description">Alarm do domácnosti</p>
-                    <p class="price">Cena: <span class="currency">300 0000 kč</span></p>
+    <div class="sales-container">
+        <div class="sales-house">
+            <header>
+                <h1>Alarm</h1>
+                <p class="update">Online prodejní stránka <span class="update-time">aktualizace:</span></p>
+                <p class="notice">Všechny položky jsou dostupné k prodeji.</p>
+            </header>
+            <main>
+                <div class="sales-item">
+                    <img src="https://i.imgur.com/sjUck7A.png" alt="Znehodnocená M16">
+                    <div class="item-details">
+                        <h2>V predaji : Alarm</h2>
+                        <p class="status">kontakt: 508836  /  ema.jasalo@post.ic</p>
+                        <p class="description">Alarm do domácnosti</p>
+                        <p class="price">Cena: <span class="currency">300 0000 kč</span></p>
+                    </div>
                 </div>
-            </div>
-        </main>
-    </div>
-    <div class="sales-house">
-        <header>
-            <h1>Taser</h1>
-            <p class="update">Online prodejní stránka <span class="update-time">aktualizace:</span></p>
-            <p class="notice">Všechny položky jsou dostupné k prodeji.</p>
-        </header>
-        <main>
-            <div class="sales-item">
-                <img src="https://i.imgur.com/oGGjiGb.jpeg" alt="Znehodnocená M16">
-                <div class="item-details">
-                    <h2>V predaji : Taser M26</h2>
-                    <p class="status">kontakt: 508836  /  ema.jasalo@post.ic</p>
-                    <p class="description">Taser na obranu</p>
-                    <p class="price">Cena: <span class="currency">95000 kč</span></p>
+            </main>
+        </div>
+        <div class="sales-house">
+            <header>
+                <h1>Taser</h1>
+                <p class="update">Online prodejní stránka <span class="update-time">aktualizace:</span></p>
+                <p class="notice">Všechny položky jsou dostupné k prodeji.</p>
+            </header>
+            <main>
+                <div class="sales-item">
+                    <img src="https://i.imgur.com/oGGjiGb.jpeg" alt="Znehodnocená M16">
+                    <div class="item-details">
+                        <h2>V predaji : Taser M26</h2>
+                        <p class="status">kontakt: 508836  /  ema.jasalo@post.ic</p>
+                        <p class="description">Taser na obranu</p>
+                        <p class="price">Cena: <span class="currency">95000 kč</span></p>
+                    </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
 </body>
 </html>
-
