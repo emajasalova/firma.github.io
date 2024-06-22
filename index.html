@@ -60,41 +60,58 @@
         th {
             background-color: #f2f2f2;
         }
+
+        #login-container {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <h1>Formulár a Tabuľka</h1>
 
-    <div id="form-container">
-        <h2>Formulár</h2>
-        <form id="myForm">
-            <label for="name">Meno:</label>
-            <input type="text" id="name" name="name" required>
-            <label for="date">Dátum:</label>
-            <input type="date" id="date" name="date" required>
-            <button type="submit">Pridať</button>
+    <div id="login-container">
+        <h2>Prihlásenie</h2>
+        <form id="loginForm">
+            <label for="password">Heslo:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Prihlásiť sa</button>
         </form>
+        <p id="error-message" style="color: red;"></p>
     </div>
 
-    <div id="table-container">
-        <h2>Tabuľka</h2>
-        <table id="myTable">
-            <thead>
-                <tr>
-                    <th>Meno</th>
-                    <th>Dátum</th>
-                    <th>Status</th>
-                    <th>Akcia</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Tu sa pridajú riadky pomocou JavaScriptu -->
-            </tbody>
-        </table>
+    <div id="content-container" style="display: none;">
+        <div id="form-container">
+            <h2>Formulár</h2>
+            <form id="myForm">
+                <label for="name">Meno:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="date">Dátum:</label>
+                <input type="date" id="date" name="date" required>
+                <button type="submit">Pridať</button>
+            </form>
+        </div>
+
+        <div id="table-container">
+            <h2>Tabuľka</h2>
+            <table id="myTable">
+                <thead>
+                    <tr>
+                        <th>Meno</th>
+                        <th>Dátum</th>
+                        <th>Status</th>
+                        <th>Akcia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Tu sa pridajú riadky pomocou JavaScriptu -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
         const API_URL = 'https://6676bc44145714a1bd729ff1.mockapi.io/api/v1/comm';  // nahraďte URL vašej kolekcie
+        const PASSWORD = 'whitecompanyjack';
 
         async function addData(name, date) {
             const data = { name, date, status: 'Nepotvrdené' };
@@ -150,7 +167,24 @@
             loadData();
         }
 
-        window.onload = loadData;
+        window.onload = function() {
+            const loginContainer = document.getElementById('login-container');
+            const contentContainer = document.getElementById('content-container');
+
+            loginContainer.style.display = 'block';
+
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const password = document.getElementById('password').value;
+                if (password === PASSWORD) {
+                    loginContainer.style.display = 'none';
+                    contentContainer.style.display = 'block';
+                    loadData();
+                } else {
+                    document.getElementById('error-message').textContent = 'Nesprávne heslo. Skúste znova.';
+                }
+            });
+        };
 
         document.getElementById('myForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -162,3 +196,4 @@
     </script>
 </body>
 </html>
+
