@@ -94,85 +94,71 @@
     </div>
 
     <script>
-        document.getElementById('myForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const date = document.getElementById('date').value;
-            addRow(name, date);
-            this.reset();
-        });
+        const API_URL = 'https://YOUR_API_URL/entries';  // nahraďte URL vašej kolekcie
 
-        function addRow(name, date) {
-            const table = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-            const newRow = table.insertRow();
-            
-            const cell1 = newRow.insertCell(0);
-            const cell2 = newRow.insertCell(1);
-            const cell3 = newRow.insertCell(2);
-            const cell4 = newRow.insertCell(3);
-
-            cell1.textContent = name;
-            cell2.textContent = date;
-            cell3.textContent = 'Nepotvrdené';
-            
-            const confirmButton = document.createElement('button');
-            confirmButton.textContent = 'Potvrdiť';
-            confirmButton.onclick = function() {
-                cell3.textContent = 'Potvrdené';
-                this.style.display = 'none';
-                updateLocalStorage();
-            };
-            cell4.appendChild(confirmButton);
-
-            updateLocalStorage();
+        async function addData(name, date) {
+            const data = { name, date, status: 'Nepotvrdené' };
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            loadData();
         }
 
-        function updateLocalStorage() {
+        async function loadData() {
+            const response = await fetch(API_URL);
+            const data = await response.json();
             const table = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-            const rows = table.getElementsByTagName('tr');
-            const data = [];
-            
-            for (let row of rows) {
-                const cells = row.getElementsByTagName('td');
-                data.push({
-                    name: cells[0].textContent,
-                    date: cells[1].textContent,
-                    status: cells[2].textContent
-                });
-            }
-            
-            localStorage.setItem('tableData', JSON.stringify(data));
-        }
+            table.innerHTML = ''; // Vyčistenie tabuľky pred načítaním nových údajov
 
-        function loadFromLocalStorage() {
-            const data = JSON.parse(localStorage.getItem('tableData') || '[]');
-            const table = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-            
-            for (let row of data) {
+            data.forEach(item => {
                 const newRow = table.insertRow();
                 const cell1 = newRow.insertCell(0);
                 const cell2 = newRow.insertCell(1);
                 const cell3 = newRow.insertCell(2);
                 const cell4 = newRow.insertCell(3);
-                
-                cell1.textContent = row.name;
-                cell2.textContent = row.date;
-                cell3.textContent = row.status;
-                
-                if (row.status === 'Nepotvrdené') {
+
+                cell1.textContent = item.name;
+                cell2.textContent = item.date;
+                cell3.textContent = item.status;
+
+                if (item.status === 'Nepotvrdené') {
                     const confirmButton = document.createElement('button');
                     confirmButton.textContent = 'Potvrdiť';
                     confirmButton.onclick = function() {
-                        cell3.textContent = 'Potvrdené';
-                        this.style.display = 'none';
-                        updateLocalStorage();
+                        confirmData(item.id);
                     };
                     cell4.appendChild(confirmButton);
                 }
-            }
+            });
         }
 
-        window.onload = loadFromLocalStorage;
+        async function confirmData(id) {
+            const response = await fetch(`${API_URL}/${id}`);
+            const item = await response.json();
+            item.status = 'Potvrdené';
+            await fetch(`${API_URL}/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(item)
+            });
+            loadData();
+        }
+
+        window.onload = loadData;
+
+        document.getElementById('myForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const date = document.getElementById('date').value;
+            addData(name, date);
+            this.reset();
+        });
     </script>
 </body>
 </html>
