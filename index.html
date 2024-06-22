@@ -142,14 +142,20 @@
                 cell2.textContent = item.date;
                 cell3.textContent = item.status;
 
-                if (item.status === 'Nepotvrdené') {
-                    const confirmButton = document.createElement('button');
-                    confirmButton.textContent = 'Potvrdiť';
-                    confirmButton.onclick = function() {
-                        confirmData(item.id);
-                    };
-                    cell4.appendChild(confirmButton);
-                }
+                const confirmButton = document.createElement('button');
+                confirmButton.textContent = 'Potvrdiť';
+                confirmButton.onclick = function() {
+                    confirmData(item.id);
+                };
+                cell4.appendChild(confirmButton);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Vymazať';
+                deleteButton.style.marginLeft = '10px';
+                deleteButton.onclick = function() {
+                    deleteData(item.id);
+                };
+                cell4.appendChild(deleteButton);
             });
         }
 
@@ -163,6 +169,13 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(item)
+            });
+            loadData();
+        }
+
+        async function deleteData(id) {
+            await fetch(`${API_URL}/${id}`, {
+                method: 'DELETE'
             });
             loadData();
         }
@@ -196,4 +209,3 @@
     </script>
 </body>
 </html>
-
