@@ -3,209 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulár a Tabuľka</title>
+    <title>Formulár a Zmluva</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
         }
-
         h1, h2 {
             color: #333;
         }
-
-        #form-container, #table-container {
-            margin-bottom: 20px;
-        }
-
-        form label {
+        form label, form input, button {
             display: block;
             margin: 5px 0;
         }
-
-        form input {
+        form input, button {
             padding: 5px;
-            margin: 5px 0 10px;
             width: 100%;
             box-sizing: border-box;
         }
-
         button {
-            padding: 10px 15px;
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
         }
-
         button:hover {
             background-color: #45a049;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        #signature-pad {
+            border: 1px solid #000;
+            width: 400px;
+            height: 200px;
         }
-
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        #login-container {
-            display: none;
+        canvas {
+            display: block;
+            border: 1px solid black;
         }
     </style>
 </head>
 <body>
-    <h1>Formulár a Tabuľka</h1>
+    <h1>Formulár a Zmluva</h1>
 
-    <div id="login-container">
-        <h2>Prihlásenie</h2>
-        <form id="loginForm">
+    <div id="form-container">
+        <h2>Formulár</h2>
+        <form id="myForm">
+            <label for="name">Meno a priezvisko:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="date">Dátum narodenia:</label>
+            <input type="date" id="date" name="date" required>
             <label for="password">Heslo:</label>
             <input type="password" id="password" name="password" required>
-            <button type="submit">Prihlásiť sa</button>
+            <label for="signature">Elektronický podpis:</label>
+            <canvas id="signature-pad"></canvas>
+            <button type="button" onclick="clearCanvas()">Vymazať podpis</button>
+            <button type="submit">Odoslať</button>
         </form>
-        <p id="error-message" style="color: red;"></p>
     </div>
 
-    <div id="content-container" style="display: none;">
-        <div id="form-container">
-            <h2>Formulár</h2>
-            <form id="myForm">
-                <label for="name">Meno:</label>
-                <input type="text" id="name" name="name" required>
-                <label for="date">Dátum:</label>
-                <input type="date" id="date" name="date" required>
-                <button type="submit">Pridať</button>
-            </form>
-        </div>
-
-        <div id="table-container">
-            <h2>Tabuľka</h2>
-            <table id="myTable">
-                <thead>
-                    <tr>
-                        <th>Meno</th>
-                        <th>Dátum</th>
-                        <th>Status</th>
-                        <th>Akcia</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Tu sa pridajú riadky pomocou JavaScriptu -->
-                </tbody>
-            </table>
-        </div>
+    <div id="contract-container" style="display:none;">
+        <h2>Pracovní smlouva firmy White Company</h2>
+        <p><strong>Jméno a příjmení:</strong> <span id="employee-name"></span></p>
+        <p><strong>Narozen:</strong> <span id="birth-date"></span></p>
+        <p><strong>Kontakt:</strong> TODO</p>
+        <p><strong>Pozice:</strong> TODO</p>
+        <h3>Zásady využívání firemních vozidel</h3>
+        <p>1. Zodpovědnost za firemní vozidla: a. Každý zaměstnanec má povinnost vrátit firemní vozidlo v plně funkčním stavu. b. Vozidlo musí být vráceno s dostatečným množstvím paliva a v plně prověřeném technickém stavu.</p>
+        <p>2. Hlášení problémů s vozidlem: a. Zaměstnanec má povinnost okamžitě nahlásit jakékoli zjištěné poškození nebo nedostatek paliva u firemního vozidla. b. V případě, že zaměstnanec odchází z provozovny s vozidlem, které není v požadovaném stavu, je povinen zajistit, aby bylo vozidlo při návratu opět plně funkční, opravené a dotankované.</p>
+        <p>3. Odpovědnost za firemní vozidla: a. Zaměstnanec souhlasí s tím, že při používání firemního vozidla a přihlášení se pomocí své identifikační karty přebírá plnou odpovědnost za vozidlo, včetně veškerých finančních nákladů spojených s jeho používáním.</p>
+        <p>4. Škody a náklady: a. V případě, že zaměstnanec nevrátí vozidlo v požadovaném stavu (plně funkční, s dostatečným množstvím paliva a bez poškození), společnost má právo vymáhat následující pokuty: -Za zničené vozidlo: 40 000 Kč. -Za nedotankované vozidlo: 35 000 Kč. -Za nevrácené firemní vozidlo: 100 000 Kč.</p>
+        <p><strong>Dne:</strong> <span id="current-date"></span></p>
+        <p>Na sídle v Los Santos sepsal: Jacob Muller</p>
+        <img src="" id="saved-signature" alt="Podpis">
     </div>
 
     <script>
-        const API_URL = 'https://6676bc44145714a1bd729ff1.mockapi.io/api/v1/comm';  // nahraďte URL vašej kolekcie
-        const PASSWORD = 'whitecompanyjack';
+        document.getElementById('myForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const date = document.getElementById('date').value;
+            document.getElementById('employee-name').textContent = name;
+            document.getElementById('birth-date').textContent = date;
+            document.getElementById('current-date').textContent = new Date().toDateString();
+            document.getElementById('contract-container').style.display = 'block';
+            addData(name, date, password);
+            saveContractAsImage();
+        });
 
-        async function addData(name, date) {
-            const data = { name, date, status: 'Nepotvrdené' };
-            await fetch(API_URL, {
+        let canvas = document.getElementById('signature-pad');
+        let ctx = canvas.getContext('2d');
+        let drawing = false;
+
+        function startDrawing(e) {
+            drawing = true;
+            draw(e);
+        }
+
+        function draw(e) {
+            if (!drawing) return;
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+        }
+
+        function stopDrawing() {
+            drawing = false;
+            ctx.beginPath();
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        async function addData(name, date, password) {
+            const data = { name, date, password };
+            await fetch('https://6676bc44145714a1bd729ff1.mockapi.io/api/v1/comm', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             });
-            loadData();
         }
 
-        async function loadData() {
-            const response = await fetch(API_URL);
-            const data = await response.json();
-            const table = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-            table.innerHTML = ''; // Vyčistenie tabuľky pred načítaním nových údajov
+        async function saveContractAsImage() {
+            const contract = document.getElementById('contract-container');
+            const canvas = document.createElement('canvas');
+            canvas.width = contract.clientWidth;
+            canvas.height = contract.clientHeight;
 
-            data.forEach(item => {
-                const newRow = table.insertRow();
-                const cell1 = newRow.insertCell(0);
-                const cell2 = newRow.insertCell(1);
-                const cell3 = newRow.insertCell(2);
-                const cell4 = newRow.insertCell(3);
+            const ctx = canvas.getContext('2d');
+            ctx.font = '18px Arial';
+            ctx.fillText(document.getElementById('full-name').textContent, 10, 50);
 
-                cell1.textContent = item.name;
-                cell2.textContent = item.date;
-                cell3.textContent = item.status;
+            // Render text and other elements here
+            ctx.font = '16px Arial';
+            ctx.fillText("Zásady využívání firemních vozidel:", 10, 70);
+            ctx.fillText("1. Zodpovědnost za firemní vozidla: ...", 10, 90);
+            // Continue for each part of the contract
 
-                const confirmButton = document.createElement('button');
-                confirmButton.textContent = 'Potvrdiť';
-                confirmButton.onclick = function() {
-                    confirmData(item.id);
-                };
-                cell4.appendChild(confirmButton);
+            try {
+                const imgData = canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, "");
+                const formData = new FormData();
+                formData.append('source', imgData);
+                formData.append('action', 'upload');
+                formData.append('key', 'YOUR_API_KEY');  // Replace YOUR_API_KEY with your actual FreeImage.host API key.
 
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Vymazať';
-                deleteButton.style.marginLeft = '10px';
-                deleteButton.onclick = function() {
-                    deleteData(item.id);
-                };
-                cell4.appendChild(deleteButton);
-            });
+                const response = await fetch('https://freeimage.host/api/1/upload/', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                document.getElementById('saved-signature').src = data.image.url;
+            } catch (error) {
+                console.error('Error uploading image:', error);
+            }
         }
-
-        async function confirmData(id) {
-            const response = await fetch(`${API_URL}/${id}`);
-            const item = await response.json();
-            item.status = 'Potvrdené';
-            await fetch(`${API_URL}/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(item)
-            });
-            loadData();
-        }
-
-        async function deleteData(id) {
-            await fetch(`${API_URL}/${id}`, {
-                method: 'DELETE'
-            });
-            loadData();
-        }
-
-        window.onload = function() {
-            const loginContainer = document.getElementById('login-container');
-            const contentContainer = document.getElementById('content-container');
-
-            loginContainer.style.display = 'block';
-
-            document.getElementById('loginForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const password = document.getElementById('password').value;
-                if (password === PASSWORD) {
-                    loginContainer.style.display = 'none';
-                    contentContainer.style.display = 'block';
-                    loadData();
-                } else {
-                    document.getElementById('error-message').textContent = 'Nesprávne heslo. Skúste znova.';
-                }
-            });
-        };
-
-        document.getElementById('myForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const date = document.getElementById('date').value;
-            addData(name, date);
-            this.reset();
-        });
     </script>
 </body>
 </html>
