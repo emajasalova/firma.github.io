@@ -1,166 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulár a Zmluva</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js" rel="stylesheet">
+    <title>Zoznam Hlídačov</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        h1, h2 {
+
+        header {
+            background-color: #333;
+            color: #fff;
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        main {
+            margin: 20px;
+            width: 80%;
+        }
+
+        .watchmen-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .watchman {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .watchman img {
+            border-radius: 8px;
+            max-width: 150px;
+            margin-right: 20px;
+        }
+
+        .description {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .description h2 {
+            margin: 0 0 10px 0;
             color: #333;
         }
-        form label, form input, button {
-            display: block;
-            margin: 5px 0;
-        }
-        form input, button {
-            padding: 5px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-        }
-        #signature-pad {
-            border: 1px solid #000;
-            width: 400px;
-            height: 200px;
-            cursor: crosshair;
-        }
-        canvas {
-            display: block;
-            border: 1px solid black;
+
+        .description p {
+            margin: 0;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <h1>Formulár a Tabuľka</h1>
-
-    <div id="form-container">
-        <h2>Pridať údaje</h2>
-        <form id="myForm">
-            <label for="name">Meno a priezvisko:</label>
-            <input type="text" id="name" name="name" required>
-            <label for="date">Dátum narodenia:</label>
-            <input type="date" id="date" name="date" required>
-            <button type="submit">Pridať do tabuľky</button>
-        </form>
-    </div>
-
-    <div id="table-container">
-        <h2>Tabuľka údajov</h2>
-        <table id="myTable">
-            <thead>
-                <tr>
-                    <th>Meno</th>
-                    <th>Dátum narodenia</th>
-                    <th>Elektronický podpis</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Riadky sa pridajú pomocou JavaScriptu -->
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Podpisová plocha -->
-    <div id="signature-container" class="hidden">
-        <h2>Podpisová plocha</h2>
-        <canvas id="signature-pad"></canvas>
-        <button onclick="clearCanvas()">Vymazať podpis</button>
-        <button onclick="saveSignature()">Uložiť podpis</button>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-    <script>
-        document.getElementById('myForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const date = document.getElementById('date').value;
-            addDataToTable(name, date);
-        });
-
-        function addDataToTable(name, date) {
-            const table = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-            const newRow = table.insertRow();
-            const cell1 = newRow.insertCell(0);
-            const cell2 = newRow.insertCell(1);
-            const cell3 = newRow.insertCell(2);
-            cell1.textContent = name;
-            cell2.textContent = date;
-
-            const signButton = document.createElement('button');
-            signButton.textContent = 'Elektronický podpis';
-            signButton.onclick = function() { showSignaturePad(name, date); };
-            cell3.appendChild(signButton);
-        }
-
-        function showSignaturePad(name, date) {
-            document.getElementById('signature-container').style.display = 'block';
-            // Setup podpisu a uloženia
-        }
-
-        let canvas = document.getElementById('signature-pad');
-        let ctx = canvas.getContext('2d');
-        let drawing = false;
-        canvas.addEventListener('mousedown', function(e) {
-            drawing = true;
-            ctx.beginPath();
-            ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-        });
-        canvas.addEventListener('mousemove', function(e) {
-            if (drawing) {
-                ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-                ctx.stroke();
-            }
-        });
-        canvas.addEventListener('mouseup', function(e) {
-            drawing = false;
-        });
-
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function saveSignature() {
-            html2canvas(document.getElementById('signature-container')).then(canvas => {
-                canvas.toBlob(function(blob) {
-                    const formData = new FormData();
-                    formData.append('source', blob);
-                    formData.append('action', 'upload');
-                    formData.append('key', 'YOUR_API_KEY');  // Replace YOUR_API_KEY with your actual FreeImage.host API key.
-
-                    fetch('https://freeimage.host/api/1/upload/', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert('Obrázok bol uložený: ' + data.image.url);
-                    })
-                    .catch(error => {
-                        console.error('Error uploading image:', error);
-                    });
-                });
-            });
-        }
-    </script>
+    <header>
+        <h1>Zoznam Hlídačov</h1>
+    </header>
+    <main>
+        <div class="watchmen-list">
+            <div class="watchman">
+                <img src="watchman1.jpg" alt="Hlídač 1">
+                <div class="description">
+                    <h2>Hlídač 1</h2>
+                    <p>Popis hlídača 1. Profesionálny prístup a spoľahlivosť.</p>
+                </div>
+            </div>
+            <div class="watchman">
+                <img src="watchman2.jpg" alt="Hlídač 2">
+                <div class="description">
+                    <h2>Hlídač 2</h2>
+                    <p>Popis hlídača 2. Vysoká úroveň zabezpečenia a odbornosti.</p>
+                </div>
+            </div>
+            <!-- Pridaj ďalších hlídačov podľa potreby -->
+        </div>
+    </main>
 </body>
 </html>
