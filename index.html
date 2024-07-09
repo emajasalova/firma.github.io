@@ -3,93 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zoznam Hlídačov</title>
+    <title>Registračný Formulár</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background: linear-gradient(to bottom right, #ffcc00, #ff6600);
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            height: 100vh;
         }
 
-        header {
-            background-color: #333;
-            color: #fff;
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 500px;
             width: 100%;
-            padding: 20px 0;
             text-align: center;
         }
 
-        main {
-            margin: 20px;
-            width: 80%;
+        h1 {
+            margin-bottom: 10px;
         }
 
-        .watchmen-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
+        p {
+            color: gray;
+            margin-bottom: 20px;
         }
 
-        .watchman {
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            display: flex;
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            text-align: left;
+        }
+
+        input[type="text"], input[type="date"], input[type="password"] {
+            width: calc(50% - 10px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .name input {
+            width: calc(50% - 10px);
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
             width: 100%;
-            max-width: 800px;
-            padding: 20px;
-            border-radius: 8px;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
 
-        .watchman img {
-            border-radius: 8px;
-            max-width: 150px;
-            margin-right: 20px;
+        table, th, td {
+            border: 1px solid #ddd;
         }
 
-        .description {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        th, td {
+            padding: 8px;
+            text-align: left;
         }
 
-        .description h2 {
-            margin: 0 0 10px 0;
-            color: #333;
-        }
-
-        .description p {
-            margin: 0;
-            color: #666;
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Zoznam Hlídačov</h1>
-    </header>
-    <main>
-        <div class="watchmen-list">
-            <div class="watchman">
-                <img src="watchman1.jpg" alt="Hlídač 1">
-                <div class="description">
-                    <h2>Hlídač 1</h2>
-                    <p>Popis hlídača 1. Profesionálny prístup a spoľahlivosť.</p>
-                </div>
+    <div class="container">
+        <form id="registrationForm">
+            <h1>Registračný Formulár</h1>
+            <p>Vyplňte formulár opatrne pre registráciu</p>
+            
+            <label for="firstName">Meno študenta</label>
+            <div class="name">
+                <input type="text" id="firstName" placeholder="Krstné meno" required>
+                <input type="text" id="lastName" placeholder="Priezvisko" required>
             </div>
-            <div class="watchman">
-                <img src="watchman2.jpg" alt="Hlídač 2">
-                <div class="description">
-                    <h2>Hlídač 2</h2>
-                    <p>Popis hlídača 2. Vysoká úroveň zabezpečenia a odbornosti.</p>
-                </div>
-            </div>
-            <!-- Pridaj ďalších hlídačov podľa potreby -->
-        </div>
-    </main>
+            
+            <label for="dob">Dátum narodenia</label>
+            <input type="date" id="dob" required>
+
+            <label for="password">Heslo</label>
+            <input type="password" id="password" placeholder="Heslo" required>
+            
+            <button type="submit">Odoslať</button>
+        </form>
+        
+        <table id="studentsTable">
+            <thead>
+                <tr>
+                    <th>Krstné meno</th>
+                    <th>Priezvisko</th>
+                    <th>Dátum narodenia</th>
+                    <th>Heslo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dáta budú vložené sem -->
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        const apiEndpoint = 'https://6676bc44145714a1bd729ff1.mockapi.io/api/v1/etp';
+
+        document.getElementById('registrationForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const dob = document.getElementById('dob').value;
+            const password = document.getElementById('password').value;
+
+            const student = {
+                firstName: firstName,
+                lastName: lastName,
+                dob: dob,
+                password: password
+            };
+
+            try {
+                const response = await fetch(apiEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(student)
+                });
+
+                if (response.ok) {
+                    const savedStudent = await response.json();
+                    addStudentToTable(savedStudent);
+                    document.getElementById('registrationForm').reset();
+                } else {
+                    console.error('Failed to save student:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        function addStudentToTable(student) {
+            const table = document.getElementById('studentsTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
+            const cell3 = newRow.insertCell(2);
+            const cell4 = newRow.insertCell(3);
+
+            cell1.textContent = student.firstName;
+            cell2.textContent = student.lastName;
+            cell3.textContent = student.dob;
+            cell4.textContent = student.password;
+        }
+
+        // Načítanie údajov z mock API pri načítaní stránky
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch(apiEndpoint);
+                if (response.ok) {
+                    const students = await response.json();
+                    students.forEach(student => {
+                        addStudentToTable(student);
+                    });
+                } else {
+                    console.error('Failed to fetch students:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
 </body>
 </html>
