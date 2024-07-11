@@ -179,8 +179,8 @@
             detailCell.colSpan = 2;
             detailCell.innerHTML = `
                 <div class="hidden" id="details-${student.id}">
-                    <p>Priezvisko: ${student.lastName}</p>
-                    <p>Dátum narodenia: ${student.dob}</p>
+                    <p id="lastName-${student.id}" class="hidden">Priezvisko: ${student.lastName}</p>
+                    <p id="dob-${student.id}" class="hidden">Dátum narodenia: ${student.dob}</p>
                     <input type="password" placeholder="Zadajte heslo" id="password-${student.id}">
                     <button onclick="verifyPassword(${student.id}, '${student.password}')">Zobraziť detaily</button>
                 </div>
@@ -196,8 +196,8 @@
             const enteredPassword = document.getElementById(`password-${studentId}`).value;
             if (enteredPassword === correctPassword) {
                 alert('Heslo správne. Zobrazujú sa detaily.');
-                const detailsDiv = document.getElementById(`details-${studentId}`);
-                detailsDiv.querySelectorAll('p').forEach(p => p.classList.remove('hidden'));
+                document.getElementById(`lastName-${studentId}`).classList.remove('hidden');
+                document.getElementById(`dob-${studentId}`).classList.remove('hidden');
             } else {
                 alert('Nesprávne heslo.');
             }
@@ -219,6 +219,10 @@
                 console.error('Error:', error);
             }
         });
+    </script>
+</body>
+</html>
+
     </script>
 </body>
 </html>
