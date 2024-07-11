@@ -114,7 +114,7 @@
         <table id="studentsTable">
             <thead>
                 <tr>
-                    <th>Priezvisko</th>
+                    <th>Krstné meno</th>
                     <th>Detail</th>
                 </tr>
             </thead>
@@ -170,7 +170,7 @@
             const cell1 = newRow.insertCell(0);
             const cell2 = newRow.insertCell(1);
 
-            cell1.textContent = student.lastName;
+            cell1.textContent = student.firstName;
             cell2.innerHTML = `<button onclick="showDetails(${student.id})">Detail</button>`;
             newRow.id = `student-${student.id}`;
 
@@ -179,9 +179,8 @@
             detailCell.colSpan = 2;
             detailCell.innerHTML = `
                 <div class="hidden" id="details-${student.id}">
-                    <p>Krstné meno: ${student.firstName}</p>
+                    <p>Priezvisko: ${student.lastName}</p>
                     <p>Dátum narodenia: ${student.dob}</p>
-                    <p>Heslo: ${student.password}</p>
                     <input type="password" placeholder="Zadajte heslo" id="password-${student.id}">
                     <button onclick="verifyPassword(${student.id}, '${student.password}')">Zobraziť detaily</button>
                 </div>
@@ -198,7 +197,7 @@
             if (enteredPassword === correctPassword) {
                 alert('Heslo správne. Zobrazujú sa detaily.');
                 const detailsDiv = document.getElementById(`details-${studentId}`);
-                detailsDiv.querySelector('p:nth-child(3)').classList.remove('hidden');
+                detailsDiv.querySelectorAll('p').forEach(p => p.classList.remove('hidden'));
             } else {
                 alert('Nesprávne heslo.');
             }
@@ -223,3 +222,4 @@
     </script>
 </body>
 </html>
+
