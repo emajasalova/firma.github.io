@@ -84,6 +84,10 @@
         th {
             background-color: #f2f2f2;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -110,10 +114,8 @@
         <table id="studentsTable">
             <thead>
                 <tr>
-                    <th>Krstné meno</th>
                     <th>Priezvisko</th>
-                    <th>Dátum narodenia</th>
-                    <th>Heslo</th>
+                    <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
@@ -167,13 +169,39 @@
 
             const cell1 = newRow.insertCell(0);
             const cell2 = newRow.insertCell(1);
-            const cell3 = newRow.insertCell(2);
-            const cell4 = newRow.insertCell(3);
 
-            cell1.textContent = student.firstName;
-            cell2.textContent = student.lastName;
-            cell3.textContent = student.dob;
-            cell4.textContent = student.password;
+            cell1.textContent = student.lastName;
+            cell2.innerHTML = `<button onclick="showDetails(${student.id})">Detail</button>`;
+            newRow.id = `student-${student.id}`;
+
+            const detailRow = table.insertRow();
+            const detailCell = detailRow.insertCell(0);
+            detailCell.colSpan = 2;
+            detailCell.innerHTML = `
+                <div class="hidden" id="details-${student.id}">
+                    <p>Krstné meno: ${student.firstName}</p>
+                    <p>Dátum narodenia: ${student.dob}</p>
+                    <p>Heslo: ${student.password}</p>
+                    <input type="password" placeholder="Zadajte heslo" id="password-${student.id}">
+                    <button onclick="verifyPassword(${student.id}, '${student.password}')">Zobraziť detaily</button>
+                </div>
+            `;
+        }
+
+        function showDetails(studentId) {
+            const detailsDiv = document.getElementById(`details-${studentId}`);
+            detailsDiv.classList.toggle('hidden');
+        }
+
+        function verifyPassword(studentId, correctPassword) {
+            const enteredPassword = document.getElementById(`password-${studentId}`).value;
+            if (enteredPassword === correctPassword) {
+                alert('Heslo správne. Zobrazujú sa detaily.');
+                const detailsDiv = document.getElementById(`details-${studentId}`);
+                detailsDiv.querySelector('p:nth-child(3)').classList.remove('hidden');
+            } else {
+                alert('Nesprávne heslo.');
+            }
         }
 
         // Načítanie údajov z mock API pri načítaní stránky
