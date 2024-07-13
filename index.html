@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="sk">
 <head>
     <meta charset="UTF-8">
@@ -16,7 +16,7 @@
             height: 100vh;
         }
 
-        .container, .auth-container {
+        .container {
             background: white;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -41,7 +41,7 @@
             text-align: left;
         }
 
-        input[type="text"], input[type="date"], input[type="number"], input[type="password"] {
+        input[type="text"], input[type="date"], input[type="password"] {
             width: calc(50% - 10px);
             padding: 10px;
             margin-bottom: 20px;
@@ -85,25 +85,13 @@
             background-color: #f2f2f2;
         }
 
-        .total {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-
         .hidden {
             display: none;
         }
     </style>
 </head>
 <body>
-    <div class="auth-container" id="authContainer">
-        <h1>Prihlásenie</h1>
-        <p>Zadajte heslo pre prístup</p>
-        <input type="password" id="authPassword" placeholder="Heslo" required>
-        <button onclick="authenticate()">Prihlásiť sa</button>
-    </div>
-
-    <div class="container" id="mainContainer" style="display: none;">
+    <div class="container">
         <form id="registrationForm">
             <h1>Registračný Formulár</h1>
             <p>Vyplňte formulár opatrne pre registráciu</p>
@@ -117,8 +105,8 @@
             <label for="dob">Dátum narodenia</label>
             <input type="date" id="dob" required>
 
-            <label for="earnings">Zárobok</label>
-            <input type="number" id="earnings" placeholder="Zárobok" required>
+            <label for="password">Heslo</label>
+            <input type="password" id="password" placeholder="Heslo" required>
             
             <button type="submit">Odoslať</button>
         </form>
@@ -127,39 +115,17 @@
             <thead>
                 <tr>
                     <th>Krstné meno</th>
-                    <th>Priezvisko</th>
-                    <th>Dátum narodenia</th>
-                    <th>Zárobok</th>
-                    <th>Akcie</th>
+                    <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Dáta budú vložené sem -->
             </tbody>
         </table>
-
-        <div class="total" id="totalEarnings">
-            Celkový zárobok: €0.00
-        </div>
-        <div class="total" id="totalEarningsMinus20">
-            Celkový zárobok po odpočítaní 20%: €0.00
-        </div>
     </div>
     
     <script>
         const apiEndpoint = 'https://6676bc44145714a1bd729ff1.mockapi.io/api/v1/etp';
-        const correctPassword = 'Isabella94';
-
-        function authenticate() {
-            const enteredPassword = document.getElementById('authPassword').value;
-            if (enteredPassword === correctPassword) {
-                document.getElementById('authContainer').style.display = 'none';
-                document.getElementById('mainContainer').style.display = 'block';
-                updateTotalEarnings();
-            } else {
-                alert('Nesprávne heslo.');
-            }
-        }
 
         document.getElementById('registrationForm').addEventListener('submit', async function(event) {
             event.preventDefault();
@@ -167,13 +133,13 @@
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
             const dob = document.getElementById('dob').value;
-            const earnings = document.getElementById('earnings').value;
+            const password = document.getElementById('password').value;
 
             const student = {
                 firstName: firstName,
                 lastName: lastName,
                 dob: dob,
-                earnings: parseFloat(earnings)
+                password: password
             };
 
             try {
@@ -189,7 +155,6 @@
                     const savedStudent = await response.json();
                     addStudentToTable(savedStudent);
                     document.getElementById('registrationForm').reset();
-                    updateTotalEarnings();
                 } else {
                     console.error('Failed to save student:', response.statusText);
                 }
@@ -204,65 +169,37 @@
 
             const cell1 = newRow.insertCell(0);
             const cell2 = newRow.insertCell(1);
-            const cell3 = newRow.insertCell(2);
-            const cell4 = newRow.insertCell(3);
-            const cell5 = newRow.insertCell(4);
 
             cell1.textContent = student.firstName;
-            cell2.textContent = student.lastName;
-            cell3.textContent = student.dob;
-            cell4.innerHTML = `<span id="earnings-${student.id}">€${student.earnings.toFixed(2)}</span>`;
-            cell5.innerHTML = `<button onclick="editEarnings(${student.id}, ${student.earnings})">Editovať</button>`;
+            cell2.innerHTML = <button onclick="showDetails(${student.id})">Detail</button>;
+            newRow.id = student-${student.id};
 
-            newRow.id = `student-${student.id}`;
+            const detailRow = table.insertRow();
+            const detailCell = detailRow.insertCell(0);
+            detailCell.colSpan = 2;
+            detailCell.innerHTML = 
+                <div class="hidden" id="details-${student.id}">
+                    <p id="lastName-${student.id}" class="hidden">Priezvisko: ${student.lastName}</p>
+                    <p id="dob-${student.id}" class="hidden">Dátum narodenia: ${student.dob}</p>
+                    <input type="password" placeholder="Zadajte heslo" id="password-${student.id}">
+                    <button onclick="verifyPassword(${student.id}, '${student.password}')">Zobraziť detaily</button>
+                </div>
+            ;
         }
 
-        async function updateTotalEarnings() {
-            try {
-                const response = await fetch(apiEndpoint);
-                if (response.ok) {
-                    const students = await response.json();
-                    let total = students.reduce((sum, student) => sum + student.earnings, 0);
-                    document.getElementById('totalEarnings').textContent = `Celkový zárobok: €${total.toFixed(2)}`;
-                    document.getElementById('totalEarningsMinus20').textContent = `Celkový zárobok po odpočítaní 20%: €${(total * 0.8).toFixed(2)}`;
-                    document.querySelector('#studentsTable tbody').innerHTML = '';
-                    students.forEach(student => {
-                        addStudentToTable(student);
-                    });
-                } else {
-                    console.error('Failed to fetch students:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
+        function showDetails(studentId) {
+            const detailsDiv = document.getElementById(details-${studentId});
+            detailsDiv.classList.toggle('hidden');
         }
 
-        function editEarnings(studentId, currentEarnings) {
-            const newEarnings = prompt('Zadajte nový zárobok', currentEarnings);
-            if (newEarnings !== null) {
-                updateEarnings(studentId, parseFloat(newEarnings));
-            }
-        }
-
-        async function updateEarnings(studentId, newEarnings) {
-            try {
-                const response = await fetch(`${apiEndpoint}/${studentId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ earnings: newEarnings })
-                });
-
-                if (response.ok) {
-                    const updatedStudent = await response.json();
-                    document.getElementById(`earnings-${studentId}`).textContent = `€${updatedStudent.earnings.toFixed(2)}`;
-                    updateTotalEarnings();
-                } else {
-                    console.error('Failed to update earnings:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error:', error);
+        function verifyPassword(studentId, correctPassword) {
+            const enteredPassword = document.getElementById(password-${studentId}).value;
+            if (enteredPassword === correctPassword) {
+                alert('Heslo správne. Zobrazujú sa detaily.');
+                document.getElementById(lastName-${studentId}).classList.remove('hidden');
+                document.getElementById(dob-${studentId}).classList.remove('hidden');
+            } else {
+                alert('Nesprávne heslo.');
             }
         }
 
@@ -275,7 +212,6 @@
                     students.forEach(student => {
                         addStudentToTable(student);
                     });
-                    updateTotalEarnings();
                 } else {
                     console.error('Failed to fetch students:', response.statusText);
                 }
@@ -283,6 +219,10 @@
                 console.error('Error:', error);
             }
         });
+    </script>
+</body>
+</html>
+
     </script>
 </body>
 </html>
