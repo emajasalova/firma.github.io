@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="sk">
 <head>
     <meta charset="UTF-8">
@@ -171,33 +171,33 @@
             const cell2 = newRow.insertCell(1);
 
             cell1.textContent = student.firstName;
-            cell2.innerHTML = <button onclick="showDetails(${student.id})">Detail</button>;
-            newRow.id = student-${student.id};
+            cell2.innerHTML = `<button onclick="showDetails(${student.id})">Detail</button>`;
+            newRow.id = `student-${student.id}`;
 
             const detailRow = table.insertRow();
             const detailCell = detailRow.insertCell(0);
             detailCell.colSpan = 2;
-            detailCell.innerHTML = 
+            detailCell.innerHTML = `
                 <div class="hidden" id="details-${student.id}">
                     <p id="lastName-${student.id}" class="hidden">Priezvisko: ${student.lastName}</p>
                     <p id="dob-${student.id}" class="hidden">Dátum narodenia: ${student.dob}</p>
                     <input type="password" placeholder="Zadajte heslo" id="password-${student.id}">
                     <button onclick="verifyPassword(${student.id}, '${student.password}')">Zobraziť detaily</button>
                 </div>
-            ;
+            `;
         }
 
         function showDetails(studentId) {
-            const detailsDiv = document.getElementById(details-${studentId});
+            const detailsDiv = document.getElementById(`details-${studentId}`);
             detailsDiv.classList.toggle('hidden');
         }
 
         function verifyPassword(studentId, correctPassword) {
-            const enteredPassword = document.getElementById(password-${studentId}).value;
+            const enteredPassword = document.getElementById(`password-${studentId}`).value;
             if (enteredPassword === correctPassword) {
                 alert('Heslo správne. Zobrazujú sa detaily.');
-                document.getElementById(lastName-${studentId}).classList.remove('hidden');
-                document.getElementById(dob-${studentId}).classList.remove('hidden');
+                document.getElementById(`lastName-${studentId}`).classList.remove('hidden');
+                document.getElementById(`dob-${studentId}`).classList.remove('hidden');
             } else {
                 alert('Nesprávne heslo.');
             }
@@ -219,10 +219,6 @@
                 console.error('Error:', error);
             }
         });
-    </script>
-</body>
-</html>
-
     </script>
 </body>
 </html>
