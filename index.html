@@ -89,6 +89,10 @@
             margin-top: 20px;
             font-weight: bold;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -126,6 +130,7 @@
                     <th>Priezvisko</th>
                     <th>Dátum narodenia</th>
                     <th>Zárobok</th>
+                    <th>Akcie</th>
                 </tr>
             </thead>
             <tbody>
@@ -201,11 +206,13 @@
             const cell2 = newRow.insertCell(1);
             const cell3 = newRow.insertCell(2);
             const cell4 = newRow.insertCell(3);
+            const cell5 = newRow.insertCell(4);
 
             cell1.textContent = student.firstName;
             cell2.textContent = student.lastName;
             cell3.textContent = student.dob;
-            cell4.textContent = `€${student.earnings.toFixed(2)}`;
+            cell4.innerHTML = `<span id="earnings-${student.id}">€${student.earnings.toFixed(2)}</span>`;
+            cell5.innerHTML = `<button onclick="editEarnings(${student.id}, ${student.earnings})">Editovať</button>`;
 
             newRow.id = `student-${student.id}`;
         }
@@ -218,11 +225,41 @@
                     let total = students.reduce((sum, student) => sum + student.earnings, 0);
                     document.getElementById('totalEarnings').textContent = `Celkový zárobok: €${total.toFixed(2)}`;
                     document.getElementById('totalEarningsMinus20').textContent = `Celkový zárobok po odpočítaní 20%: €${(total * 0.8).toFixed(2)}`;
+                    document.querySelector('#studentsTable tbody').innerHTML = '';
                     students.forEach(student => {
                         addStudentToTable(student);
                     });
                 } else {
                     console.error('Failed to fetch students:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function editEarnings(studentId, currentEarnings) {
+            const newEarnings = prompt('Zadajte nový zárobok', currentEarnings);
+            if (newEarnings !== null) {
+                updateEarnings(studentId, parseFloat(newEarnings));
+            }
+        }
+
+        async function updateEarnings(studentId, newEarnings) {
+            try {
+                const response = await fetch(`${apiEndpoint}/${studentId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ earnings: newEarnings })
+                });
+
+                if (response.ok) {
+                    const updatedStudent = await response.json();
+                    document.getElementById(`earnings-${studentId}`).textContent = `€${updatedStudent.earnings.toFixed(2)}`;
+                    updateTotalEarnings();
+                } else {
+                    console.error('Failed to update earnings:', response.statusText);
                 }
             } catch (error) {
                 console.error('Error:', error);
