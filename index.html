@@ -255,6 +255,16 @@
                 } else {
                     console.error('Failed to fetch students:', response.statusText);
                 }
+
+                const imageResponse = await fetch(apiEndpoint + '/images');
+                if (imageResponse.ok) {
+                    const images = await imageResponse.json();
+                    images.forEach(image => {
+                        displayImage(image);
+                    });
+                } else {
+                    console.error('Failed to fetch images:', imageResponse.statusText);
+                }
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -271,7 +281,7 @@
             };
 
             try {
-                const response = await fetch(apiEndpoint, {
+                const response = await fetch(apiEndpoint + '/images', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
