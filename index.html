@@ -14,7 +14,7 @@
             justify-content: center;
             align-items: flex-start;
             height: 100vh;
-            overflow: hidden;
+            overflow-y: auto;
         }
 
         .container {
@@ -25,16 +25,11 @@
             max-width: 500px;
             width: 100%;
             text-align: center;
-            overflow: hidden;
         }
 
         .form-container {
-            position: fixed;
-            top: 0;
             width: 100%;
-            max-width: 500px;
             background: white;
-            z-index: 1000;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -42,8 +37,8 @@
         }
 
         .table-container {
-            margin-top: 260px; /* Enough space for the form */
-            max-height: calc(100vh - 280px);
+            margin-top: 20px;
+            max-height: 400px;
             overflow-y: auto;
         }
 
@@ -114,7 +109,8 @@
             display: none;
         }
 
-        .image-preview {
+        .image-preview img {
+            max-width: 100%;
             margin-top: 20px;
         }
     </style>
