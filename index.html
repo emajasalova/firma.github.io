@@ -258,9 +258,11 @@
 
                 const imageResponse = await fetch(apiEndpoint);
                 if (imageResponse.ok) {
-                    const images = await imageResponse.json();
-                    images.forEach(image => {
-                        displayImage(image);
+                    const items = await imageResponse.json();
+                    items.forEach(item => {
+                        if (item.imageUrl) {
+                            displayImage(item);
+                        }
                     });
                 } else {
                     console.error('Failed to fetch images:', imageResponse.statusText);
