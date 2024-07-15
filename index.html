@@ -12,8 +12,9 @@
             background: linear-gradient(to bottom right, #ffcc00, #ff6600);
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             height: 100vh;
+            overflow: hidden;
         }
 
         .container {
@@ -24,6 +25,30 @@
             max-width: 500px;
             width: 100%;
             text-align: center;
+            overflow: hidden;
+        }
+
+        .form-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            z-index: 1000;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .table-container {
+            margin-top: 260px; /* Enough space for the form */
+            max-height: calc(100vh - 280px);
+            overflow-y: auto;
+        }
+
+        .image-form-container {
+            margin-top: 20px;
         }
 
         h1 {
@@ -88,40 +113,59 @@
         .hidden {
             display: none;
         }
+
+        .image-preview {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <form id="registrationForm">
-            <h1>Registračný Formulár</h1>
-            <p>Vyplňte formulár opatrne pre registráciu</p>
-            
-            <label for="firstName">Meno študenta</label>
-            <div class="name">
-                <input type="text" id="firstName" placeholder="Krstné meno" required>
-                <input type="text" id="lastName" placeholder="Priezvisko" required>
-            </div>
-            
-            <label for="dob">Dátum narodenia</label>
-            <input type="date" id="dob" required>
+        <div class="form-container">
+            <form id="registrationForm">
+                <h1>Registračný Formulár</h1>
+                <p>Vyplňte formulár opatrne pre registráciu</p>
+                
+                <label for="firstName">Meno študenta</label>
+                <div class="name">
+                    <input type="text" id="firstName" placeholder="Krstné meno" required>
+                    <input type="text" id="lastName" placeholder="Priezvisko" required>
+                </div>
+                
+                <label for="dob">Dátum narodenia</label>
+                <input type="date" id="dob" required>
 
-            <label for="password">Heslo</label>
-            <input type="password" id="password" placeholder="Heslo" required>
-            
-            <button type="submit">Odoslať</button>
-        </form>
+                <label for="password">Heslo</label>
+                <input type="password" id="password" placeholder="Heslo" required>
+                
+                <button type="submit">Odoslať</button>
+            </form>
+        </div>
         
-        <table id="studentsTable">
-            <thead>
-                <tr>
-                    <th>Krstné meno</th>
-                    <th>Detail</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Dáta budú vložené sem -->
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table id="studentsTable">
+                <thead>
+                    <tr>
+                        <th>Krstné meno</th>
+                        <th>Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dáta budú vložené sem -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="image-form-container">
+            <form id="imageForm">
+                <label for="imageUrl">URL obrázku</label>
+                <input type="text" id="imageUrl" placeholder="Zadajte URL obrázku" required>
+                <button type="submit">Embedovať</button>
+            </form>
+            <div class="image-preview" id="imagePreview">
+                <!-- Embedded images will be shown here -->
+            </div>
+        </div>
     </div>
     
     <script>
@@ -196,8 +240,8 @@
             const enteredPassword = document.getElementById(`password-${studentId}`).value;
             if (enteredPassword === correctPassword) {
                 alert('Heslo správne. Zobrazujú sa detaily.');
-                document.getElementById(`lastName-${studentId}`).classList.remove('hidden');
-                document.getElementById(`dob-${studentId}`).classList.remove('hidden');
+                document.getElementById(`lastName-${student.id}`).classList.remove('hidden');
+                document.getElementById(`dob-${student.id}`).classList.remove('hidden');
             } else {
                 alert('Nesprávne heslo.');
             }
@@ -219,6 +263,25 @@
                 console.error('Error:', error);
             }
         });
+
+        // Embed Image Form Submission
+        document.getElementById('imageForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const imageUrl = document.getElementById('imageUrl').value;
+            const imagePreview = document.getElementById('imagePreview');
+
+            const imgElement = document.createElement('img');
+            imgElement.src = imageUrl;
+            imgElement.alt = 'Embedded Image';
+            imgElement.style.maxWidth = '100%';
+            imgElement.style.marginTop = '20px';
+
+            imagePreview.appendChild(imgElement);
+
+            document.getElementById('imageForm').reset();
+        });
     </script>
 </body>
 </html>
+
