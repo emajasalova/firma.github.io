@@ -1,312 +1,75 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registračný Formulár</title>
+    <title>Upload and Send to Discord</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to bottom right, #ffcc00, #ff6600);
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             height: 100vh;
-            overflow-y: auto;
+            background-color: #f0f0f0;
         }
-
-        .container {
+        .upload-container {
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-
-        .form-container {
-            width: 100%;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+        .upload-container h1 {
             margin-bottom: 20px;
         }
-
-        .table-container {
-            margin-top: 20px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .image-form-container {
-            margin-top: 20px;
-        }
-
-        h1 {
-            margin-bottom: 10px;
-        }
-
-        p {
-            color: gray;
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin: 10px 0 5px;
-            text-align: left;
-        }
-
-        input[type="text"], input[type="date"], input[type="password"] {
-            width: calc(50% - 10px);
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .name input {
-            width: calc(50% - 10px);
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .hidden {
+        .upload-container input[type="file"] {
             display: none;
         }
-
-        .image-preview img {
-            max-width: 100%;
-            margin-top: 20px;
+        .upload-container label {
+            display: block;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .upload-container label:hover {
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="form-container">
-            <form id="registrationForm">
-                <h1>Registračný Formulár</h1>
-                <p>Vyplňte formulár opatrne pre registráciu</p>
-                
-                <label for="firstName">Meno študenta</label>
-                <div class="name">
-                    <input type="text" id="firstName" placeholder="Krstné meno" required>
-                    <input type="text" id="lastName" placeholder="Priezvisko" required>
-                </div>
-                
-                <label for="dob">Dátum narodenia</label>
-                <input type="date" id="dob" required>
-
-                <label for="password">Heslo</label>
-                <input type="password" id="password" placeholder="Heslo" required>
-                
-                <button type="submit">Odoslať</button>
-            </form>
-        </div>
-        
-        <div class="table-container">
-            <table id="studentsTable">
-                <thead>
-                    <tr>
-                        <th>Krstné meno</th>
-                        <th>Detail</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Dáta budú vložené sem -->
-                </tbody>
-            </table>
-        </div>
-
-        <div class="image-form-container">
-            <form id="imageForm">
-                <label for="imageUrl">URL obrázku</label>
-                <input type="text" id="imageUrl" placeholder="Zadajte URL obrázku" required>
-                <button type="submit">Embedovať</button>
-            </form>
-            <div class="image-preview" id="imagePreview">
-                <!-- Embedded images will be shown here -->
-            </div>
-        </div>
+    <div class="upload-container">
+        <h1>Upload and Send to Discord</h1>
+        <input type="file" id="fileInput">
+        <label for="fileInput">Choose a file</label>
     </div>
-    
+
     <script>
-        const apiEndpoint = 'https://6676bc44145714a1bd729ff1.mockapi.io/api/v1/etp';
+        document.getElementById('fileInput').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
 
-        document.getElementById('registrationForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
+                const webhookUrl = 'https://discord.com/api/webhooks/1266647965980823594/etFKfkE-VJwoRbjodcqEi9ngsGT7vKlkA8F4f3WzKvHIPPiJApxUJZx-ISNc4USooaFp';
 
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const dob = document.getElementById('dob').value;
-            const password = document.getElementById('password').value;
-
-            const student = {
-                firstName: firstName,
-                lastName: lastName,
-                dob: dob,
-                password: password
-            };
-
-            try {
-                const response = await fetch(apiEndpoint, {
+                fetch(webhookUrl, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(student)
+                    body: formData
+                }).then(response => {
+                    if (response.ok) {
+                        alert('File uploaded and sent to Discord successfully!');
+                    } else {
+                        alert('Failed to upload and send the file.');
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while uploading the file.');
                 });
-
-                if (response.ok) {
-                    const savedStudent = await response.json();
-                    addStudentToTable(savedStudent);
-                    document.getElementById('registrationForm').reset();
-                } else {
-                    console.error('Failed to save student:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error:', error);
             }
         });
-
-        function addStudentToTable(student) {
-            const table = document.getElementById('studentsTable').getElementsByTagName('tbody')[0];
-            const newRow = table.insertRow();
-
-            const cell1 = newRow.insertCell(0);
-            const cell2 = newRow.insertCell(1);
-
-            cell1.textContent = student.firstName;
-            cell2.innerHTML = `<button onclick="showDetails(${student.id})">Detail</button>`;
-            newRow.id = `student-${student.id}`;
-
-            const detailRow = table.insertRow();
-            const detailCell = detailRow.insertCell(0);
-            detailCell.colSpan = 2;
-            detailCell.innerHTML = `
-                <div class="hidden" id="details-${student.id}">
-                    <p id="lastName-${student.id}" class="hidden">Priezvisko: ${student.lastName}</p>
-                    <p id="dob-${student.id}" class="hidden">Dátum narodenia: ${student.dob}</p>
-                    <input type="password" placeholder="Zadajte heslo" id="password-${student.id}">
-                    <button onclick="verifyPassword(${student.id}, '${student.password}')">Zobraziť detaily</button>
-                </div>
-            `;
-        }
-
-        function showDetails(studentId) {
-            const detailsDiv = document.getElementById(`details-${studentId}`);
-            detailsDiv.classList.toggle('hidden');
-        }
-
-        function verifyPassword(studentId, correctPassword) {
-            const enteredPassword = document.getElementById(`password-${studentId}`).value;
-            if (enteredPassword === correctPassword) {
-                alert('Heslo správne. Zobrazujú sa detaily.');
-                document.getElementById(`lastName-${studentId}`).classList.remove('hidden');
-                document.getElementById(`dob-${studentId}`).classList.remove('hidden');
-            } else {
-                alert('Nesprávne heslo.');
-            }
-        }
-
-        // Načítanie údajov z mock API pri načítaní stránky
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const response = await fetch(apiEndpoint);
-                if (response.ok) {
-                    const items = await response.json();
-                    items.forEach(item => {
-                        if (item.firstName) {
-                            addStudentToTable(item);
-                        }
-                        if (item.imageUrl) {
-                            displayImage(item);
-                        }
-                    });
-                } else {
-                    console.error('Failed to fetch items:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        });
-
-        // Embed Image Form Submission
-        document.getElementById('imageForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
-
-            const imageUrl = document.getElementById('imageUrl').value;
-
-            const image = {
-                imageUrl: imageUrl
-            };
-
-            try {
-                const response = await fetch(apiEndpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(image)
-                });
-
-                if (response.ok) {
-                    const savedImage = await response.json();
-                    displayImage(savedImage);
-                    document.getElementById('imageForm').reset();
-                } else {
-                    console.error('Failed to save image:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        });
-
-        function displayImage(image) {
-            const imagePreview = document.getElementById('imagePreview');
-
-            const imgElement = document.createElement('img');
-            imgElement.src = image.imageUrl;
-            imgElement.alt = 'Embedded Image';
-            imgElement.style.maxWidth = '100%';
-            imgElement.style.marginTop = '20px';
-
-            imagePreview.appendChild(imgElement);
-        }
     </script>
 </body>
 </html>
