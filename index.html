@@ -68,14 +68,14 @@
             margin: 0 auto;
         }
 
-        #onas, #sluzby, #referencie, #kontakt {
+        #onas, #sluzby, #cenik, #kontakt {
             background: #2a2a2a;
             margin-top: 20px;
             padding: 30px;
             border-radius: 5px;
         }
 
-        #onas h2, #sluzby h2, #referencie h2, #kontakt h2 {
+        #onas h2, #sluzby h2, #cenik h2, #kontakt h2 {
             color: #fff;
             font-size: 2rem;
             border-bottom: 2px solid #444;
@@ -99,12 +99,21 @@
             margin-right: 10px;
         }
 
-        blockquote {
-            font-style: italic;
-            color: #ccc;
-            margin: 10px 0;
-            border-left: 5px solid #555;
-            padding-left: 10px;
+        #cenik ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        #cenik ul li {
+            padding: 10px 0;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #444;
+            margin-bottom: 10px;
+        }
+
+        #cenik ul li:before {
+            content: '💼';
+            margin-right: 10px;
         }
 
         #kontakt p {
@@ -151,7 +160,7 @@
     <section id="onas">
         <div class="container">
             <h2>O nás</h2>
-            <p>Naša agentúra má dlhoročné skúsenosti v oblasti bezpečnosti a ochrany. Zameriavame sa na poskytovanie komplexných riešení pre rôzne sektory, vrátane komerčných, priemyselných a rezidenčných nehnuteľností.</p>
+            <p>Naša agentúra má  skúsenosti v oblasti bezpečnosti a ochrany. Zameriavame sa na poskytovanie komplexných riešení pre rôzne sektory, vrátane komerčných, priemyselných a rezidenčných nehnuteľností.</p>
         </div>
     </section>
 
@@ -168,8 +177,15 @@
         </div>
     </section>
 
-
-   
+    <section id="cenik">
+        <div class="container">
+            <h2>Cenník</h2>
+            <ul>
+                <li>Ozbrojená ochranka: 13 000 za smenu</li>
+                <li>Neozbrojená ochranka: 6 000 za smenu</li>
+            </ul>
+        </div>
+    </section>
 
     <section id="kontakt">
         <div class="container">
