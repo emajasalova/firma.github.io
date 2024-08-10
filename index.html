@@ -20,12 +20,21 @@
             padding: 20px 0;
             text-align: center;
             border-bottom: 3px solid #444;
+            position: relative;
         }
 
         header h1 {
             margin: 0;
             font-size: 2.5rem;
             letter-spacing: 2px;
+        }
+
+        header img {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 100px; /* Adjust the size as necessary */
+            height: auto;
         }
 
         .container {
@@ -99,21 +108,35 @@
             margin-right: 10px;
         }
 
+        #cenik {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        #cenik h2 {
+            font-size: 2.5rem;
+            color: #ffc107;
+        }
+
         #cenik ul {
             list-style-type: none;
             padding-left: 0;
+            font-size: 1.5rem;
         }
 
         #cenik ul li {
             padding: 10px 0;
-            font-size: 1.2rem;
-            border-bottom: 1px solid #444;
+            border-bottom: 1px solid #555;
             margin-bottom: 10px;
+            color: #fff;
         }
 
         #cenik ul li:before {
             content: '💼';
             margin-right: 10px;
+            color: #ffc107;
         }
 
         #kontakt p {
@@ -147,6 +170,7 @@
     <header>
         <div class="container">
             <h1>Bezpečnostná Agentúra</h1>
+            <img src="converted_logo.png" alt="Logo">
         </div>
     </header>
 
@@ -182,7 +206,7 @@
             <h2>Cenník</h2>
             <ul>
                 <li>Ozbrojená ochranka: 2 900 kč - na hodinu</li>
-                <li>Neozbrojená ochranka: 1 600 kč -  na hodinu</li>
+                <li>Neozbrojená ochranka: 1 600 kč - na hodinu</li>
             </ul>
         </div>
     </section>
@@ -236,3 +260,5 @@
     </script>
 </body>
 </html>
+
+     
