@@ -12,15 +12,34 @@
             color: #e5e5e5;
             background-color: #1c1c1c;
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animované pozadie */
+        .animated-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1581357829838-1d2a660c367b') no-repeat center center/cover;
+            z-index: -1;
+            animation: backgroundMove 20s infinite linear;
+        }
+
+        @keyframes backgroundMove {
+            from { transform: scale(1) translateX(0); }
+            to { transform: scale(1.2) translateX(-50px); }
         }
 
         header {
-            background-color: #0d0d0d;
+            background-color: rgba(0, 0, 0, 0.8);
             color: #fff;
             padding: 20px 0;
             text-align: center;
             border-bottom: 3px solid #444;
             position: relative;
+            z-index: 1;
             animation: slideDown 1s ease-in-out;
         }
 
@@ -44,6 +63,8 @@
             width: 80%;
             margin: auto;
             overflow: hidden;
+            position: relative;
+            z-index: 1;
         }
 
         section {
@@ -78,7 +99,7 @@
         }
 
         #intro {
-            background: url('https://images.unsplash.com/photo-1581357829838-1d2a660c367b') no-repeat center center/cover;
+            background: rgba(0, 0, 0, 0.8);
             color: #fff;
             text-align: center;
             padding: 80px 0;
@@ -101,7 +122,7 @@
         }
 
         #onas, #sluzby, #cenik, #kontakt {
-            background: #2a2a2a;
+            background: rgba(42, 42, 42, 0.9);
             margin-top: 20px;
             padding: 30px;
             border-radius: 5px;
@@ -138,7 +159,7 @@
         }
 
         #cenik {
-            background-color: #333;
+            background-color: rgba(51, 51, 51, 0.9);
             padding: 20px;
             border-radius: 10px;
             margin-top: 20px;
@@ -173,7 +194,7 @@
         }
 
         footer {
-            background-color: #0d0d0d;
+            background-color: rgba(13, 13, 13, 0.9);
             color: #777;
             text-align: center;
             padding: 20px 0;
@@ -197,10 +218,13 @@
     </style>
 </head>
 <body>
+    <!-- Animované pozadie -->
+    <div class="animated-background"></div>
+
     <header>
         <div class="container">
             <h1>Bezpečnostná Agentúra</h1>
-            <img src="https://i.imgur.com/689EXsF.jpg" alt="Logo">
+            <img src="https://i.imgur.com/689EXsF.jpg" alt="Logo" class="logo-reveal">
         </div>
     </header>
 
@@ -254,40 +278,4 @@
         <div class="container">
             <p>&copy; 2024 Bezpečnostná Agentúra. Všetky práva vyhradené.</p>
         </div>
-    </footer>
-
-    <script>
-        function typeWriter(element, text, delay, callback) {
-            let i = 0;
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, delay);
-                } else {
-                    if (callback) callback();
-                }
-            }
-            type();
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const introText1 = document.getElementById('typewriter1');
-            const introText2 = document.getElementById('typewriter2');
-            const sections = document.querySelectorAll('section:not(#intro)');
-
-            typeWriter(introText1, "Spoľahlivá ochrana pre váš majetok a bezpečnosť", 50, function () {
-                typeWriter(introText2, "Naša bezpečnostná agentúra poskytuje široké spektrum profesionálnych služieb v oblasti ochrany osôb a majetku.", 50, function () {
-                    let delay = 500;
-                    sections.forEach((section, index) => {
-                        setTimeout(() => {
-                            section.classList.add('visible');
-                        }, delay * (index + 1));
-                    });
-                });
-            });
-        });
-    </script>
-</body>
-</html>
-
+   
