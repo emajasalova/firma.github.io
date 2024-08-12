@@ -278,4 +278,39 @@
         <div class="container">
             <p>&copy; 2024 Bezpečnostná Agentúra. Všetky práva vyhradené.</p>
         </div>
-   
+    </footer>
+
+    <script>
+        function typeWriter(element, text, delay, callback) {
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, delay);
+                } else {
+                    if (callback) callback();
+                }
+            }
+            type();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const introText1 = document.getElementById('typewriter1');
+            const introText2 = document.getElementById('typewriter2');
+            const sections = document.querySelectorAll('section:not(#intro)');
+
+            typeWriter(introText1, "Spoľahlivá ochrana pre váš majetok a bezpečnosť", 50, function () {
+                typeWriter(introText2, "Naša bezpečnostná agentúra poskytuje široké spektrum profesionálnych služieb v oblasti ochrany osôb a majetku.", 50, function () {
+                    let delay = 500;
+                    sections.forEach((section, index) => {
+                        setTimeout(() => {
+                            section.classList.add('visible');
+                        }, delay * (index + 1));
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
