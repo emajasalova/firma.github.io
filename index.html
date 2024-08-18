@@ -3,314 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bezpečnostná Agentúra</title>
+    <title>Mriežka Produktov</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            color: #e5e5e5;
-            background-color: #1c1c1c;
-            line-height: 1.6;
-            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
-        /* Animované pozadie */
-        .animated-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1581357829838-1d2a660c367b') no-repeat center center/cover;
-            z-index: -1;
-            animation: backgroundMove 20s infinite linear;
-        }
-
-        @keyframes backgroundMove {
-            from { transform: scale(1) translateX(0); }
-            to { transform: scale(1.2) translateX(-50px); }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
         }
 
         header {
-            background-color: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            padding: 20px 0;
+            background-color: #e9ecef;
+            padding: 20px;
             text-align: center;
-            border-bottom: 3px solid #444;
-            position: relative;
-            z-index: 1;
-            animation: slideDown 1s ease-in-out;
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            letter-spacing: 2px;
-            animation: fadeIn 2s ease-in-out;
-        }
-
-        header img {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 100px; /* Adjust the size as necessary */
-            height: auto;
-            animation: rotateIn 2s ease-in-out;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
-        }
-
-        section {
-            padding: 40px 0;
-            border-bottom: 1px solid #444;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease-in-out, visibility 0s linear 1s;
-            transform: translateY(50px);
-        }
-
-        .visible {
-            opacity: 1;
-            visibility: visible;
-            transition-delay: 0s;
-            transform: translateY(0);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-100px); }
-            to { transform: translateY(0); }
-        }
-
-        @keyframes rotateIn {
-            from { transform: rotate(-360deg); }
-            to { transform: rotate(0); }
-        }
-
-        #intro {
-            background: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            text-align: center;
-            padding: 80px 0;
-            visibility: visible;
-            opacity: 1;
-            animation: fadeIn 2s ease-in-out;
-        }
-
-        #intro h2 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            animation: fadeIn 2s ease-in-out;
-        }
-
-        #intro p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto;
-            animation: fadeIn 2s ease-in-out;
-        }
-
-        #onas, #sluzby, #cenik, #kontakt {
-            background: rgba(42, 42, 42, 0.9);
-            margin-top: 20px;
-            padding: 30px;
-            border-radius: 5px;
-            animation: fadeInUp 1s ease-in-out;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        #onas h2, #sluzby h2, #cenik h2, #kontakt h2 {
-            color: #fff;
+        .header-content h1 {
             font-size: 2rem;
-            border-bottom: 2px solid #444;
-            padding-bottom: 10px;
-        }
-
-        #sluzby ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        #sluzby ul li {
-            padding: 10px 0;
-            font-size: 1.2rem;
-            border-bottom: 1px solid #444;
             margin-bottom: 10px;
         }
 
-        #sluzby ul li:before {
-            content: '🔒';
-            margin-right: 10px;
+        .buttons {
+            margin-top: 10px;
         }
 
-        #cenik {
-            background-color: rgba(51, 51, 51, 0.9);
+        .buy-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .buy-btn:hover {
+            background-color: #0056b3;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .results {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .sort-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .sort-display select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: white;
             padding: 20px;
             border-radius: 10px;
-            margin-top: 20px;
-        }
-
-        #cenik h2 {
-            font-size: 2.5rem;
-            color: #ffc107;
-        }
-
-        #cenik ul {
-            list-style-type: none;
-            padding-left: 0;
-            font-size: 1.5rem;
-        }
-
-        #cenik ul li {
-            padding: 10px 0;
-            border-bottom: 1px solid #555;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        #cenik ul li:before {
-            content: '💼';
-            margin-right: 10px;
-            color: #ffc107;
-        }
-
-        #kontakt p {
-            font-size: 1.2rem;
-        }
-
-        footer {
-            background-color: rgba(13, 13, 13, 0.9);
-            color: #777;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            padding: 20px 0;
-            border-top: 3px solid #444;
-            margin-top: 20px;
-            animation: fadeIn 2s ease-in-out;
         }
 
-        footer p {
-            margin: 0;
+        .image-placeholder {
+            background-color: #e9ecef;
+            height: 240px;
+            margin-bottom: 20px;
         }
 
-        a {
-            color: #ffc107;
+        .product-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            margin-bottom: 10px;
+        }
+
+        .product-card .price {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .favorite {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
             text-decoration: none;
         }
 
-        a:hover {
+        .favorite:hover {
             text-decoration: underline;
+        }
+
+        .pagination {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .pagination a {
+            color: #007bff;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+            border-radius: 5px;
+        }
+
+        .pagination a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid #007bff;
         }
     </style>
 </head>
 <body>
-    <!-- Animované pozadie -->
-    <div class="animated-background"></div>
-
     <header>
-        <div class="container">
-            <h1>Bezpečnostná Agentúra</h1>
-            <img src="https://i.imgur.com/689EXsF.jpg" alt="Logo" class="logo-reveal">
+        <div class="header-content">
+            <h1>Moje Logo</h1>
+            <div class="buttons">
+                <button class="buy-btn">KÚPIŤ Laravel 5.4 Verziu</button>
+                <button class="buy-btn">KÚPIŤ Laravel 5.5 Verziu</button>
+            </div>
         </div>
     </header>
 
-    <section id="intro">
-        <div class="container">
-            <h2 id="typewriter1"></h2>
-            <p id="typewriter2"></p>
-        </div>
-    </section>
+    <main>
+        <section class="results">
+            <div class="sort-display">
+                <label for="sort">Zoradiť Podľa:</label>
+                <select id="sort">
+                    <option value="select">Vyberte</option>
+                </select>
+                <label for="order">Poradie:</label>
+                <select id="order">
+                    <option value="ascending">Vzostupne</option>
+                </select>
+                <label for="display">Zobraziť:</label>
+                <select id="display">
+                    <option value="6">6</option>
+                </select>
+            </div>
 
-    <section id="onas">
-        <div class="container">
-            <h2>O nás</h2>
-            <p>Naša agentúra má skúsenosti v oblasti bezpečnosti a ochrany. Zameriavame sa na poskytovanie komplexných riešení pre rôzne sektory, vrátane komerčných, priemyselných a rezidenčných nehnuteľností.</p>
-        </div>
-    </section>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="image-placeholder"></div>
+                    <h2>Polo Tričko</h2>
+                    <p>Lorem Ipsum je jednoducho text používaný v tlačiarenskom a sadzobnom priemysle.</p>
+                    <p class="price">Cena: 100€</p>
+                    <button class="buy-btn">KÚPIŤ</button>
+                    <a href="#" class="favorite">Obľúbené</a>
+                </div>
+                <div class="product-card">
+                    <div class="image-placeholder"></div>
+                    <h2>Dlhé Nohavice</h2>
+                    <p>Štandardný text používaný od 16. storočia, keď neznámy tlačiar vzal sadačkovú galéru a pomiešal ju, aby vytvoril.</p>
+                    <p class="price">Cena: 120€</p>
+                    <button class="buy-btn">KÚPIŤ</button>
+                    <a href="#" class="favorite">Obľúbené</a>
+                </div>
+                <div class="product-card">
+                    <div class="image-placeholder"></div>
+                    <h2>Športová Obuv</h2>
+                    <p>Exemplárna kniha. Prežila nielen päť storočí, ale aj prechod na elektronickú sadzbu.</p>
+                    <p class="price">Cena: 250€</p>
+                    <button class="buy-btn">KÚPIŤ</button>
+                    <a href="#" class="favorite">Obľúbené</a>
+                </div>
+                <div class="product-card">
+                    <div class="image-placeholder"></div>
+                    <h2>Nohavice</h2>
+                    <p>Prechod na elektronickú sadzbu, zostal v podstate nezmenený. Popularizoval sa v 60-tych rokoch.</p>
+                    <p class="price">Cena: 24€</p>
+                    <button class="buy-btn">KÚPIŤ</button>
+                    <a href="#" class="favorite">Obľúbené</a>
+                </div>
+                <div class="product-card">
+                    <div class="image-placeholder"></div>
+                    <h2>Nohavice</h2>
+                    <p>Pasáže Lorem Ipsum a v poslednej dobe aj s desktopovým publikačným softvérom ako Aldus PageMaker.</p>
+                    <p class="price">Cena: 20€</p>
+                    <button class="buy-btn">KÚPIŤ</button>
+                    <a href="#" class="favorite">Obľúbené</a>
+                </div>
+                <div class="product-card">
+                    <div class="image-placeholder"></div>
+                    <h2>Džínsy</h2>
+                    <p>Dôvod používania Lorem Ipsum je, že má približne normálne rozdelenie písmen.</p>
+                    <p class="price">Cena: 22€</p>
+                    <button class="buy-btn">KÚPIŤ</button>
+                    <a href="#" class="favorite">Obľúbené</a>
+                </div>
+            </div>
 
-    <section id="sluzby">
-        <div class="container">
-            <h2>Naše Služby</h2>
-            <ul>
-                <li>Ochrana objektov a areálov</li>
-                <li>Monitorovanie a dohľad</li>
-                <li>Osobná ochrana</li>
-                <li>Bezpečnostné poradenstvo</li>
-                <li>Inštalácia a údržba bezpečnostných systémov</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="cenik">
-        <div class="container">
-            <h2>Cenník</h2>
-            <ul>
-                <li>Ozbrojená ochranka: 2 900 kč - na hodinu</li>
-                <li>Neozbrojená ochranka: 1 600 kč - na hodinu</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="kontakt">
-        <div class="container">
-            <h2>Kontakt</h2>
-            <p>Ak máte záujem o naše služby, neváhajte nás kontaktovať.</p>
-            <p><strong>Telefón:</strong> 508 836</p>
-            <p><strong>Email:</strong> <a href="mailto:ema.jasalova@post.ic">ema.jasalova@post.ic</a></p>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Bezpečnostná Agentúra. Všetky práva vyhradené.</p>
-        </div>
-    </footer>
-
-    <script>
-        function typeWriter(element, text, delay, callback) {
-            let i = 0;
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, delay);
-                } else {
-                    if (callback) callback();
-                }
-            }
-            type();
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const introText1 = document.getElementById('typewriter1');
-            const introText2 = document.getElementById('typewriter2');
-            const sections = document.querySelectorAll('section:not(#intro)');
-
-            typeWriter(introText1, "Spoľahlivá ochrana pre váš majetok a bezpečnosť", 50, function () {
-                typeWriter(introText2, "Naša bezpečnostná agentúra poskytuje široké spektrum profesionálnych služieb v oblasti ochrany osôb a majetku.", 50, function () {
-                    let delay = 500;
-                    sections.forEach((section, index) => {
-                        setTimeout(() => {
-                            section.classList.add('visible');
-                        }, delay * (index + 1));
-                    });
-                });
-            });
-        });
-    </script>
+            <div class="pagination">
+                <a href="#">&laquo;</a>
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">&raquo;</a>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
