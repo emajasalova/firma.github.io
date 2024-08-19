@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mriežka Produktov</title>
     <style>
+        /* Pôvodné CSS štýly */
         * {
             margin: 0;
             padding: 0;
@@ -144,8 +145,8 @@
         <div class="header-content">
             <h1>Moje Logo</h1>
             <div class="buttons">
-                <button class="buy-btn">KÚPIŤ Laravel 5.4 Verziu</button>
-                <button class="buy-btn">KÚPIŤ Laravel 5.5 Verziu</button>
+                <button class="buy-btn" data-item-id="1">KÚPIŤ Laravel 5.4 Verziu</button>
+                <button class="buy-btn" data-item-id="2">KÚPIŤ Laravel 5.5 Verziu</button>
             </div>
         </div>
     </header>
@@ -173,7 +174,7 @@
                     <h2>Polo Tričko</h2>
                     <p>Lorem Ipsum je jednoducho text používaný v tlačiarenskom a sadzobnom priemysle.</p>
                     <p class="price">Cena: 100€</p>
-                    <button class="buy-btn">KÚPIŤ</button>
+                    <button class="buy-btn" data-item-id="3">KÚPIŤ</button>
                     <a href="#" class="favorite">Obľúbené</a>
                 </div>
                 <div class="product-card">
@@ -181,7 +182,7 @@
                     <h2>Dlhé Nohavice</h2>
                     <p>Štandardný text používaný od 16. storočia, keď neznámy tlačiar vzal sadačkovú galéru a pomiešal ju, aby vytvoril.</p>
                     <p class="price">Cena: 120€</p>
-                    <button class="buy-btn">KÚPIŤ</button>
+                    <button class="buy-btn" data-item-id="4">KÚPIŤ</button>
                     <a href="#" class="favorite">Obľúbené</a>
                 </div>
                 <div class="product-card">
@@ -189,7 +190,7 @@
                     <h2>Športová Obuv</h2>
                     <p>Exemplárna kniha. Prežila nielen päť storočí, ale aj prechod na elektronickú sadzbu.</p>
                     <p class="price">Cena: 250€</p>
-                    <button class="buy-btn">KÚPIŤ</button>
+                    <button class="buy-btn" data-item-id="5">KÚPIŤ</button>
                     <a href="#" class="favorite">Obľúbené</a>
                 </div>
                 <div class="product-card">
@@ -197,7 +198,7 @@
                     <h2>Nohavice</h2>
                     <p>Prechod na elektronickú sadzbu, zostal v podstate nezmenený. Popularizoval sa v 60-tych rokoch.</p>
                     <p class="price">Cena: 24€</p>
-                    <button class="buy-btn">KÚPIŤ</button>
+                    <button class="buy-btn" data-item-id="6">KÚPIŤ</button>
                     <a href="#" class="favorite">Obľúbené</a>
                 </div>
                 <div class="product-card">
@@ -205,7 +206,7 @@
                     <h2>Nohavice</h2>
                     <p>Pasáže Lorem Ipsum a v poslednej dobe aj s desktopovým publikačným softvérom ako Aldus PageMaker.</p>
                     <p class="price">Cena: 20€</p>
-                    <button class="buy-btn">KÚPIŤ</button>
+                    <button class="buy-btn" data-item-id="7">KÚPIŤ</button>
                     <a href="#" class="favorite">Obľúbené</a>
                 </div>
                 <div class="product-card">
@@ -213,7 +214,7 @@
                     <h2>Džínsy</h2>
                     <p>Dôvod používania Lorem Ipsum je, že má približne normálne rozdelenie písmen.</p>
                     <p class="price">Cena: 22€</p>
-                    <button class="buy-btn">KÚPIŤ</button>
+                    <button class="buy-btn" data-item-id="8">KÚPIŤ</button>
                     <a href="#" class="favorite">Obľúbené</a>
                 </div>
             </div>
@@ -227,5 +228,68 @@
             </div>
         </section>
     </main>
+
+    <!-- Modal pre zadanie údajov -->
+    <div id="modal" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); z-index: 1000;">
+        <h2>Zadajte údaje</h2>
+        <form id="order-form">
+            <label for="item-number">Číslo položky:</label>
+            <input type="text" id="item-number" name="item-number" readonly><br><br>
+            <label for="user-number">Vaše číslo:</label>
+            <input type="text" id="user-number" name="user-number" required><br><br>
+            <label for="name">Meno:</label>
+            <input type="text" id="name" name="name" required><br><br>
+            <button type="submit">Odoslať</button>
+            <button type="button" id="close-modal">Zavrieť</button>
+        </form>
+    </div>
+
+    <script>
+        document.querySelectorAll('.buy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const itemId = this.getAttribute('data-item-id');
+                document.getElementById('item-number').value = itemId;
+                document.getElementById('modal').style.display = 'block';
+            });
+        });
+
+        document.getElementById('close-modal').addEventListener('click', function() {
+            document.getElementById('modal').style.display = 'none';
+        });
+
+        document.getElementById('order-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const itemNumber = document.getElementById('item-number').value;
+            const userNumber = document.getElementById('user-number').value;
+            const name = document.getElementById('name').value;
+
+            const webhookURL = 'https://discord.com/api/webhooks/YOUR_WEBHOOK_URL';
+            const data = {
+                content: `Objednávka:\nČíslo položky: ${itemNumber}\nVaše číslo: ${userNumber}\nMeno: ${name}`
+            };
+
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Objednávka bola odoslaná!');
+                } else {
+                    alert('Vyskytla sa chyba pri odosielaní objednávky.');
+                }
+                document.getElementById('modal').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Chyba:', error);
+                alert('Vyskytla sa chyba pri odosielaní objednávky.');
+                document.getElementById('modal').style.display = 'none';
+            });
+        });
+    </script>
 </body>
 </html>
