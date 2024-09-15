@@ -64,9 +64,9 @@
         document.getElementById('dataForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
-            const name = document.getElementById('name').value;
-            const location = document.getElementById('location').value;
-            const spz = document.getElementById('spz').value;
+            const name = document.getElementById('name').value.trim();
+            const location = document.getElementById('location').value.trim();
+            const spz = document.getElementById('spz').value.trim();
             const image = document.getElementById('image').files[0];
 
             if (!image) {
@@ -76,9 +76,13 @@
 
             const formData = new FormData();
             formData.append('file', image);
-            formData.append('payload_json', JSON.stringify({
+
+            // Konvertuj textové údaje do formátu JSON
+            const jsonPayload = JSON.stringify({
                 content: `**Meno:** ${name}\n**Lokalita:** ${location}\n**ŠPZ:** ${spz}`
-            }));
+            });
+
+            formData.append('payload_json', jsonPayload);
 
             const webhookURL = 'https://discord.com/api/webhooks/1280862954673278986/oR8zuvSE8uyQrD0l-AsE9NOKeegcMlciyDuJ-xwr_nBDr4bCIQLNhaJhZdLSyRpJggjN';
 
