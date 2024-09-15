@@ -3,288 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mriežka Produktov</title>
+    <title>Moderný Formulár</title>
     <style>
-        /* Pôvodné CSS štýly */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
 
-        header {
-            background-color: #e9ecef;
-            padding: 20px;
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
             text-align: center;
         }
 
-        .header-content h1 {
-            font-size: 2rem;
-            margin-bottom: 10px;
+        input[type="text"],
+        input[type="file"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
         }
 
-        .buttons {
-            margin-top: 10px;
-        }
-
-        .buy-btn {
+        button {
+            padding: 10px 20px;
             background-color: #007bff;
             color: white;
             border: none;
-            padding: 10px 20px;
-            margin: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            border-radius: 5px;
+            font-size: 16px;
         }
 
-        .buy-btn:hover {
+        button:hover {
             background-color: #0056b3;
-        }
-
-        main {
-            padding: 20px;
-        }
-
-        .results {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .sort-display {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .sort-display select {
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .product-card {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-       
-        .product-card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        .product-card p {
-            margin-bottom: 10px;
-        }
-
-        .product-card .price {
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .favorite {
-            display: inline-block;
-            margin-top: 10px;
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .favorite:hover {
-            text-decoration: underline;
-        }
-
-        .pagination {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .pagination a {
-            color: #007bff;
-            padding: 8px 16px;
-            text-decoration: none;
-            border: 1px solid #ddd;
-            margin: 0 4px;
-            border-radius: 5px;
-        }
-
-        .pagination a:hover {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .pagination a.active {
-            background-color: #007bff;
-            color: white;
-            border: 1px solid #007bff;
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1>Moje Logo</h1>
-            <div class="buttons">
-              
-            </div>
-        </div>
-    </header>
-
-    <main>
-        <section class="results">
-            <div class="sort-display">
-                <label for="sort">Zoradiť Podľa:</label>
-                <select id="sort">
-                    <option value="select">Vyberte</option>
-                </select>
-                <label for="order">Poradie:</label>
-                <select id="order">
-                    <option value="ascending">Vzostupne</option>
-                </select>
-                <label for="display">Zobraziť:</label>
-                <select id="display">
-                    <option value="6">6</option>
-                </select>
-            </div>
-
-            <div class="product-grid">
-                <div class="product-card">
-                    <div class="image-placeholder"></div>
-                    <h2>Kamerový systém</h2>
-                </p>Číslo položky : 3</p>
-                    <p class="price">Cena: 500.000 kč.</p>
-                    <button class="buy-btn" data-item-id="3">KÚPIŤ</button>
-                    <a href="#" class="favorite">Obľúbené</a>
-                </div>
-                <div class="product-card">
-                    <div class="image-placeholder"></div>
-                    <h2>Alarm do domácnosti</h2>
-                    <p>Číslo položky : 4</p>
-                    <p class="price">Cena: 400.000 kč</p>
-                    <button class="buy-btn" data-item-id="4">KÚPIŤ</button>
-                    <a href="#" class="favorite">Obľúbené</a>
-                </div>
-                <div class="product-card">
-                    <div class="image-placeholder"></div>
-                    <h2>Motorová píla</h2>
-                    <p>Číslo položky : 5</p>
-                    <p class="price">Cena: 50.000 kč</p>
-                    <button class="buy-btn" data-item-id="5">KÚPIŤ</button>
-                    <a href="#" class="favorite">Obľúbené</a>
-                </div>
-                <div class="product-card">
-                    <div class="image-placeholder"></div>
-                    <h2>Nohavice</h2>
-                    <p>Prechod na elektronickú sadzbu, zostal v podstate nezmenený. Popularizoval sa v 60-tych rokoch.</p>
-                    <p class="price">Cena: 24€</p>
-                    <button class="buy-btn" data-item-id="6">KÚPIŤ</button>
-                    <a href="#" class="favorite">Obľúbené</a>
-                </div>
-                <div class="product-card">
-                    <div class="image-placeholder"></div>
-                    <h2>Žuvací tabák SAVANNA</h2>
-                    <p>Čísli položky : 7 </p>
-                    <p class="price">Cena: 20€</p>
-                    <button class="buy-btn" data-item-id="7">KÚPIŤ</button>
-                    <a href="#" class="favorite">Obľúbené</a>
-                </div>
-                <div class="product-card">
-                    <div class="image-placeholder"></div>
-                    <h2>Džínsy</h2>
-                    <p>Dôvod používania Lorem Ipsum je, že má približne normálne rozdelenie písmen.</p>
-                    <p class="price">Cena: 22€</p>
-                    <button class="buy-btn" data-item-id="8">KÚPIŤ</button>
-                    <a href="#" class="favorite">Obľúbené</a>
-                </div>
-            </div>
-
-            <div class="pagination">
-                <a href="#">&laquo;</a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">&raquo;</a>
-            </div>
-        </section>
-    </main>
-
-    <!-- Modal pre zadanie údajov -->
-    <div id="modal" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); z-index: 1000;">
-        <h2>Zadajte údaje</h2>
-        <form id="order-form">
-            <label for="item-number">Číslo položky:</label>
-            <input type="text" id="item-number" name="item-number" readonly><br><br>
-            <label for="user-number">Vaše číslo telefonu:</label>
-            <input type="text" id="user-number" name="user-number" required><br><br>
-            <label for="name">Meno:</label>
-            <input type="text" id="user-number" name="user-number" required><br><br>
-            <label for="kusov">Počet kusov:</label>
-            <input type="text" id="kusov" name="kusov" required><br><br>
+    <div class="form-container">
+        <h1>Odoslať údaje</h1>
+        <form id="dataForm">
+            <input type="text" id="name" placeholder="Meno" required>
+            <input type="text" id="location" placeholder="Lokace" required>
+            <input type="file" id="image" accept="image/*" required>
             <button type="submit">Odoslať</button>
-            <button type="button" id="close-modal">Zavrieť</button>
         </form>
     </div>
 
     <script>
-        document.querySelectorAll('.buy-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const itemId = this.getAttribute('data-item-id');
-                document.getElementById('item-number').value = itemId;
-                document.getElementById('modal').style.display = 'block';
-            });
-        });
+        document.getElementById('dataForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-        document.getElementById('close-modal').addEventListener('click', function() {
-            document.getElementById('modal').style.display = 'none';
-        });
-
-        document.getElementById('order-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const itemNumber = document.getElementById('item-number').value;
-            const userNumber = document.getElementById('user-number').value;
             const name = document.getElementById('name').value;
+            const location = document.getElementById('location').value;
+            const image = document.getElementById('image').files[0];
 
-            const webhookURL = 'https://discord.com/api/webhooks/YOUR_WEBHOOK_URL';
-            const data = {
-                content: `Objednávka:\nČíslo položky: ${itemNumber}\nPočet Kusov: ${itemNumber}\nVaše číslo: ${userNumber}\nMeno: ${name}`
-            };
+            if (!image) {
+                alert('Prosím vyberte obrázok.');
+                return;
+            }
 
-            fetch(webhookURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
+            const formData = new FormData();
+            formData.append('file', image);
+            formData.append('payload_json', JSON.stringify({
+                content: `**Meno:** ${name}\n**Lokalita:** ${location}`
+            }));
+
+            const webhookURL = 'https://discord.com/api/webhooks/1280862954673278986/oR8zuvSE8uyQrD0l-AsE9NOKeegcMlciyDuJ-xwr_nBDr4bCIQLNhaJhZdLSyRpJggjN';
+
+            try {
+                const response = await fetch(webhookURL, {
+                    method: 'POST',
+                    body: formData
+                });
+
                 if (response.ok) {
-                    alert('Objednávka bola odoslaná!');
+                    alert('Údaje boli úspešne odoslané.');
                 } else {
-                    alert('Vyskytla sa chyba pri odosielaní objednávky.');
+                    alert('Nastala chyba pri odosielaní údajov.');
                 }
-                document.getElementById('modal').style.display = 'none';
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Chyba:', error);
-                alert('Vyskytla sa chyba pri odosielaní objednávky.');
-                document.getElementById('modal').style.display = 'none';
-            });
+                alert('Nastala chyba pri odosielaní údajov.');
+            }
         });
     </script>
 </body>
