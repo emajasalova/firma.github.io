@@ -54,6 +54,7 @@
         <form id="dataForm">
             <input type="text" id="name" placeholder="Meno" required>
             <input type="text" id="location" placeholder="Lokace" required>
+            <input type="text" id="spz" placeholder="ŠPZ" required>
             <input type="file" id="image" accept="image/*" required>
             <button type="submit">Odoslať</button>
         </form>
@@ -65,6 +66,7 @@
 
             const name = document.getElementById('name').value;
             const location = document.getElementById('location').value;
+            const spz = document.getElementById('spz').value;
             const image = document.getElementById('image').files[0];
 
             if (!image) {
@@ -75,10 +77,10 @@
             const formData = new FormData();
             formData.append('file', image);
             formData.append('payload_json', JSON.stringify({
-                content: `**Meno:** ${name}\n**Lokalita:** ${location}`
+                content: `**Meno:** ${name}\n**Lokalita:** ${location}\n**ŠPZ:** ${spz}`
             }));
 
-            const webhookURL = 'https://discord.com/api/webhooks/1280862954673278986/oR8zuvSE8uyQrD0l-AsE9NOKeegcMlciyDuJ-xwr_nBDr4bCIQLNhaJhZdLSyRpJggjN';
+            const webhookURL = 'TU_ZADAJ_WEBHOOK_URL';
 
             try {
                 const response = await fetch(webhookURL, {
