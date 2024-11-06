@@ -1,116 +1,107 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garver Sales House</title>
+    <title>Moderný Formulár</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #222;
-            color: #ddd;
-            margin: 0;
-            padding: 0;
+            background-color: #f4f4f9;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-        }
-
-        .sales-house {
-            background-color: #333;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            width: 80%;
-            max-width: 900px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2em;
-        }
-
-        header .update {
-            margin: 10px 0;
-        }
-
-        header .update-time {
-            color: #4caf50;
-        }
-
-        header .notice {
-            font-size: 0.9em;
-            color: #aaa;
-        }
-
-        .sales-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .sales-item img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-
-        .item-details {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .item-details h2 {
-            font-size: 1.5em;
             margin: 0;
         }
 
-        .item-details .status {
-            color: #f00;
-            font-weight: bold;
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            width: calc(100% - 20px);
+            padding: 10px;
             margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
         }
 
-        .item-details .description {
-            margin: 10px 0;
-            font-size: 0.95em;
-            line-height: 1.5;
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
         }
 
-        .item-details .price {
-            font-weight: bold;
-            margin: 20px 0 0;
-            color: #4caf50;
-        }
-
-        .currency {
-            color: #ddd;
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="sales-house">
-        <header>
-            <h1>Kariera</h1>
-            <p class="update">Online prodejní stránka <span class="update-time">aktualizace</span></p>
-            <p class="notice">Všechny položky jsou dostupné k prodeji.</p>
-        </header>
-        <main>
-            <div class="sales-item">
-                <img src="https://i.imgur.com/CruDUiO.png" alt="Alarm do domu alebo kancelarie">
-                <div class="item-details">
-                    <h2>Alarm</h2>
-                    <p class="status">kontakt ema.jasalo@post.ic</p>
-                    <p class="description">Alarm do domu alebo kancelárie</p>
-                    <p class="price">Cena: <span class="currency">250 000 kč</span></p>
-                </div>
-            </div>
-        </main>
+    <div class="form-container">
+        <h1>Odoslať údaje</h1>
+        <form id="dataForm">
+            <input type="text" id="name" placeholder="Meno" required>
+            <input type="text" id="location" placeholder="Lokace" required>
+            <input type="text" id="spz" placeholder="ŠPZ" required>
+            <input type="file" id="image" accept="image/*" required>
+            <button type="submit">Odoslať</button>
+        </form>
     </div>
+
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const location = document.getElementById('location').value.trim();
+            const spz = document.getElementById('spz').value.trim();
+            const image = document.getElementById('image').files[0];
+
+            if (!image) {
+                alert('Prosím vyberte obrázok.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', image);
+
+            // Konvertuj textové údaje do formátu JSON
+            const jsonPayload = JSON.stringify({
+                content: `**Meno:** ${name}\n**Lokalita:** ${location}\n**ŠPZ:** ${spz}`
+            });
+
+            formData.append('payload_json', jsonPayload);
+
+            const webhookURL = 'https://discord.com/api/webhooks/1280862954673278986/oR8zuvSE8uyQrD0l-AsE9NOKeegcMlciyDuJ-xwr_nBDr4bCIQLNhaJhZdLSyRpJggjN';
+
+            try {
+                const response = await fetch(webhookURL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    alert('Údaje boli úspešne odoslané.');
+                } else {
+                    alert('Nastala chyba pri odosielaní údajov.');
+                }
+            } catch (error) {
+                console.error('Chyba:', error);
+                alert('Nastala chyba pri odosielaní údajov.');
+            }
+        });
+    </script>
 </body>
 </html>
