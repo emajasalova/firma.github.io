@@ -3,94 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAMUS a RTech - Pracovní pozice</title>
+    <title>CAMUS a RTech - Profesionální Služby</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
         body {
-            background-color: #f7f7f7;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
             color: #333;
-            line-height: 1.6;
         }
 
         header {
-            background-color: #e0e0e0;
+            background-color: #4CAF50;
+            color: #fff;
             text-align: center;
-            padding: 20px;
+            padding: 40px 20px;
         }
 
-        .logos {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
+        header img {
+            width: 100px;
+            margin-bottom: 15px;
         }
 
-        .logo {
-            width: 80px;
-            height: auto;
-        }
-
-        h1 {
-            color: #4CAF50;
-            font-size: 2em;
-            margin-bottom: 5px;
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
         }
 
         header p {
-            color: #888;
-            font-size: 1.1em;
+            font-size: 1.2em;
         }
 
         main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 30px 20px;
         }
 
-        .job {
-            background-color: #fff;
-            border: 2px solid #4CAF50;
-            padding: 15px;
-            margin: 10px 0;
-            width: 90%;
-            max-width: 600px;
+        .service-card {
+            background-color: white;
+            border: 1px solid #ddd;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
         }
 
-        .job h2 {
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card h2 {
             color: #FFD700;
-            font-size: 1.5em;
             margin-bottom: 10px;
         }
 
-        .job p {
-            color: #555;
-            margin-bottom: 8px;
+        .service-card p {
+            margin: 10px 0;
         }
 
         footer {
+            background-color: #333;
+            color: white;
             text-align: center;
-            padding: 20px;
-            background-color: #e0e0e0;
-            color: #333;
-            margin-top: 20px;
-        }
-
-        footer h3 {
-            font-size: 1.2em;
-            color: #4CAF50;
-        }
-
-        footer p {
-            color: #555;
+            padding: 20px 10px;
         }
 
         footer a {
@@ -98,61 +80,77 @@
             text-decoration: none;
             font-weight: bold;
         }
+
+        footer p {
+            margin-top: 10px;
+            font-size: 1.1em;
+        }
+
+        .logos {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logos">
-            <img src="https://i.imgur.com/P5hJwe6.png" alt="CAMUS" class="logo">
-            <img src="https://i.imgur.com/o1HU8V6.png" alt="RTech" class="logo">
-        </div>
-        <h1>CAMUS a RTech - Pracovní příležitosti</h1>
-        <p>Profesionální přístup a kvalitní služby v každém odvětví.</p>
-    </header>
 
-    <main>
-        <div class="job">
-            <h2>Správce komunikací</h2>
-            <p>Zisk: 2.500 Kč za každé odtáhnuté vozidlo</p>
-            <p>Popis: Správa a odtahování vozidel s důrazem na bezpečnost a spolehlivost.</p>
-        </div>
+<header>
+    <div class="logos">
+        <img src="logo-camus.png" alt="CAMUS Logo" class="logo">
+        <img src="logo-rtech.png" alt="RTech Logo" class="logo">
+    </div>
+    <h1>CAMUS a RTech - Profesionální služby</h1>
+    <p>Společnost se silným zaměřením na kvalitu a spolehlivost.</p>
+</header>
 
-        <div class="job">
-            <h2>Rozvoz doutníků</h2>
-            <p>Zisk: až 41 tisíc Kč</p>
-            <p>Popis: Rychlý a efektivní rozvoz luxusních doutníků našim zákazníkům.</p>
-        </div>
+<main>
+    <div class="service-card">
+        <h2>Správce komunikací</h2>
+        <p>Zisk: 2.500 Kč za každé odtáhnuté vozidlo</p>
+        <p>Odtahování vozidel a správa komunikací na vysoké úrovni. Bezpečnost a spolehlivost na prvním místě.</p>
+    </div>
 
-        <div class="job">
-            <h2>Rozvoz rádií</h2>
-            <p>Zisk: 46-50 tisíc Kč</p>
-            <p>Popis: Rozvoz rádií po celé zemi s garancí kvality a spolehlivosti.</p>
-        </div>
+    <div class="service-card">
+        <h2>Rozvoz doutníků</h2>
+        <p>Zisk: až 41 tisíc Kč</p>
+        <p>Profesionalita a rychlost při rozvozu luxusních doutníků k našim zákazníkům.</p>
+    </div>
 
-        <div class="job">
-            <h2>Kamionista</h2>
-            <p>Zisk: Podle poptávky</p>
-            <p>Popis: Dálková doprava zboží po celé zemi s ohledem na maximální bezpečnost a efektivitu.</p>
-        </div>
+    <div class="service-card">
+        <h2>Rozvoz rádií</h2>
+        <p>Zisk: 46-50 tisíc Kč</p>
+        <p>Rozvoz kvalitních rádií s důrazem na včasnost a efektivitu.</p>
+    </div>
 
-        <div class="job">
-            <h2>Opravář elektrického vedení</h2>
-            <p>Zisk: 30-60 tisíc Kč za opravu</p>
-            <p>Popis: Profesionální opravy elektrického vedení s vysokým ohledem na bezpečnost a kvalitu.</p>
-        </div>
+    <div class="service-card">
+        <h2>Kamionista</h2>
+        <p>Zisk: Podle poptávky</p>
+        <p>Dálková doprava zboží s flexibilitou a důrazem na bezpečnost během cesty.</p>
+    </div>
 
-        <div class="job">
-            <h2>CAMUS Servis</h2>
-            <p>Profesionální úpravy vozidel od odborníků.</p>
-        </div>
-    </main>
+    <div class="service-card">
+        <h2>Opravář elektrického vedení</h2>
+        <p>Zisk: 30-60 tisíc Kč za opravu</p>
+        <p>Specializované opravy elektrického vedení s maximální péčí a ohledem na bezpečnost.</p>
+    </div>
 
-    <footer>
-        <h3>Kontakt</h3>
-        <p>Email: <a href="mailto:ema.jasalova@post.ic">ema.jasalova@post.ic</a></p>
-        <p>Telefon: 508 836</p>
-    </footer>
+    <div class="service-card">
+        <h2>CAMUS Servis</h2>
+        <p>Profesionální úpravy vozidel - Zajišťujeme kompletní tuning a opravy vozidel s důrazem na kvalitu.</p>
+    </div>
+</main>
+
+<footer>
+    <p>Email: <a href="mailto:ema.jasalova@post.ic">ema.jasalova@post.ic</a></p>
+    <p>Telefon: 508 836</p>
+</footer>
+
 </body>
 </html>
-
- 
