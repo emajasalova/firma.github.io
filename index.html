@@ -1,156 +1,190 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAMUS a RTech - Profesionální Služby</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAMUS & RTech - Kariéra a Ochrana Areálu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      color: #333;
+      background: #f8f9fa;
+      line-height: 1.6;
+    }
 
-        header {
-            background-color: #4CAF50;
-            color: #fff;
-            text-align: center;
-            padding: 40px 20px;
-        }
+    header {
+      text-align: center;
+      padding: 30px 20px;
+      background: #333;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        header img {
-            width: 100px;
-            margin-bottom: 15px;
-        }
+    header h1 {
+      font-size: 3em;
+      font-weight: bold;
+      margin: 15px 0;
+      color: #d4af37;
+    }
 
-        header h1 {
-            font-size: 2.5em;
-            margin: 0;
-        }
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+    }
 
-        header p {
-            font-size: 1.2em;
-        }
+    .logo-container img {
+      width: 100px;
+      height: auto;
+      object-fit: contain;
+    }
 
-        main {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 30px 20px;
-        }
+    header p {
+      font-size: 1.2em;
+      font-weight: 300;
+      max-width: 700px;
+      margin: 15px auto;
+    }
 
-        .service-card {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
 
-        .service-card:hover {
-            transform: translateY(-10px);
-        }
+    section {
+      padding: 40px 30px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
 
-        .service-card h2 {
-            color: #FFD700;
-            margin-bottom: 10px;
-        }
+    section:hover {
+      transform: translateY(-5px);
+    }
 
-        .service-card p {
-            margin: 10px 0;
-        }
+    section h2 {
+      font-size: 2.2em;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      color: #a6ce39;
+    }
 
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px 10px;
-        }
+    .job-list ul {
+      list-style: none;
+    }
 
-        footer a {
-            color: #FFD700;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    .job-list ul li {
+      display: flex;
+      align-items: center;
+      font-size: 1.1em;
+      background: #d4af37;
+      color: white;
+      padding: 15px 20px;
+      margin: 10px 0;
+      border-radius: 5px;
+      position: relative;
+    }
 
-        footer p {
-            margin-top: 10px;
-            font-size: 1.1em;
-        }
+    .job-list ul li i {
+      margin-right: 15px;
+      font-size: 1.5em;
+    }
 
-        .logos {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
+    .job-list ul li span {
+      font-size: 0.9em;
+      position: absolute;
+      right: 20px;
+      font-weight: bold;
+    }
 
-        .logo {
-            width: 100px;
-            height: auto;
-        }
-    </style>
+    #security h2, #camus-service h2 {
+      color: #d4af37;
+    }
+
+    #contact {
+      text-align: center;
+      padding: 20px;
+      background: #f1f1f1;
+      border-top: 3px solid #d4af37;
+    }
+
+    #contact h2 {
+      color: #a6ce39;
+      margin-bottom: 20px;
+    }
+
+    #contact a {
+      display: block;
+      font-size: 1.2em;
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 5px 0;
+    }
+
+    #contact a:hover {
+      color: #d4af37;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-    <div class="logos">
-        <img src="logo-camus.png" alt="CAMUS Logo" class="logo">
-        <img src="logo-rtech.png" alt="RTech Logo" class="logo">
+  <header>
+    <div class="logo-container">
+      <img src="camus-logo.png" alt="Logo CAMUS">
+      <img src="rtech-logo.png" alt="Logo RTech">
     </div>
-    <h1>CAMUS a RTech - Profesionální služby</h1>
-    <p>Společnost se silným zaměřením na kvalitu a spolehlivost.</p>
-</header>
+    <h1>CAMUS & RTech</h1>
+    <p>Profesionální pracovní příležitosti v oblasti logistiky, údržby a ochrany areálu. Spojení kvality a stability.</p>
+  </header>
 
-<main>
-    <div class="service-card">
-        <h2>Správce komunikací</h2>
-        <p>Zisk: 2.500 Kč za každé odtáhnuté vozidlo</p>
-        <p>Odtahování vozidel a správa komunikací na vysoké úrovni. Bezpečnost a spolehlivost na prvním místě.</p>
-    </div>
+  <div class="content">
 
-    <div class="service-card">
-        <h2>Rozvoz doutníků</h2>
-        <p>Zisk: až 41 tisíc Kč</p>
-        <p>Profesionalita a rychlost při rozvozu luxusních doutníků k našim zákazníkům.</p>
-    </div>
+    <section id="jobs" class="job-list">
+      <h2>Pracovní pozice</h2>
+      <ul>
+        <li><i class="fas fa-tools"></i>Správce komunikací - odtah vozidel <span>2 500 Kč/každé odtažené vozidlo</span></li>
+        <li><i class="fas fa-cigar"></i>Řidič - rozvoz doutníků <span>Až 41 000 Kč</span></li>
+        <li><i class="fas fa-shipping-fast"></i>Kamionista - přeprava materiálu <span>Podle poptávky</span></li>
+        <li><i class="fas fa-bolt"></i>Opravář elektrického vedení <span>30 000 - 60 000 Kč za opravu</span></li>
+        <li><i class="fas fa-radio"></i>Řidič - rozvoz rádií <span>46 000 - 50 000 Kč</span></li>
+        <li><i class="fas fa-user-shield"></i>Hlídač - ochrana areálu a majetku</li>
+      </ul>
+    </section>
 
-    <div class="service-card">
-        <h2>Rozvoz rádií</h2>
-        <p>Zisk: 46-50 tisíc Kč</p>
-        <p>Rozvoz kvalitních rádií s důrazem na včasnost a efektivitu.</p>
-    </div>
+    <section id="camus-service">
+      <h2>CAMUS Servis</h2>
+      <p>Profesionální úpravy vozidel od kvalifikovaných odborníků. Přinášíme inovativní řešení a kvalitní servis pro vaše vozidla, abyste se mohli spolehnout na perfektní výsledky.</p>
+    </section>
 
-    <div class="service-card">
-        <h2>Kamionista</h2>
-        <p>Zisk: Podle poptávky</p>
-        <p>Dálková doprava zboží s flexibilitou a důrazem na bezpečnost během cesty.</p>
-    </div>
+    <section id="security">
+      <h2>Ochrana Areálu</h2>
+      <p>Naši zkušení hlídači zajišťují bezpečnost vašich prostor a majetku. Sledují a monitorují objekty a zajišťují klid a bezpečí pro všechny pracovníky.</p>
+    </section>
 
-    <div class="service-card">
-        <h2>Opravář elektrického vedení</h2>
-        <p>Zisk: 30-60 tisíc Kč za opravu</p>
-        <p>Specializované opravy elektrického vedení s maximální péčí a ohledem na bezpečnost.</p>
-    </div>
+    <section id="contact">
+      <h2>Kontaktujte nás</h2>
+      <p>Máte-li zájem o některou z našich pracovních pozic nebo potřebujete více informací, kontaktujte nás:</p>
+      <a href="mailto:ema.jasalova@post.ic"><i class="fas fa-envelope"></i> ema.jasalova@post.ic</a>
+      <a href="tel:508836"><i class="fas fa-phone"></i> 508836</a>
+    </section>
 
-    <div class="service-card">
-        <h2>CAMUS Servis</h2>
-        <p>Profesionální úpravy vozidel - Zajišťujeme kompletní tuning a opravy vozidel s důrazem na kvalitu.</p>
-    </div>
-</main>
-
-<footer>
-    <p>Email: <a href="mailto:ema.jasalova@post.ic">ema.jasalova@post.ic</a></p>
-    <p>Telefon: 508 836</p>
-</footer>
+  </div>
 
 </body>
 </html>
