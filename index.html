@@ -15,7 +15,7 @@
     body {
       font-family: Arial, sans-serif;
       color: #333;
-      background: #f4f4f9;
+      background: #f8f9fa;
       line-height: 1.6;
     }
 
@@ -27,51 +27,65 @@
     }
 
     header h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
+      font-size: 3em;
+      font-weight: bold;
+      margin-bottom: 15px;
     }
 
     header p {
       font-size: 1.2em;
+      font-weight: 300;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
     }
 
     section {
-      padding: 40px 20px;
-      margin: 20px 0;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-      border-radius: 8px;
+      padding: 40px 30px;
       background: white;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+
+    section:hover {
+      transform: translateY(-5px);
     }
 
     section h2 {
       color: #d4af37;
-      font-size: 2em;
+      font-size: 2.2em;
       margin-bottom: 20px;
+      text-transform: uppercase;
     }
 
     .icon {
-      font-size: 2em;
+      font-size: 2.5em;
       color: #a6ce39;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
 
     .job-list ul {
       list-style: none;
-      padding: 0;
     }
 
     .job-list ul li {
-      background: #d4af37;
-      color: white;
-      padding: 15px;
-      margin: 5px 0;
-      border-radius: 5px;
       display: flex;
       align-items: center;
+      font-size: 1.2em;
+      background: #d4af37;
+      color: white;
+      padding: 15px 20px;
+      margin: 10px 0;
+      border-radius: 5px;
       transition: background 0.3s;
     }
 
@@ -80,34 +94,37 @@
     }
 
     .job-list ul li i {
-      margin-right: 10px;
+      margin-right: 15px;
+      font-size: 1.5em;
     }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      max-width: 600px;
+    #security p {
+      font-size: 1.1em;
+      max-width: 800px;
       margin: 0 auto;
+      line-height: 1.6;
     }
 
-    input, textarea, button {
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ddd;
-      border-radius: 5px;
+    #contact {
+      text-align: center;
     }
 
-    button {
-      background: #a6ce39;
-      color: white;
+    #contact p {
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    #contact a {
+      display: block;
+      font-size: 1.3em;
+      color: #d4af37;
+      text-decoration: none;
       font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s;
+      margin: 5px 0;
     }
 
-    button:hover {
-      background: #d4af37;
+    #contact a:hover {
+      color: #a6ce39;
     }
   </style>
 </head>
@@ -115,40 +132,34 @@
 
   <header>
     <h1>CAMUS & RTech</h1>
-    <p>Stabilné pracovné príležitosti a spoľahlivá ochrana areálov</p>
+    <p>Poskytujeme profesionálne pracovné príležitosti v oblasti logistiky a údržby a zaistenie bezpečnosti v priemyselných a komerčných areáloch.</p>
   </header>
 
-  <section id="jobs" class="job-list">
-    <h2>Pracovné pozície</h2>
-    <ul>
-      <li><i class="fas fa-truck icon"></i> Správca komunikácií - odťah vozidiel a rozvoz rádií a doutníkov</li>
-      <li><i class="fas fa-shipping-fast icon"></i> Kamionista - prepravovanie materiálu a tovaru</li>
-      <li><i class="fas fa-bolt icon"></i> Opravár elektrického vedenia - údržba a opravy elektrických zariadení</li>
-      <li><i class="fas fa-user-shield icon"></i> Hliadač - ochrana areálu a majetku</li>
-    </ul>
-  </section>
+  <div class="content">
 
-  <section id="security">
-    <h2>Ochrana Areálu</h2>
-    <p>Poskytujeme profesionálne služby na ochranu priemyselných a komerčných areálov. Naše služby sú zamerané na zaistenie bezpečnosti a ochrany majetku.</p>
-  </section>
+    <section id="jobs" class="job-list">
+      <h2>Pracovné pozície</h2>
+      <ul>
+        <li><i class="fas fa-truck icon"></i>Správca komunikácií - odťah vozidiel a rozvoz rádií a doutníkov</li>
+        <li><i class="fas fa-shipping-fast icon"></i>Kamionista - prepravovanie materiálu a tovaru</li>
+        <li><i class="fas fa-bolt icon"></i>Opravár elektrického vedenia - údržba a opravy elektrických zariadení</li>
+        <li><i class="fas fa-user-shield icon"></i>Hliadač - ochrana areálu a majetku</li>
+      </ul>
+    </section>
 
-  <section id="contact">
-    <h2>Kontaktujte nás</h2>
-    <form action="#">
-      <label for="name">Meno</label>
-      <input type="text" id="name" name="name" required>
+    <section id="security">
+      <h2>Ochrana Areálu</h2>
+      <p>Poskytujeme špičkové služby na ochranu areálov, vrátane sledovania a monitorovania objektov, aby sme zaistili bezpečnosť a ochranu vášho majetku. Naši skúsení hliadači zabezpečujú stabilitu a spoľahlivosť, čím garantujeme istotu v každom momente.</p>
+    </section>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
+    <section id="contact">
+      <h2>Kontaktujte nás</h2>
+      <p>Ak máte záujem o niektorú z našich pracovných pozícií alebo potrebujete viac informácií o našich službách, kontaktujte nás na:</p>
+      <a href="mailto:ema.jasalova@post.ic"><i class="fas fa-envelope"></i> ema.jasalova@post.ic</a>
+      <a href="tel:508836"><i class="fas fa-phone"></i> 508836</a>
+    </section>
 
-      <label for="message">Správa</label>
-      <textarea id="message" name="message" required></textarea>
-
-      <button type="submit">Odoslať</button>
-    </form>
-  </section>
+  </div>
 
 </body>
 </html>
-
