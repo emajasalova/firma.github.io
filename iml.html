@@ -1,146 +1,168 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAMUS a RTech - Diagnostický program</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            padding: 20px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Predaj produktov - CAMUS & RTech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        h1 {
-            text-align: center;
-            color: #4CAF50;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      color: #333;
+      background: #f8f9fa;
+      line-height: 1.6;
+    }
 
-        .simulator {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 0 auto;
-        }
+    header {
+      text-align: center;
+      padding: 20px;
+      background: #333;
+      color: white;
+    }
 
-        .action {
-            margin-bottom: 20px;
-        }
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #d4af37;
+    }
 
-        .action label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #333;
+      padding: 10px;
+    }
 
-        .action input[type="range"] {
-            width: 100%;
-        }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
 
-        .result {
-            background-color: #e6f7e6;
-            border: 1px solid #4CAF50;
-            padding: 10px;
-            margin-top: 20px;
-            border-radius: 5px;
-            text-align: center;
-        }
+    nav ul li {
+      display: inline;
+    }
 
-        button {
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            font-weight: bold;
-        }
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      padding: 10px 15px;
+      transition: background 0.3s;
+    }
 
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    nav ul li a:hover {
+      background-color: #a6ce39;
+      border-radius: 5px;
+    }
+
+    .content {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 40px 30px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    section h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      color: #a6ce39;
+    }
+
+    .product-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .product-list ul li {
+      display: flex;
+      align-items: center;
+      background: #d4af37;
+      color: white;
+      padding: 20px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+
+    .product-list ul li i {
+      margin-right: 20px;
+    }
+
+    .product-list ul li span {
+      font-size: 1.2em;
+      margin-left: auto;
+    }
+
+    #contact {
+      text-align: center;
+      padding: 20px;
+      background: #f1f1f1;
+      border-top: 3px solid #d4af37;
+    }
+
+    #contact a {
+      display: block;
+      font-size: 1.2em;
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 5px 0;
+    }
+
+    #contact a:hover {
+      color: #d4af37;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Diagnostický Simulátor</h1>
-<div class="simulator">
+  <!-- Navigácia -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Domov</a></li>
+      <li><a href="#products">Naša Ponuka</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+    </ul>
+  </nav>
 
-    <div class="action">
-        <label for="ecu-map">Remap ECU výkonu</label>
-        <input type="range" id="ecu-map" min="0" max="100" value="50" oninput="updateECU()">
-        <p>Aktuálna hodnota: <span id="ecu-value">50</span>%</p>
-    </div>
+  <!-- Hlavička -->
+  <header>
+    <h1>Predaj produktov - CAMUS & RTech</h1>
+    <p>Vyberte si z našich kvalitných produktov na zabezpečenie a ochranu domácnosti alebo podnikania.</p>
+  </header>
 
-    <div class="action">
-        <label for="power-increase">Zvýšenie výkonu motora</label>
-        <input type="range" id="power-increase" min="0" max="50" value="0" oninput="updatePower()">
-        <p>Aktuálny výkon: <span id="power-value">0</span> kW</p>
-    </div>
+  <!-- Obsah stránky -->
+  <div class="content">
 
-    <div class="action">
-        <label for="torque-increase">Zvýšenie krútiaceho momentu</label>
-        <input type="range" id="torque-increase" min="0" max="100" value="0" oninput="updateTorque()">
-        <p>Aktuálny krútiaci moment: <span id="torque-value">0</span> Nm</p>
-    </div>
+    <section id="products" class="product-list">
+      <h2>Naša Ponuka</h2>
+      <ul>
+        <li><i class="fas fa-shield-alt"></i>Alarm do domácnosti <span>80 000 Kč</span></li>
+        <li><i class="fas fa-video"></i>Kamerový systém <span>500 000 Kč</span></li>
+        <li><i class="fas fa-bolt"></i>Výboje do taseru <span>9 000 Kč/kus</span></li>
+      </ul>
+    </section>
 
-    <button onclick="animateResults()">Zobraziť výsledky</button>
-
-    <div id="result" class="result" style="display: none;">
-        <h3>Výsledky diagnostiky:</h3>
-        <p>ECU remap výkonu: <span id="result-ecu">0</span>%</p>
-        <p>Výkon motora: <span id="result-power">0</span> kW</p>
-        <p>Krútiaci moment: <span id="result-torque">0</span> Nm</p>
-    </div>
-
-</div>
-
-<script>
-    function updateECU() {
-        const ecuValue = document.getElementById("ecu-map").value;
-        document.getElementById("ecu-value").innerText = ecuValue;
-    }
-
-    function updatePower() {
-        const powerValue = document.getElementById("power-increase").value;
-        document.getElementById("power-value").innerText = powerValue;
-    }
-
-    function updateTorque() {
-        const torqueValue = document.getElementById("torque-increase").value;
-        document.getElementById("torque-value").innerText = torqueValue;
-    }
-
-    function animateResults() {
-        const ecuTarget = parseInt(document.getElementById("ecu-map").value);
-        const powerTarget = parseInt(document.getElementById("power-increase").value);
-        const torqueTarget = parseInt(document.getElementById("torque-increase").value);
-
-        let ecuCurrent = 0;
-        let powerCurrent = 0;
-        let torqueCurrent = 0;
-
-        document.getElementById("result").style.display = "block";
-
-        const interval = setInterval(() => {
-            if (ecuCurrent < ecuTarget) ecuCurrent++;
-            if (powerCurrent < powerTarget) powerCurrent++;
-            if (torqueCurrent < torqueTarget) torqueCurrent++;
-
-            document.getElementById("result-ecu").innerText = ecuCurrent;
-            document.getElementById("result-power").innerText = powerCurrent;
-            document.getElementById("result-torque").innerText = torqueCurrent;
-
-            if (ecuCurrent >= ecuTarget && powerCurrent >= powerTarget && torqueCurrent >= torqueTarget) {
-                clearInterval(interval);
-            }
-        }, 30);  // Interval rýchlosti animácie
-    }
-</script>
+    <section id="contact">
+      <h2>Kontaktujte nás</h2>
+      <p>Ak máte záujem o niektorý z našich produktov, neváhajte nás kontaktovať:</p>
+      <a href="mailto:ema.jasalova@post.ic"><i class="fas fa-envelope"></i> ema.jasalova@post.ic</a>
+      <a href="tel:508836"><i class="fas fa-phone"></i> 508836</a>
+    </section>
+  </div>
 
 </body>
 </html>
