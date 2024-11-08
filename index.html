@@ -21,19 +21,44 @@
 
     header {
       text-align: center;
-      padding: 30px 20px;
+      padding: 20px;
       background: #333;
       color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
 
     header h1 {
-      font-size: 3em;
-      font-weight: bold;
-      margin: 15px 0;
+      font-size: 2.5em;
+      margin-bottom: 10px;
       color: #d4af37;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #333;
+      padding: 10px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li {
+      display: inline;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      padding: 10px 15px;
+      transition: background 0.3s;
+    }
+
+    nav ul li a:hover {
+      background-color: #a6ce39;
+      border-radius: 5px;
     }
 
     .logo-container {
@@ -49,17 +74,7 @@
       object-fit: contain;
     }
 
-    header p {
-      font-size: 1.2em;
-      font-weight: 300;
-      max-width: 700px;
-      margin: 15px auto;
-    }
-
     .content {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
       max-width: 1200px;
       margin: 20px auto;
       padding: 0 20px;
@@ -70,15 +85,11 @@
       background: white;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s;
-    }
-
-    section:hover {
-      transform: translateY(-5px);
+      margin-bottom: 20px;
     }
 
     section h2 {
-      font-size: 2.2em;
+      font-size: 2em;
       margin-bottom: 20px;
       text-transform: uppercase;
       color: #a6ce39;
@@ -86,30 +97,21 @@
 
     .job-list ul {
       list-style: none;
+      padding: 0;
     }
 
     .job-list ul li {
       display: flex;
       align-items: center;
-      font-size: 1.1em;
       background: #d4af37;
       color: white;
-      padding: 15px 20px;
+      padding: 15px;
       margin: 10px 0;
       border-radius: 5px;
-      position: relative;
     }
 
     .job-list ul li i {
       margin-right: 15px;
-      font-size: 1.5em;
-    }
-
-    .job-list ul li span {
-      font-size: 0.9em;
-      position: absolute;
-      right: 20px;
-      font-weight: bold;
     }
 
     #security h2, #camus-service h2 {
@@ -121,11 +123,6 @@
       padding: 20px;
       background: #f1f1f1;
       border-top: 3px solid #d4af37;
-    }
-
-    #contact h2 {
-      color: #a6ce39;
-      margin-bottom: 20px;
     }
 
     #contact a {
@@ -141,7 +138,6 @@
       color: #d4af37;
     }
 
-    /* Štýly pre tlačidlo na presmerovanie */
     .redirect-button {
       display: block;
       margin: 20px auto;
@@ -152,7 +148,6 @@
       text-align: center;
       text-decoration: none;
       border-radius: 5px;
-      width: fit-content;
       transition: background-color 0.3s ease;
     }
 
@@ -163,6 +158,18 @@
 </head>
 <body>
 
+  <!-- Navigácia -->
+  <nav>
+    <ul>
+      <li><a href="#jobs">Pracovní pozice</a></li>
+      <li><a href="#camus-service">CAMUS Servis</a></li>
+      <li><a href="#security">Ochrana Areálu</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+      <li><a href="iml.html">Predaj produktov</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hlavička -->
   <header>
     <div class="logo-container">
       <img src="https://i.imgur.com/t4ebvFu.png" alt="Logo CAMUS">
@@ -172,6 +179,7 @@
     <p>Profesionální pracovní příležitosti v oblasti logistiky, údržby a ochrany areálu. Spojení kvality a stability.</p>
   </header>
 
+  <!-- Obsah stránky -->
   <div class="content">
 
     <section id="jobs" class="job-list">
@@ -202,11 +210,11 @@
       <a href="mailto:ema.jasalova@post.ic"><i class="fas fa-envelope"></i> ema.jasalova@post.ic</a>
       <a href="tel:508836"><i class="fas fa-phone"></i> 508836</a>
     </section>
-
   </div>
 
-  <!-- Tlačidlo na presmerovanie na iml.html -->
-  <a href="iml.html" class="redirect-button">Prejsť</a>
+  <!-- Tlačidlo na presmerovanie na podstránku -->
+  <a href="iml.html" class="redirect-button">Prejsť na predaj produktov</a>
 
 </body>
 </html>
+
