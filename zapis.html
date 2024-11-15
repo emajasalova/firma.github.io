@@ -98,7 +98,7 @@
   <!-- Hlavný formulár -->
   <div class="container">
     <div class="header">
-      <img id="logo" src="https://via.placeholder.com/150" alt="Logo firmy">
+      <img id="logo" src="https://i.imgur.com/39Uy5LM.png" alt="Logo firmy">
       <h1>Zápisový protokol</h1>
     </div>
     <form id="entryForm">
@@ -158,13 +158,13 @@
       const imageData = canvas.toDataURL('image/png');
 
       // Posielanie na Discord cez Webhook
-      const webhookUrl = "TVOJA_DISCORD_WEBHOOK_URL";
+      const webhookUrl = "https://discord.com/api/webhooks/1307012549946114130/qQS_5h7i34Ml3YeA8Xltbfk9AKwc8h91PRehHW11BCIkTYpuve-_DOCNqdQF-AWGbiGo";
       const payload = {
         username: "Protokol Bot",
         avatar_url: "https://via.placeholder.com/150",
         embeds: [
           {
-            title: "Nový zápis",
+            title: "Zápis úprav CAMUS",
             description: `**Meno:** ${data.Meno}\n**Zápis:** ${data.Zápis}\n**Dátum:** ${data.Dátum}\n**SPZ:** ${data.SPZ}`,
             color: 3447003
           }
