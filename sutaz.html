@@ -1,27 +1,115 @@
-<script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Súťažná stránka</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      margin: 20px 0;
+    }
+    .cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .card {
+      background: white;
+      border: 2px solid #ccc;
+      padding: 20px;
+      border-radius: 8px;
+      width: 200px;
+      height: 150px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .card:hover {
+      border-color: #00aaff;
+    }
+    .form-container {
+      margin-top: 30px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 200px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #00aaff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    button:hover {
+      background-color: #007acc;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Súťažná stránka</h1>
+  <div class="cards">
+    <div class="card">🏆 Vyhraj až do 200.000 Kč</div>
+    <div class="card">🏆 Vyhraj až do 400.000 Kč</div>
+    <div class="card">🏆 Vyhraj až do 600.000 Kč</div>
+    <div class="card">🚗 Vyhraj Auto Evo IX s polepom</div>
+    <div class="card">💰 Vyhraj až do 700.000 Kč</div>
+  </div>
+
+  <div class="form-container">
+    <h2>Zadaj svoj kód</h2>
+    <input type="text" id="code" placeholder="Zadajte váš kód">
+    <button id="submit">Odoslať</button>
+  </div>
+
+  <div class="result" id="result"></div>
+
+  <script>
     const apiUrl = "https://674600bf512ddbd807fa7e9e.mockapi.io/etsst";
     const validCode = "vyhravatecamuspozvanku";
 
     document.getElementById("submit").addEventListener("click", async () => {
-        const code = document.getElementById("code").value.trim();
-        const result = document.getElementById("result");
+      const code = document.getElementById("code").value.trim();
+      const result = document.getElementById("result");
 
-        if (!code) {
-            result.textContent = "Zadajte kód!";
-            return;
+      if (!code) {
+        result.textContent = "Zadajte kód!";
+        return;
+      }
+
+      try {
+        // Overenie, či kód existuje v MockAPI
+        const response = await fetch(${apiUrl}?code=${code});
+        const data = await response.json();
+
+        if (data.length === 0) {
+          result.textContent = "Kód neexistuje alebo už bol použitý!";
+          return;
         }
 
-        try {
-            // Overenie, či kód existuje v MockAPI
-            const response = await fetch(`${apiUrl}?code=${code}`);
-            const data = await response.json();
-
-            if (data.length === 0) {
-                result.textContent = "Kód neexistuje alebo už bol použitý!";
-                return;
-            }
-
-            // Generovanie náhodnej výhry
+        // Generovanie náhodnej výhry
 const prizes = [
     "500 Kč", "1.000 Kč", "1.500 Kč", "2.000 Kč", "2.500 Kč", 
     "3.000 Kč", "3.500 Kč", "4.000 Kč", "4.500 Kč", "5.000 Kč",
@@ -48,29 +136,29 @@ const probabilities = [
     0.0015, 0.0015, 0.001, 0.001, 0.0008, 
     0.0007, 0.0005, 0.0003, 0.0002, 0.0001 // Najnižšia šanca na auto
 ];
+        const random = Math.random();
+        let cumulativeProbability = 0;
+        let prize = "Žiadna výhra";
 
-            const random = Math.random();
-            let cumulativeProbability = 0;
-            let prize = "Žiadna výhra";
-
-            for (let i = 0; i < prizes.length; i++) {
-                cumulativeProbability += probabilities[i];
-                if (random <= cumulativeProbability) {
-                    prize = prizes[i];
-                    break;
-                }
-            }
-
-            // Aktualizácia výsledku a mazanie použitého kódu
-            const id = data[0].id; // ID záznamu v MockAPI
-            await fetch(`${apiUrl}/${id}`, {
-                method: "DELETE",
-            });
-
-            result.textContent = `Gratulujeme! Vyhrali ste: ${prize}`;
-        } catch (error) {
-            result.textContent = "Došlo k chybe pri spracovaní požiadavky!";
+        for (let i = 0; i < prizes.length; i++) {
+          cumulativeProbability += probabilities[i];
+          if (random <= cumulativeProbability) {
+            prize = prizes[i];
+            break;
+          }
         }
-    });
-</script>
 
+        // Aktualizácia výsledku a mazanie použitého kódu
+        const id = data[0].id; // ID záznamu v MockAPI
+        await fetch(${apiUrl}/${id}, {
+          method: "DELETE",
+        });
+
+        result.textContent = Gratulujeme! Vyhrali ste: ${prize};
+      } catch (error) {
+        result.textContent = "Došlo k chybe pri spracovaní požiadavky!";
+      }
+    });
+  </script>
+</body>
+</html>
