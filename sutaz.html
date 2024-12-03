@@ -109,7 +109,7 @@
           return;
         }
 
-        // Generovanie náhodnej výhry na základe pravdepodobnosti
+        // Generovanie náhodnej výhry
         const prizes = [
           "500 Kč", "1.000 Kč", "1.500 Kč", "2.000 Kč", "2.500 Kč", 
           "3.000 Kč", "3.500 Kč", "4.000 Kč", "4.500 Kč", "5.000 Kč",
@@ -123,36 +123,50 @@
           "400.000 Kč", "500.000 Kč", "600.000 Kč", "700.000 Kč", "Auto Evo IX s polepom"
         ];
 
+        // Pravdepodobnosti pre jednotlivé výhry
         const probabilities = [
           0.1, 0.09, 0.08, 0.08, 0.07, 
           0.06, 0.06, 0.05, 0.05, 0.04, 
-          0.04, 0.03, 0.03, 0.025, 0.025, 
+          0.04, 0.03, 0.03, 0.06, 0.025, 
           0.02, 0.02, 0.02, 0.015, 0.015,
           0.01, 0.01, 0.01, 0.009, 0.009, 
           0.008, 0.008, 0.007, 0.007, 0.006,
           0.005, 0.005, 0.004, 0.004, 0.003,
           0.003, 0.0025, 0.0025, 0.002, 0.002,
-          0.0015, 0.0015, 0.001, 0.001, 0.0008, 
-          0.0007, 0.0005, 0.0003, 0.0002, 0.0001 // Najnižšia šanca na auto
+          0.0015, 0.0015, 0.001, 0.0001
         ];
 
-        // Generovanie náhodného indexu na výber ceny
-        const totalProbability = probabilities.reduce((acc, prob) => acc + prob, 0);
-        let randomValue = Math.random() * totalProbability;
-        let selectedPrizeIndex = 0;
+        const random = Math.random();
+        let cumulativeProbability = 0;
+        let prize = "Žiadna výhra";
 
-        for (let i = 0; i < probabilities.length; i++) {
-          randomValue -= probabilities[i];
-          if (randomValue <= 0) {
-            selectedPrizeIndex = i;
+        for (let i = 0; i < prizes.length; i++) {
+          cumulativeProbability += probabilities[i];
+          if (random <= cumulativeProbability) {
+            prize = prizes[i];
             break;
           }
         }
 
-        // Zobrazenie výsledku
-        result.textContent = `Vyhrali ste: ${prizes[selectedPrizeIndex]}`;
+        // Získanie ID záznamu v MockAPI a pridanie výhry
+        const id = data[0].id; // ID záznamu v MockAPI
+
+        // Aktualizácia záznamu o kóde
+        await fetch(`${apiUrl}/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            ...data[0], // zachováme existujúce údaje
+            prize: prize, // pridáme výhru
+            used: true // označíme kód ako použitý
+          })
+        });
+
+        result.textContent = `Gratulujeme! Vyhrali ste: ${prize}`;
       } catch (error) {
-        result.textContent = "Chyba pri komunikácii so serverom.";
+        result.textContent = "Došlo k chybe pri spracovaní požiadavky!";
       }
     });
   </script>
