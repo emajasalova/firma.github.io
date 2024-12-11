@@ -17,6 +17,7 @@
       color: #333;
       background: #f8f9fa;
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
     header {
@@ -24,12 +25,21 @@
       padding: 20px;
       background: #333;
       color: white;
+      position: relative;
+      overflow: hidden;
     }
 
     header h1 {
-      font-size: 2.5em;
+      font-size: 3em;
       margin-bottom: 10px;
       color: #d4af37;
+      animation: fadeIn 2s ease-out;
+    }
+
+    header p {
+      animation: fadeIn 2s ease-out 0.5s;
+      opacity: 0;
+      animation-fill-mode: forwards;
     }
 
     nav {
@@ -37,16 +47,15 @@
       justify-content: center;
       background-color: #333;
       padding: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     nav ul {
       list-style: none;
       display: flex;
       gap: 20px;
-    }
-
-    nav ul li {
-      display: inline;
     }
 
     nav ul li a {
@@ -61,6 +70,14 @@
       border-radius: 5px;
     }
 
+    .parallax {
+      background: url('https://i.imgur.com/t4ebvFu.png') no-repeat center;
+      background-size: cover;
+      height: 300px;
+      position: relative;
+      z-index: -1;
+    }
+
     .logo-container {
       display: flex;
       justify-content: center;
@@ -72,6 +89,7 @@
       width: 100px;
       height: auto;
       object-fit: contain;
+      animation: bounce 2s infinite alternate;
     }
 
     .content {
@@ -86,6 +104,9 @@
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
     }
 
     section h2 {
@@ -108,6 +129,12 @@
       padding: 15px;
       margin: 10px 0;
       border-radius: 5px;
+      transform: scale(1);
+      transition: transform 0.3s;
+    }
+
+    .job-list ul li:hover {
+      transform: scale(1.05);
     }
 
     .job-list ul li i {
@@ -154,6 +181,21 @@
     .redirect-button:hover {
       background-color: #a6ce39;
     }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
   </style>
 </head>
 <body>
@@ -178,6 +220,9 @@
     <h1>CAMUS & RTech</h1>
     <p>Profesionální pracovní příležitosti v oblasti logistiky, údržby a ochrany areálu. Spojení kvality a stability.</p>
   </header>
+
+  <!-- Parallax sekcia -->
+  <div class="parallax"></div>
 
   <!-- Obsah stránky -->
   <div class="content">
@@ -215,6 +260,14 @@
   <!-- Tlačidlo na presmerovanie na podstránku -->
   <a href="iml.html" class="redirect-button">Prejsť na predaj produktov</a>
 
+  <script>
+    // Parallax efekt
+    window.addEventListener('scroll', () => {
+      const parallax = document.querySelector('.parallax');
+      const offset = window.pageYOffset;
+      parallax.style.backgroundPositionY = offset * 0.5 + 'px';
+    });
+  </script>
+
 </body>
 </html>
-
