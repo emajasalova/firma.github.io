@@ -66,6 +66,29 @@
       margin-top: 20px;
       font-size: 18px;
     }
+    .winner-list {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+    .winner-list h3 {
+      margin-bottom: 15px;
+    }
+    .winner-list ul {
+      list-style: none;
+      padding: 0;
+    }
+    .winner-list ul li {
+      padding: 8px;
+      background-color: #f9f9f9;
+      border-bottom: 1px solid #ccc;
+    }
   </style>
 </head>
 <body>
@@ -79,22 +102,31 @@
   </div>
 
   <div class="form-container">
-    <h2>Zadaj svoj kód</h2>
+    <h2>Zadajte svoje meno a kód</h2>
+    <input type="text" id="name" placeholder="Zadajte vaše meno">
     <input type="text" id="code" placeholder="Zadajte váš kód">
     <button id="submit">Odoslať</button>
   </div>
 
   <div class="result" id="result"></div>
 
+  <div class="winner-list" id="winnerList">
+    <h3>Výhercovia</h3>
+    <ul id="winnerListContent">
+      <!-- Zoznam výhercov sa bude dynamicky generovať tu -->
+    </ul>
+  </div>
+
 <script>
   const apiUrl = "https://674600bf512ddbd807fa7e9e.mockapi.io/etsst";
-
+  
   document.getElementById("submit").addEventListener("click", async () => {
+    const name = document.getElementById("name").value.trim();
     const code = document.getElementById("code").value.trim();
     const result = document.getElementById("result");
 
-    if (!code) {
-      result.textContent = "Zadajte kód!";
+    if (!name || !code) {
+      result.textContent = "Prosím, zadajte svoje meno a kód!";
       return;
     }
 
@@ -114,17 +146,13 @@
         "5 000 Kč", "10 000 Kč", "13 000 Kč", "15 000 Kč", "18 000 Kč", 
         "19 500 Kč", "22 000 Kč", "30 000 Kč", "26 000 Kč", "35 000 Kč",
         "37 000 Kč", "40 000 Kč", "42 000 Kč", "39 000 Kč", "50 000 Kč",
- 
       ];
 
-      // Pravdepodobnosti pre jednotlivé výhry
-const probabilities = [
-  0.1, 0.1, 0.1, 0.1, 0.1, 
-  0.1, 0.1, 0.1, 0.1, 0.1, 
-  0.1, 0.1, 0.1, 0.1, 0.1
-
-];
-
+      const probabilities = [
+        0.1, 0.1, 0.1, 0.1, 0.1, 
+        0.1, 0.1, 0.1, 0.1, 0.1, 
+        0.1, 0.1, 0.1, 0.1, 0.1
+      ];
 
       const random = Math.random();
       let cumulativeProbability = 0;
@@ -150,11 +178,18 @@ const probabilities = [
         body: JSON.stringify({
           ...data[0], // zachováme existujúce údaje
           prize: prize, // pridáme výhru
-          used: true // označíme kód ako použitý
+          used: true, // označíme kód ako použitý
+          name: name // uložíme meno výhercu
         })
       });
 
-      result.textContent = `Gratulujeme! Vyhrali ste: ${prize}`;
+      result.textContent = `Gratulujeme, ${name}! Vyhrali ste: ${prize}`;
+
+      // Pridáme výhercu do zoznamu
+      const winnerListContent = document.getElementById("winnerListContent");
+      const newWinnerItem = document.createElement("li");
+      newWinnerItem.textContent = `${name} - ${prize}`;
+      winnerListContent.appendChild(newWinnerItem);
     } catch (error) {
       result.textContent = "Došlo k chybe pri spracovaní požiadavky!";
     }
