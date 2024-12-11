@@ -94,11 +94,11 @@
 <body>
   <h1>Súťažná stránka</h1>
   <div class="cards">
-    <div class="card">🏆 Vyhraj až do 200.000 Kč</div>
-    <div class="card">🏆 Vyhraj až do 400.000 Kč</div>
-    <div class="card">🏆 Vyhraj až do 600.000 Kč</div>
+    <div class="card">Náhodné premie až do 20.000 Kč Kč</div>
+    <div class="card">🏆 Náhodné premie až do 40.000 Kč Kč</div>
+    <div class="card">🏆 Náhodné premie až do 50.000 Kč</div>
     <div class="card">🚗 Vyhraj Auto Evo IX s polepom</div>
-    <div class="card">💰 Vyhraj až do 700.000 Kč</div>
+    <div class="card">💰 Náhodné premie až do 70.000 Kč</div>
   </div>
 
   <div class="form-container">
@@ -119,7 +119,30 @@
 
 <script>
   const apiUrl = "https://674600bf512ddbd807fa7e9e.mockapi.io/etsst";
-  
+
+  // Funkcia na načítanie výhercov pri načítaní stránky
+  async function loadWinners() {
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      const winnerListContent = document.getElementById("winnerListContent");
+      winnerListContent.innerHTML = ""; // Vymažeme existujúci zoznam
+
+      data.forEach(winner => {
+        if (winner.used) {
+          const newWinnerItem = document.createElement("li");
+          newWinnerItem.textContent = `${winner.name} - ${winner.prize}`;
+          winnerListContent.appendChild(newWinnerItem);
+        }
+      });
+    } catch (error) {
+      console.error("Chyba pri načítaní výhercov:", error);
+    }
+  }
+
+  // Načítanie výhercov pri načítaní stránky
+  window.onload = loadWinners;
+
   document.getElementById("submit").addEventListener("click", async () => {
     const name = document.getElementById("name").value.trim();
     const code = document.getElementById("code").value.trim();
@@ -183,7 +206,7 @@
         })
       });
 
-      result.textContent = `Gratulujeme, ${name}! Vyhrali ste: ${prize}`;
+      result.textContent = `Gratulujeme, ${name}! Získavate premiu: ${prize}`;
 
       // Pridáme výhercu do zoznamu
       const winnerListContent = document.getElementById("winnerListContent");
