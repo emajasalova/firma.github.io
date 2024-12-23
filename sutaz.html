@@ -34,37 +34,9 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
     }
     .card:hover {
       border-color: #00aaff;
-    }
-    .form-container {
-      margin-top: 30px;
-    }
-    input[type="text"] {
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      width: 200px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      color: white;
-      background-color: #00aaff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-left: 10px;
-    }
-    button:hover {
-      background-color: #007acc;
-    }
-    .result {
-      margin-top: 20px;
-      font-size: 18px;
     }
     .winner-list {
       margin-top: 30px;
@@ -89,26 +61,23 @@
       background-color: #f9f9f9;
       border-bottom: 1px solid #ccc;
     }
+    .countdown {
+      font-size: 20px;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
   <h1>Súťažná stránka</h1>
   <div class="cards">
-    <div class="card">Náhodné premie až do 20.000 Kč Kč</div>
-    <div class="card">🏆 Náhodné premie až do 40.000 Kč Kč</div>
+    <div class="card">Náhodné premie až do 20.000 Kč</div>
+    <div class="card">🏆 Náhodné premie až do 40.000 Kč</div>
     <div class="card">🏆 Náhodné premie až do 50.000 Kč</div>
     <div class="card">🚗 Vyhraj Auto Evo IX s polepom</div>
     <div class="card">💰 Náhodné premie až do 70.000 Kč</div>
   </div>
 
-  <div class="form-container">
-    <h2>Zadajte svoje meno a kód</h2>
-    <input type="text" id="name" placeholder="Zadajte vaše meno">
-    <input type="text" id="code" placeholder="Zadajte váš kód">
-    <button id="submit">Odoslať</button>
-  </div>
-
-  <div class="result" id="result"></div>
+  <div class="countdown" id="countdown">Odpočet: 24:00:00</div>
 
   <div class="winner-list" id="winnerList">
     <h3>Rozpis premí</h3>
@@ -120,103 +89,78 @@
 <script>
   const apiUrl = "https://674600bf512ddbd807fa7e9e.mockapi.io/etsst";
 
-  // Funkcia na načítanie výhercov pri načítaní stránky
+  // Funkcia na generovanie náhodnej sumy
+  function generateRandomPrize() {
+    return Math.floor(Math.random() * 35001); // 0 - 35 000
+  }
+
+  // Funkcia na aktualizáciu odmien v MockAPI
+  async function distributeRewards() {
+    try {
+      const response = await fetch(apiUrl);
+      const users = await response.json();
+
+      for (const user of users) {
+        const prize = generateRandomPrize();
+        await fetch(`${apiUrl}/${user.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...user, prize: prize }),
+        });
+      }
+      loadWinners();
+    } catch (error) {
+      console.error("Chyba pri rozdeľovaní odmien:", error);
+    }
+  }
+
+  // Funkcia na zobrazenie výhercov
   async function loadWinners() {
     try {
       const response = await fetch(apiUrl);
-      const data = await response.json();
+      const users = await response.json();
       const winnerListContent = document.getElementById("winnerListContent");
-      winnerListContent.innerHTML = ""; // Vymažeme existujúci zoznam
+      winnerListContent.innerHTML = "";
 
-      data.forEach(winner => {
-        if (winner.used) {
-          const newWinnerItem = document.createElement("li");
-          newWinnerItem.textContent = `${winner.name} - ${winner.prize}`;
-          winnerListContent.appendChild(newWinnerItem);
-        }
+      users.forEach((user) => {
+        const newWinnerItem = document.createElement("li");
+        newWinnerItem.textContent = `${user.name} - ${user.prize} Kč`;
+        winnerListContent.appendChild(newWinnerItem);
       });
     } catch (error) {
       console.error("Chyba pri načítaní výhercov:", error);
     }
   }
 
+  // Funkcia na odpočet času
+  function startCountdown() {
+    const countdownElement = document.getElementById("countdown");
+    let timeLeft = 24 * 60 * 60; // 24 hodín v sekundách
+
+    const interval = setInterval(() => {
+      const hours = Math.floor(timeLeft / 3600);
+      const minutes = Math.floor((timeLeft % 3600) / 60);
+      const seconds = timeLeft % 60;
+      countdownElement.textContent = `Odpočet: ${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+      if (timeLeft === 0) {
+        clearInterval(interval);
+        distributeRewards();
+        timeLeft = 24 * 60 * 60; // Reset odpočetu
+        startCountdown();
+      } else {
+        timeLeft--;
+      }
+    }, 1000);
+  }
+
   // Načítanie výhercov pri načítaní stránky
-  window.onload = loadWinners;
-
-  document.getElementById("submit").addEventListener("click", async () => {
-    const name = document.getElementById("name").value.trim();
-    const code = document.getElementById("code").value.trim();
-    const result = document.getElementById("result");
-
-    if (!name || !code) {
-      result.textContent = "Prosím, zadajte svoje meno a kód!";
-      return;
-    }
-
-    try {
-      // Overenie, či kód existuje v MockAPI
-      const response = await fetch(`${apiUrl}?code=${code}`);
-      const data = await response.json();
-
-      // Skontrolujeme, či je kód platný a ešte nebol použitý
-      if (data.length === 0 || data[0].used) {
-        result.textContent = "Kód neexistuje alebo už bol použitý!";
-        return;
-      }
-
-      // Generovanie náhodnej výhry
-      const prizes = [
-        "15 000 Kč", "20 000 Kč", "35 000 Kč", "25 000 Kč", "24  000 Kč", 
-        "25 500 Kč", "22 000 Kč", "30 000 Kč", "26 000 Kč", "35 000 Kč",
-        "37 000 Kč", "40 000 Kč", "42 000 Kč", "65 000 Kč", "80 000 Kč",
-      ];
-
-      const probabilities = [
-        0.1, 0.1, 0.1, 0.1, 0.1, 
-        0.1, 0.1, 0.1, 0.1, 0.1, 
-        0.1, 0.1, 0.1, 0.1, 0.1
-      ];
-
-      const random = Math.random();
-      let cumulativeProbability = 0;
-      let prize = "Žiadna výhra";
-
-      for (let i = 0; i < prizes.length; i++) {
-        cumulativeProbability += probabilities[i];
-        if (random <= cumulativeProbability) {
-          prize = prizes[i];
-          break;
-        }
-      }
-
-      // Získanie ID záznamu v MockAPI a pridanie výhry
-      const id = data[0].id; // ID záznamu v MockAPI
-
-      // Aktualizácia záznamu o kóde, označíme ho ako použitý
-      await fetch(`${apiUrl}/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          ...data[0], // zachováme existujúce údaje
-          prize: prize, // pridáme výhru
-          used: true, // označíme kód ako použitý
-          name: name // uložíme meno výhercu
-        })
-      });
-
-      result.textContent = `Gratulujeme, ${name}! Získavate premiu: ${prize}`;
-
-      // Pridáme výhercu do zoznamu
-      const winnerListContent = document.getElementById("winnerListContent");
-      const newWinnerItem = document.createElement("li");
-      newWinnerItem.textContent = `${name} - ${prize}`;
-      winnerListContent.appendChild(newWinnerItem);
-    } catch (error) {
-      result.textContent = "Došlo k chybe pri spracovaní požiadavky!";
-    }
-  });
+  window.onload = () => {
+    loadWinners();
+    startCountdown();
+  };
 </script>
 
 </body>
