@@ -87,81 +87,83 @@
   </div>
 
 <script>
-  const apiUrl = "https://674600bf512ddbd807fa7e9e.mockapi.io/etsst";
+  const apiUrl = "https://674600bf512ddbd807fa7e9e.mockapi.io/etsst"; // API adresa
+  let countdownTime = 24 * 60 * 60; // Výchozí čas (24 hodín v sekundách)
 
-  // Funkcia na generovanie náhodnej sumy
-  function generateRandomPrize() {
-    return Math.floor(Math.random() * 35001); // 0 - 35 000
-  }
-
-  // Funkcia na aktualizáciu odmien v MockAPI
-  async function distributeRewards() {
+  // Funkcia na načítanie odpočtu z MockAPI
+  async function loadCountdown() {
     try {
-      const response = await fetch(apiUrl);
-      const users = await response.json();
+      const response = await fetch(`${apiUrl}/countdown`);
+      const data = await response.json();
 
-      for (const user of users) {
-        const prize = generateRandomPrize();
-        await fetch(`${apiUrl}/${user.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ...user, prize: prize }),
-        });
+      if (data && data.remainingTime !== undefined) {
+        countdownTime = data.remainingTime; // Nastav aktuálny čas odpočtu
+      } else {
+        await saveCountdown(countdownTime); // Ak čas neexistuje, ulož výchozí čas
       }
-      loadWinners();
     } catch (error) {
-      console.error("Chyba pri rozdeľovaní odmien:", error);
+      console.error("Chyba pri načítaní odpočtu:", error);
     }
   }
 
-  // Funkcia na zobrazenie výhercov
-  async function loadWinners() {
+  // Funkcia na uloženie odpočtu do MockAPI
+  async function saveCountdown(time) {
     try {
-      const response = await fetch(apiUrl);
-      const users = await response.json();
-      const winnerListContent = document.getElementById("winnerListContent");
-      winnerListContent.innerHTML = "";
-
-      users.forEach((user) => {
-        const newWinnerItem = document.createElement("li");
-        newWinnerItem.textContent = `${user.name} - ${user.prize} Kč`;
-        winnerListContent.appendChild(newWinnerItem);
+      await fetch(`${apiUrl}/countdown`, {
+        method: "PUT", // Update existujúceho záznamu
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ remainingTime: time }),
       });
     } catch (error) {
-      console.error("Chyba pri načítaní výhercov:", error);
+      console.error("Chyba pri ukladaní odpočtu:", error);
     }
   }
 
   // Funkcia na odpočet času
   function startCountdown() {
     const countdownElement = document.getElementById("countdown");
-    let timeLeft = 24 * 60 * 60; // 24 hodín v sekundách
 
-    const interval = setInterval(() => {
-      const hours = Math.floor(timeLeft / 3600);
-      const minutes = Math.floor((timeLeft % 3600) / 60);
-      const seconds = timeLeft % 60;
-      countdownElement.textContent = `Odpočet: ${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    const interval = setInterval(async () => {
+      const hours = Math.floor(countdownTime / 3600);
+      const minutes = Math.floor((countdownTime % 3600) / 60);
+      const seconds = countdownTime % 60;
 
-      if (timeLeft === 0) {
+      countdownElement.textContent = `Odpočet: ${hours
+        .toString()
+        .padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+      if (countdownTime <= 0) {
         clearInterval(interval);
-        distributeRewards();
-        timeLeft = 24 * 60 * 60; // Reset odpočetu
-        startCountdown();
+        distributeRewards(); // Rozdeľ odmeny
+        countdownTime = 24 * 60 * 60; // Resetuj na 24 hodín
+        await saveCountdown(countdownTime); // Ulož nový čas
+        startCountdown(); // Začni znova
       } else {
-        timeLeft--;
+        countdownTime--;
+        if (countdownTime % 60 === 0) {
+          // Každú minútu ulož stav
+          await saveCountdown(countdownTime);
+        }
       }
     }, 1000);
   }
 
+  // Funkcia na rozdelenie odmien (demo účely)
+  async function distributeRewards() {
+    console.log("Odmeny boli rozdelené!");
+  }
+
   // Načítanie výhercov pri načítaní stránky
-  window.onload = () => {
-    loadWinners();
-    startCountdown();
+  window.onload = async () => {
+    await loadCountdown(); // Načítaj odpočet
+    startCountdown(); // Spusti odpočet
   };
 </script>
 
 </body>
 </html>
+
