@@ -205,52 +205,66 @@
     </div>
   </div>
 
-  <script>
-    document.getElementById('questionnaire-form').addEventListener('submit', function(event) {
-      event.preventDefault();
+<script>
+  document.getElementById('questionnaire-form').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-      const answers = {
-        question1: document.querySelector('input[name="question1"]:checked')?.value,
-        question2: document.querySelector('input[name="question2"]:checked')?.value,
-        question3: document.querySelector('input[name="question3"]:checked')?.value,
-        question4: document.querySelector('input[name="question4"]:checked')?.value,
-        question5: document.querySelector('input[name="question5"]:checked')?.value,
-        question6: document.querySelector('input[name="question6"]:checked')?.value,
-      };
+    const answers = {
+      question1: document.querySelector('input[name="question1"]:checked')?.value,
+      question2: document.querySelector('input[name="question2"]:checked')?.value,
+      question3: document.querySelector('input[name="question3"]:checked')?.value,
+      question4: document.querySelector('input[name="question4"]:checked')?.value,
+      question5: document.querySelector('input[name="question5"]:checked')?.value,
+      question6: document.querySelector('input[name="question6"]:checked')?.value,
+    };
 
-      const name = document.getElementById('name').value;
-      const phone = document.getElementById('phone').value;
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
 
-      let resultText = "Formulář odeslán. Výsledek:\n";
-      let score = 0;
+    // Validácia
+    if (!name || !phone || Object.values(answers).includes(undefined)) {
+      alert("Prosím, vyplňte všetky otázky a polia formulára.");
+      return;
+    }
 
-      if (answers.question1 === 'B') score++;
-      if (answers.question2 === 'C') score++;
-      if (answers.question3 === 'A') score++;
-      if (answers.question4 === 'A') score++;
-      if (answers.question5 === 'C') score++;
-      if (answers.question6 === 'A') score++;
+    let resultText = "Formulář odeslán. Výsledek:\n";
+    let score = 0;
 
-      const passed = score >= 5;
+    if (answers.question1 === 'B') score++;
+    if (answers.question2 === 'C') score++;
+    if (answers.question3 === 'A') score++;
+    if (answers.question4 === 'A') score++;
+    if (answers.question5 === 'C') score++;
+    if (answers.question6 === 'A') score++;
 
-      resultText += `Celkové skóre: ${score}/6\n`;
-      resultText += passed ? "Prešiel!" : "Neprešiel!";
+    const passed = score >= 5;
 
-      const webhookUrl = "https://discord.com/api/webhooks/1307006285572739224/sY0EZqxAbYaP2ZQwfCkmzhtbKYqMIgQgYc9qn9bZzN2L_YwWhJzm8UjsCAr-rMl6DJIN";
-      fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          content: `Formulár odoslaný: ${passed ? "Prešiel" : "Neprešiel"} - Meno: ${name} - Telefón: ${phone}`
-        })
-      });
+    resultText += `Celkové skóre: ${score}/6\n`;
+    resultText += passed ? "Prešiel!" : "Neprešiel!";
 
-      document.getElementById('result-text').textContent = resultText;
-      document.getElementById('result').style.display = 'block';
+    const webhookUrl = "https://discord.com/api/webhooks/1307006285572739224/sY0EZqxAbYaP2ZQwfCkmzhtbKYqMIgQgYc9qn9bZzN2L_YwWhJzm8UjsCAr-rMl6DJIN";
+
+    // Poslanie na webhook
+    fetch(webhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        content: `Formulár odoslaný: ${passed ? "Prešiel" : "Neprešiel"} - Meno: ${name} - Telefón: ${phone}`
+      })
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error("Odoslanie na Discord webhook zlyhalo.");
+      }
+    }).catch(error => {
+      console.error("Chyba pri odosielaní na Discord webhook:", error);
     });
-  </script>
+
+    document.getElementById('result-text').textContent = resultText;
+    document.getElementById('result').style.display = 'block';
+  });
+</script>
 
 </body>
 </html>
