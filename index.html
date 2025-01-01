@@ -137,11 +137,11 @@
   <!-- Navigácia -->
   <nav>
     <ul>
-      <li><a href="#">Premie</a></li>
-      <li><a href="#">CAMUS Servis</a></li>
-      <li><a href="#">Zapis Odtahu</a></li>
-      <li><a href="#">Zapis Mechanikú</a></li>
-      <li><a href="#">Predaj produktov</a></li>
+       <li><a href="#camus-service">Premie</a></li>
+      <li><a href="#camus-service">CAMUS Servis</a></li>
+      <li><a href="etl.html">Zapis Odtahu</a></li>
+      <li><a href="zapis.html">Zapis Mechanikú</a></li>
+      <li><a href="iml.html">Predaj produktov</a></li>
     </ul>
   </nav>
 
@@ -165,25 +165,36 @@
       <label for="phone">Telefónne číslo:</label>
       <input type="tel" id="phone" name="phone" required><br>
 
-      <label>1. Jaké máte zkušenosti v oblasti logistiky?</label><br>
-      <input type="radio" name="question1" value="A"> A. Mám rozsáhlé zkušenosti<br>
-      <input type="radio" name="question1" value="B"> B. Mám základní zkušenosti<br>
-      <input type="radio" name="question1" value="C"> C. Nemám žádné zkušenosti<br>
+      <label>1. Ako by ste reagovali, ak by ste dostali nejasný pokyn alebo úlohu?</label><br>
+      <input type="radio" name="question1" value="A"> A. Pokúsil by som sa úlohu zvládnuť podľa svojho najlepšieho úsudku.<br>
+      <input type="radio" name="question1" value="B"> B. Rýchlo by som sa pýtal na vysvetlenie, aby som sa uistil, že to urobím správne.<br>
+      <input type="radio" name="question1" value="C"> C. Zostal by som ticho a dúfal, že to vyjde.<br>
 
-      <label>2. Jaký je váš jazykový základ?</label><br>
-      <input type="radio" name="question2" value="A"> A. Pokročilý<br>
-      <input type="radio" name="question2" value="B"> B. Středně pokročilý<br>
-      <input type="radio" name="question2" value="C"> C. Začátečník<br>
+      <label>2. Ako sa cítite pri práci v tíme, kde máte rôzne názory s kolegami?</label><br>
+      <input type="radio" name="question2" value="A"> A.Mám tendenciu byť dominantný a presadiť svoj názor.<br>
+      <input type="radio" name="question2" value="B"> B.Snažím sa udržať pokoj a nechám ostatných rozhodnúť.<br>
+      <input type="radio" name="question2" value="C"> C.Snažím sa nájsť spoločnú reč a dohodnúť sa na riešení.<br>
 
-      <label>3. Můžete pracovat v noci?</label><br>
-      <input type="radio" name="question3" value="A"> A. Ano<br>
-      <input type="radio" name="question3" value="B"> B. Ne<br>
+      <label>3. Ako by ste reagovali, keby ste dostali negatívnu spätnú väzbu na svoju prácu?</label><br>
+      <input type="radio" name="question3" value="A"> A. Zoberiem si to k srdcu a pokúsim sa zlepšiť.<br>
+      <input type="radio" name="question3" value="B"> B.Pokúsim sa objasniť, čo sa stalo, a pokračovať ďalej.<br>
+      <input type="radio" name="question3" value="C"> C.Mám tendenciu brániť svoje rozhodnutia a neprijať kritiku.<br>
 
       <label>4. Jaké jsou vaše silné stránky?</label><br>
       <input type="radio" name="question4" value="A"> A. Rychlost a preciznost<br>
       <input type="radio" name="question4" value="B"> B. Týmová práce<br>
       <input type="radio" name="question4" value="C"> C. Technické dovednosti<br>
 
+      <label>5. Aký je váš postoj k práci v prípade, že sa objavia nepredvídané okolnosti alebo zmena plánu?</label><br>
+      <input type="radio" name="question5" value="A"> A. Chcem mať jasný plán, nemam rád stres.<br>
+      <input type="radio" name="question5" value="B"> B. Zmena ma môže stresovať a potrebujem viac času na prispôsobenie.<br>
+      <input type="radio" name="question5" value="C"> C.  Prispôsobím sa a upravím plán podľa situácie.<br>
+      
+      <label>6.Aké sú vaše najväčšie predpoklady pre to, aby ste sa stali úspešným členom tímu?</label><br>
+      <input type="radio" name="question6" value="A"> A. Odpovednosť a sústredenie sa na úlohy..<br>
+      <input type="radio" name="question6" value="B"> B. Schopnosť komunikovať a pracovať v skupine.<br>
+      <input type="radio" name="question6" value="C"> C. Kreatívny prístup a snaha zlepšiť veci, kde sa dá..<br>
+  
       <!-- Pridaj ďalšie otázky ako vyššie -->
 
       <button type="submit">Odeslat odpovědi</button>
@@ -206,6 +217,8 @@
         question2: document.querySelector('input[name="question2"]:checked')?.value,
         question3: document.querySelector('input[name="question3"]:checked')?.value,
         question4: document.querySelector('input[name="question4"]:checked')?.value,
+        question4: document.querySelector('input[name="question5"]:checked')?.value,
+        question4: document.querySelector('input[name="question6"]:checked')?.value,
       };
 
       const name = document.getElementById('name').value;
@@ -215,13 +228,15 @@
       let score = 0;
 
       // Skontroluj odpovede a priraď bodové hodnotenie
-      if (answers.question1 === 'A') score++;
-      if (answers.question2 === 'A') score++;
+      if (answers.question1 === 'B') score++;
+      if (answers.question2 === 'C') score++;
       if (answers.question3 === 'A') score++;
       if (answers.question4 === 'A') score++;
+       if (answers.question5 === 'C') score++;
+      if (answers.question6 === 'A') score++;
 
       // Rozhodni, či prešiel alebo nie
-      const passed = score >= 3;
+      const passed = score >= 5;
 
       resultText += `Celkové skóre: ${score}/4\n`;
       resultText += passed ? "Prešiel!" : "Neprešiel!";
