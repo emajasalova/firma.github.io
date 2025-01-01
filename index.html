@@ -137,7 +137,7 @@
   <!-- Navigácia -->
   <nav>
     <ul>
-       <li><a href="#camus-service">Premie</a></li>
+      <li><a href="#camus-service">Premie</a></li>
       <li><a href="#camus-service">CAMUS Servis</a></li>
       <li><a href="etl.html">Zapis Odtahu</a></li>
       <li><a href="zapis.html">Zapis Mechanikú</a></li>
@@ -182,20 +182,18 @@
 
       <label>4. Jaké jsou vaše silné stránky?</label><br>
       <input type="radio" name="question4" value="A"> A. Rychlost a preciznost<br>
-      <input type="radio" name="question4" value="B"> B. Týmová práce<br>
+      <input type="radio" name="question4" value="B"> B. Týmová práca<br>
       <input type="radio" name="question4" value="C"> C. Technické dovednosti<br>
 
       <label>5. Aký je váš postoj k práci v prípade, že sa objavia nepredvídané okolnosti alebo zmena plánu?</label><br>
-      <input type="radio" name="question5" value="A"> A. Chcem mať jasný plán, nemam rád stres.<br>
+      <input type="radio" name="question5" value="A"> A. Chcem mať jasný plán, nemám rád stres.<br>
       <input type="radio" name="question5" value="B"> B. Zmena ma môže stresovať a potrebujem viac času na prispôsobenie.<br>
-      <input type="radio" name="question5" value="C"> C.  Prispôsobím sa a upravím plán podľa situácie.<br>
+      <input type="radio" name="question5" value="C"> C. Prispôsobím sa a upravím plán podľa situácie.<br>
       
       <label>6.Aké sú vaše najväčšie predpoklady pre to, aby ste sa stali úspešným členom tímu?</label><br>
       <input type="radio" name="question6" value="A"> A. Odpovednosť a sústredenie sa na úlohy..<br>
       <input type="radio" name="question6" value="B"> B. Schopnosť komunikovať a pracovať v skupine.<br>
       <input type="radio" name="question6" value="C"> C. Kreatívny prístup a snaha zlepšiť veci, kde sa dá..<br>
-  
-      <!-- Pridaj ďalšie otázky ako vyššie -->
 
       <button type="submit">Odeslat odpovědi</button>
     </form>
@@ -208,7 +206,6 @@
   </div>
 
   <script>
-    // Funkcia pre vyhodnotenie a odoslanie na Discord webhook
     document.getElementById('questionnaire-form').addEventListener('submit', function(event) {
       event.preventDefault();
 
@@ -217,8 +214,8 @@
         question2: document.querySelector('input[name="question2"]:checked')?.value,
         question3: document.querySelector('input[name="question3"]:checked')?.value,
         question4: document.querySelector('input[name="question4"]:checked')?.value,
-        question4: document.querySelector('input[name="question5"]:checked')?.value,
-        question4: document.querySelector('input[name="question6"]:checked')?.value,
+        question5: document.querySelector('input[name="question5"]:checked')?.value,
+        question6: document.querySelector('input[name="question6"]:checked')?.value,
       };
 
       const name = document.getElementById('name').value;
@@ -227,21 +224,18 @@
       let resultText = "Formulář odeslán. Výsledek:\n";
       let score = 0;
 
-      // Skontroluj odpovede a priraď bodové hodnotenie
       if (answers.question1 === 'B') score++;
       if (answers.question2 === 'C') score++;
       if (answers.question3 === 'A') score++;
       if (answers.question4 === 'A') score++;
-       if (answers.question5 === 'C') score++;
+      if (answers.question5 === 'C') score++;
       if (answers.question6 === 'A') score++;
 
-      // Rozhodni, či prešiel alebo nie
       const passed = score >= 5;
 
-      resultText += `Celkové skóre: ${score}/4\n`;
+      resultText += `Celkové skóre: ${score}/6\n`;
       resultText += passed ? "Prešiel!" : "Neprešiel!";
 
-      // Odošli na Discord webhook
       const webhookUrl = "https://discord.com/api/webhooks/1307006285572739224/sY0EZqxAbYaP2ZQwfCkmzhtbKYqMIgQgYc9qn9bZzN2L_YwWhJzm8UjsCAr-rMl6DJIN";
       fetch(webhookUrl, {
         method: "POST",
@@ -253,7 +247,6 @@
         })
       });
 
-      // Zobraziť výsledek na stránke
       document.getElementById('result-text').textContent = resultText;
       document.getElementById('result').style.display = 'block';
     });
