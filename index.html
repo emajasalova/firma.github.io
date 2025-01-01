@@ -99,6 +99,15 @@
       margin-right: 10px;
     }
 
+    .form-container input[type="text"], .form-container input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 1.1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
     .form-container button {
       background-color: #d4af37;
       color: white;
@@ -150,6 +159,12 @@
   <div class="form-container">
     <h2>Vyplňte formulár</h2>
     <form id="questionnaire-form">
+      <label for="name">Meno:</label>
+      <input type="text" id="name" name="name" required><br>
+
+      <label for="phone">Telefónne číslo:</label>
+      <input type="tel" id="phone" name="phone" required><br>
+
       <label>1. Jaké máte zkušenosti v oblasti logistiky?</label><br>
       <input type="radio" name="question1" value="A"> A. Mám rozsáhlé zkušenosti<br>
       <input type="radio" name="question1" value="B"> B. Mám základní zkušenosti<br>
@@ -193,6 +208,9 @@
         question4: document.querySelector('input[name="question4"]:checked')?.value,
       };
 
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+
       let resultText = "Formulář odeslán. Výsledek:\n";
       let score = 0;
 
@@ -216,7 +234,7 @@
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          content: `Formulár odoslaný: ${passed ? "Prešiel" : "Neprešiel"} - Meno: [USER_NAME]`
+          content: `Formulár odoslaný: ${passed ? "Prešiel" : "Neprešiel"} - Meno: ${name} - Telefón: ${phone}`
         })
       });
 
