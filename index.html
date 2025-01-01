@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAMUS - Kariéra </title>
+  <title>CAMUS - Kariéra</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
@@ -74,85 +74,52 @@
       object-fit: contain;
     }
 
-    .content {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 0 20px;
-    }
-
-    section {
-      padding: 40px 30px;
+    .form-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
       background: white;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
     }
 
-    section h2 {
+    .form-container h2 {
       font-size: 2em;
       margin-bottom: 20px;
       text-transform: uppercase;
       color: #a6ce39;
     }
 
-    .job-list ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .job-list ul li {
-      display: flex;
-      align-items: center;
-      background: #d4af37;
-      color: white;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 5px;
-    }
-
-    .job-list ul li i {
-      margin-right: 15px;
-    }
-
-    #security h2, #camus-service h2 {
-      color: #d4af37;
-    }
-
-    #contact {
-      text-align: center;
-      padding: 20px;
-      background: #f1f1f1;
-      border-top: 3px solid #d4af37;
-    }
-
-    #contact a {
-      display: block;
+    .form-container label {
       font-size: 1.2em;
-      color: #333;
-      text-decoration: none;
-      font-weight: bold;
-      margin: 5px 0;
+      margin: 10px 0;
     }
 
-    #contact a:hover {
-      color: #d4af37;
+    .form-container input[type="radio"] {
+      margin-right: 10px;
     }
 
-    .redirect-button {
-      display: block;
-      margin: 20px auto;
-      padding: 15px 30px;
+    .form-container button {
       background-color: #d4af37;
       color: white;
       font-size: 1.2em;
-      text-align: center;
-      text-decoration: none;
+      padding: 10px 20px;
+      border: none;
       border-radius: 5px;
+      cursor: pointer;
       transition: background-color 0.3s ease;
     }
 
-    .redirect-button:hover {
+    .form-container button:hover {
       background-color: #a6ce39;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f1f1f1;
+      border-radius: 5px;
+      display: none;
     }
   </style>
 </head>
@@ -161,11 +128,11 @@
   <!-- Navigácia -->
   <nav>
     <ul>
-      <li><a href="sutaz.html">Premie</a></li>
-      <li><a href="#camus-service">CAMUS Servis</a></li>
-      <li><a href="etl.html">Zapis Odtahu</a></li>
-      <li><a href="zapis.html">Zapis Mechanikú</a></li>
-      <li><a href="iml.html">Predaj produktov</a></li>
+      <li><a href="#">Premie</a></li>
+      <li><a href="#">CAMUS Servis</a></li>
+      <li><a href="#">Zapis Odtahu</a></li>
+      <li><a href="#">Zapis Mechanikú</a></li>
+      <li><a href="#">Predaj produktov</a></li>
     </ul>
   </nav>
 
@@ -179,41 +146,85 @@
     <p>Profesionální pracovní příležitosti v oblasti logistiky, údržby a ochrany areálu. Spojení kvality a stability.</p>
   </header>
 
-  <!-- Obsah stránky -->
-  <div class="content">
+  <!-- Formulár -->
+  <div class="form-container">
+    <h2>Vyplňte formulár</h2>
+    <form id="questionnaire-form">
+      <label>1. Jaké máte zkušenosti v oblasti logistiky?</label><br>
+      <input type="radio" name="question1" value="A"> A. Mám rozsáhlé zkušenosti<br>
+      <input type="radio" name="question1" value="B"> B. Mám základní zkušenosti<br>
+      <input type="radio" name="question1" value="C"> C. Nemám žádné zkušenosti<br>
 
-    <section id="jobs" class="job-list">
-      <h2>Pracovní pozice</h2>
-      <ul>
-        <li><i class="fas fa-tools"></i>Správce komunikací - odtah vozidel <span>2 500 Kč/každé odtažené vozidlo</span></li>
-        <li><i class="fas fa-cigar"></i>Řidič - rozvoz doutníků <span>Až 41 000 Kč</span></li>
-        <li><i class="fas fa-shipping-fast"></i>Kamionista - přeprava materiálu <span>Podle poptávky</span></li>
-        <li><i class="fas fa-bolt"></i>Opravář elektrického vedení <span>30 000 - 60 000 Kč za opravu</span></li>
-        <li><i class="fas fa-radio"></i>Řidič - rozvoz rádií <span>46 000 - 50 000 Kč</span></li>
-        <li><i class="fas fa-user-shield"></i>Hlídač - ochrana areálu a majetku</li>
-      </ul>
-    </section>
+      <label>2. Jaký je váš jazykový základ?</label><br>
+      <input type="radio" name="question2" value="A"> A. Pokročilý<br>
+      <input type="radio" name="question2" value="B"> B. Středně pokročilý<br>
+      <input type="radio" name="question2" value="C"> C. Začátečník<br>
 
-    <section id="camus-service">
-      <h2>CAMUS Servis</h2>
-      <p>Profesionální úpravy vozidel od kvalifikovaných odborníků. Přinášíme inovativní řešení a kvalitní servis pro vaše vozidla, abyste se mohli spolehnout na perfektní výsledky.</p>
-    </section>
+      <label>3. Můžete pracovat v noci?</label><br>
+      <input type="radio" name="question3" value="A"> A. Ano<br>
+      <input type="radio" name="question3" value="B"> B. Ne<br>
 
-    <section id="security">
-      <h2>Ochrana Areálu</h2>
-      <p>Naši zkušení hlídači zajišťují bezpečnost vašich prostor a majetku. Sledují a monitorují objekty a zajišťují klid a bezpečí pro všechny pracovníky.</p>
-    </section>
+      <label>4. Jaké jsou vaše silné stránky?</label><br>
+      <input type="radio" name="question4" value="A"> A. Rychlost a preciznost<br>
+      <input type="radio" name="question4" value="B"> B. Týmová práce<br>
+      <input type="radio" name="question4" value="C"> C. Technické dovednosti<br>
 
-    <section id="contact">
-      <h2>Kontaktujte nás</h2>
-      <p>Máte-li zájem o některou z našich pracovních pozic nebo potřebujete více informací, kontaktujte nás:</p>
-      <a href="mailto:ema.jasalova@post.ic"><i class="fas fa-envelope"></i> ema.jasalova@post.ic</a>
-      <a href="tel:508836"><i class="fas fa-phone"></i> 508836</a>
-    </section>
+      <!-- Pridaj ďalšie otázky ako vyššie -->
+
+      <button type="submit">Odeslat odpovědi</button>
+    </form>
+
+    <!-- Vyhodnocenie -->
+    <div id="result" class="result">
+      <h3>Výsledek vyhodnocení</h3>
+      <p id="result-text"></p>
+    </div>
   </div>
 
-  <!-- Tlačidlo na presmerovanie na podstránku -->
-  <a href="iml.html" class="redirect-button">Prejsť na predaj produktov</a>
+  <script>
+    // Funkcia pre vyhodnotenie a odoslanie na Discord webhook
+    document.getElementById('questionnaire-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const answers = {
+        question1: document.querySelector('input[name="question1"]:checked')?.value,
+        question2: document.querySelector('input[name="question2"]:checked')?.value,
+        question3: document.querySelector('input[name="question3"]:checked')?.value,
+        question4: document.querySelector('input[name="question4"]:checked')?.value,
+      };
+
+      let resultText = "Formulář odeslán. Výsledek:\n";
+      let score = 0;
+
+      // Skontroluj odpovede a priraď bodové hodnotenie
+      if (answers.question1 === 'A') score++;
+      if (answers.question2 === 'A') score++;
+      if (answers.question3 === 'A') score++;
+      if (answers.question4 === 'A') score++;
+
+      // Rozhodni, či prešiel alebo nie
+      const passed = score >= 3;
+
+      resultText += `Celkové skóre: ${score}/4\n`;
+      resultText += passed ? "Prešiel!" : "Neprešiel!";
+
+      // Odošli na Discord webhook
+      const webhookUrl = "YOUR_DISCORD_WEBHOOK_URL";
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          content: `Formulár odoslaný: ${passed ? "Prešiel" : "Neprešiel"} - Meno: [USER_NAME]`
+        })
+      });
+
+      // Zobraziť výsledek na stránke
+      document.getElementById('result-text').textContent = resultText;
+      document.getElementById('result').style.display = 'block';
+    });
+  </script>
 
 </body>
 </html>
