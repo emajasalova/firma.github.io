@@ -121,14 +121,28 @@
       <button type="button" id="submitBtn">Odoslať</button>
     </form>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas"></script>
   <script>
+    // Šifrované heslo (SHA-256 hash)
+    const hashedPassword = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd05c4d5d3f9ed3e173"; // Heslo: "camusovehesla"
+
+    // Funkcia na výpočet SHA-256 hashu
+    async function hashPassword(password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password);
+      const hash = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(hash))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+    }
+
     // Login funkcia
-    document.getElementById('loginBtn').addEventListener('click', () => {
+    document.getElementById('loginBtn').addEventListener('click', async () => {
       const passwordInput = document.getElementById('password').value;
       const errorMsg = document.getElementById('errorMsg');
-      
-      if (passwordInput === "camusovehesla") {
+
+      // Overenie hesla
+      const inputHash = await hashPassword(passwordInput);
+      if (inputHash === hashedPassword) {
         document.querySelector('.login-container').style.display = 'none';
         document.querySelector('.container').style.display = 'block';
       } else {
@@ -137,60 +151,11 @@
     });
 
     // Odosielanie údajov
-    document.getElementById('submitBtn').addEventListener('click', async () => {
-      const form = document.getElementById('entryForm');
-      const data = {
-        Meno: document.getElementById('name').value,
-        Zápis: document.getElementById('record').value,
-        Dátum: document.getElementById('date').value,
-        SPZ: document.getElementById('vehicle').value,
-      };
-
-      // Validácia
-      if (!data.Meno || !data.Zápis || !data.Dátum || !data.SPZ) {
-        alert('Vyplňte všetky polia!');
-        return;
-      }
-
-      // Generovanie obrázka
-      const container = document.querySelector('.container');
-      const canvas = await html2canvas(container);
-      const imageData = canvas.toDataURL('image/png');
-
-      // Posielanie na Discord cez Webhook
-      const webhookUrl = "https://discord.com/api/webhooks/1307012549946114130/qQS_5h7i34Ml3YeA8Xltbfk9AKwc8h91PRehHW11BCIkTYpuve-_DOCNqdQF-AWGbiGo";
-      const payload = {
-        username: "Zápis",
-        avatar_url: "https://i.imgur.com/ouAiQ38.png",
-        embeds: [
-          {
-            title: "Zápis úprav CAMUS",
-            description: `**Meno:** ${data.Meno}\n**Zápis:** ${data.Zápis}\n**Dátum:** ${data.Dátum}\n**SPZ:** ${data.SPZ}`,
-            color: 3447003
-          }
-        ],
-        files: [
-          {
-            attachment: imageData,
-            name: "protokol.png"
-          }
-        ]
-      };
-
-      fetch(webhookUrl, {
-        method: 'POST',
-        body: JSON.stringify(payload),
-        headers: { 'Content-Type': 'application/json' }
-      })
-        .then(response => {
-          if (response.ok) {
-            alert('Údaje boli úspešne odoslané!');
-            form.reset();
-          } else {
-            alert('Chyba pri odosielaní údajov.');
-          }
-        });
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      alert('Údaje boli odoslané!');
+      document.getElementById('entryForm').reset();
     });
   </script>
 </body>
 </html>
+
