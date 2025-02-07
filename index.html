@@ -150,7 +150,7 @@
 
   <script>
     // Načítanie aukcií z MockAPI
-    fetch('https://674600bf512ddbd807fa7e9e.mockapi.io/elp/auctions')
+    fetch('https://674600bf512ddbd807fa7e9e.mockapi.io/etsst/auctions')
       .then(response => response.json())
       .then(data => {
         const auctionList = document.getElementById('auction-list');
@@ -178,7 +178,7 @@
       const bidderPhone = prompt('Zadaj svoje telefónne číslo:');
 
       // Zaslanie ponuky na API
-      fetch(`https://674600bf512ddbd807fa7e9e.mockapi.io/elp/auctions/${auctionId}/bids`, {
+      fetch(`https://674600bf512ddbd807fa7e9e.mockapi.io/etsst/auctions/${auctionId}/bids`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -212,7 +212,7 @@
         bidder_name: document.getElementById('name').value,
       };
 
-      fetch('https://674600bf512ddbd807fa7e9e.mockapi.io/elp/auctions', {
+      fetch('https://674600bf512ddbd807fa7e9e.mockapi.io/etsst/auctions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
