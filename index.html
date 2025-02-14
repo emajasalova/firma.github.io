@@ -1,232 +1,93 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aukcie na serveri</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
-
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-
-    .auction-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin: 20px;
-    }
-
-    .auction-card {
-      background-color: #fff;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      padding: 20px;
-      width: 250px;
-      text-align: center;
-      position: relative;
-    }
-
-    .auction-img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .auction-title {
-      font-size: 1.2em;
-      color: #333;
-      margin: 10px 0;
-    }
-
-    .auction-description {
-      color: #777;
-      font-size: 0.9em;
-      margin: 10px 0;
-    }
-
-    .auction-starting-price,
-    .auction-current-bid {
-      font-size: 1.1em;
-      margin: 10px 0;
-      color: #2f8eff;
-    }
-
-    .bid-button {
-      background-color: #2f8eff;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1em;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .bid-button:hover {
-      background-color: #1c6fcc;
-    }
-
-    #auction-form {
-      width: 50%;
-      margin: 30px auto;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    #auction-form label {
-      display: block;
-      margin: 10px 0 5px;
-    }
-
-    #auction-form input,
-    #auction-form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    #auction-form button {
-      background-color: #2f8eff;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1.1em;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    #auction-form button:hover {
-      background-color: #1c6fcc;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOVETRA - Firemný web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 20px;
+        }
+        .services {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .service {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+        form {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            width: 300px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+        footer {
+            background: #333;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-
-  <!-- Hlavná stránka s aukciami -->
-  <h1>Aukcie na serveri</h1>
-  <div class="auction-list" id="auction-list"></div>
-
-  <!-- Formulár na vytvorenie aukcie -->
-  <h1>Vytvoriť aukciu</h1>
-  <form id="auction-form">
-    <label for="car-name">Názov auta:</label>
-    <input type="text" id="car-name" name="car-name" required>
-
-    <label for="car-description">Popis auta:</label>
-    <textarea id="car-description" name="car-description" required></textarea>
-
-    <label for="car-img">URL obrázka:</label>
-    <input type="text" id="car-img" name="car-img" required>
-
-    <label for="starting-price">Počiatočná cena:</label>
-    <input type="number" id="starting-price" name="starting-price" required>
-
-    <label for="min-bid">Minimálna ponuka:</label>
-    <input type="number" id="min-bid" name="min-bid" required>
-
-    <label for="name">Tvoje meno:</label>
-    <input type="text" id="name" name="name" required>
-
-    <label for="phone">Telefónne číslo:</label>
-    <input type="tel" id="phone" name="phone" required>
-
-    <button type="submit">Založiť aukciu</button>
-  </form>
-
-  <script>
-    // Načítanie aukcií z MockAPI
-    fetch('https://674600bf512ddbd807fa7e9e.mockapi.io/etsst/auctions')
-      .then(response => response.json())
-      .then(data => {
-        const auctionList = document.getElementById('auction-list');
+    <header>
+        <h1>NOVETRA</h1>
+        <p>Frekvencia vysielačky: <strong>195.125</strong></p>
+    </header>
+    
+    <main>
+        <section id="about">
+            <h2>Čomu sa venujeme</h2>
+            <div class="services">
+                <div class="service"><span class="icon">🚚</span> Rozvoz zásielok</div>
+                <div class="service"><span class="icon">🚛</span> Kamiónová preprava</div>
+                <div class="service"><span class="icon">🛡️</span> Ochrana areálov</div>
+            </div>
+        </section>
         
-        data.forEach(auction => {
-          const auctionCard = document.createElement('div');
-          auctionCard.classList.add('auction-card');
-          auctionCard.innerHTML = `
-            <img src="${auction.img_url}" alt="Auto" class="auction-img">
-            <h3 class="auction-title">${auction.name}</h3>
-            <p class="auction-description">${auction.description}</p>
-            <p class="auction-starting-price">Počiatočná cena: ${auction.starting_price} €</p>
-            <p class="auction-current-bid">Aktuálna ponuka: ${auction.current_bid} €</p>
-            <button class="bid-button" onclick="placeBid(${auction.id})">Prihodiť</button>
-          `;
-          auctionList.appendChild(auctionCard);
-        });
-      })
-      .catch(error => console.error('Chyba pri načítavaní aukcií:', error));
-
-    // Funkcia na prihodenie ponuky
-    function placeBid(auctionId) {
-      const bidAmount = prompt('Zadaj svoju ponuku:');
-      const bidderName = prompt('Zadaj svoje meno:');
-      const bidderPhone = prompt('Zadaj svoje telefónne číslo:');
-
-      // Zaslanie ponuky na API
-      fetch(`https://674600bf512ddbd807fa7e9e.mockapi.io/etsst/auctions/${auctionId}/bids`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          amount: bidAmount,
-          bidder_name: bidderName,
-          bidder_phone: bidderPhone
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        alert('Ponuka úspešne pridaná!');
-        // Aktualizuj aukciu s novou ponukou
-        alert(`Aktualizovaná ponuka: ${data.amount} €`);
-      })
-      .catch(error => console.error('Chyba pri prihodení ponuky:', error));
-    }
-
-    // Odoslanie formulára pre vytvorenie aukcie
-    document.getElementById('auction-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const newAuction = {
-        name: document.getElementById('car-name').value,
-        description: document.getElementById('car-description').value,
-        img_url: document.getElementById('car-img').value,
-        starting_price: document.getElementById('starting-price').value,
-        current_bid: document.getElementById('starting-price').value,
-        phone: document.getElementById('phone').value,
-        bidder_name: document.getElementById('name').value,
-      };
-
-      fetch('https://674600bf512ddbd807fa7e9e.mockapi.io/etsst/auctions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newAuction)
-      })
-      .then(response => response.json())
-      .then(data => {
-        alert('Aukcia bola úspešne vytvorená!');
-        window.location.href = '/'; // Presmerovanie na hlavnú stránku aukcií
-      })
-      .catch(error => console.error('Chyba pri vytváraní aukcie:', error));
-    });
-  </script>
-
+        <section id="competitions">
+            <h2>Informácie o súťažiach</h2>
+            <p>Momentálne neprebieha žiadna súťaž.</p>
+        </section>
+        
+        <section id="vacation">
+            <h2>Nahlásenie dovolenky</h2>
+            <form>
+                <label for="name">Meno:</label>
+                <input type="text" id="name" required>
+                
+                <label for="from">Od:</label>
+                <input type="date" id="from" required>
+                
+                <label for="to">Do:</label>
+                <input type="date" id="to" required>
+                
+                <p>Nahláste dovolenku formou SMS na číslo: <strong>430574</strong></p>
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 NOVETRA - Firemný web</p>
+    </footer>
 </body>
 </html>
+
