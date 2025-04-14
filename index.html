@@ -1,81 +1,297 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOVETRA - Firemný web</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            text-align: center;
-        }
-        header {
-            background: #333;
-            color: white;
-            padding: 20px;
-        }
-        .services {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
-        }
-        .service {
-            background: white;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        }
-        footer {
-            background: #333;
-            color: white;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game Product Search Engine</title>
+  <meta name="description" content="Agregátor hier s kategorizáciou, moderným vzhľadom a jednoduchým pridávaním produktov.">
+  <style>
+    /* Základný styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f4f4;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 2em;
+      margin: 10px 0;
+    }
+    p {
+      margin: 5px 0;
+    }
+    .filter {
+      margin-top: 10px;
+    }
+    /* Grid zoznam produktov */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    .grid-item {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+    }
+    .grid-item:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    .product-card img {
+      width: 100%;
+      height: auto;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+    .product-card h3 {
+      font-size: 1.2em;
+      margin: 10px 0;
+      text-align: center;
+    }
+    /* Modal okno */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+    .modal-content {
+      background: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+      text-align: center;
+    }
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .product-link {
+      display: inline-block;
+      margin: 15px 0;
+      text-decoration: none;
+      color: #007BFF;
+      font-weight: bold;
+    }
+    /* Sekcia pre pridávanie nového produktu */
+    #addProductSection {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-top: 30px;
+      border-radius: 5px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #addProductSection input, #addProductSection select {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #addProductSection button {
+      padding: 10px 20px;
+      background: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+    #addProductSection button:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>NOVETRA</h1>
-        <p>Frekvencia vysielačky: <strong>195.125</strong></p>
-    </header>
-    
-    <main>
-        <section id="about">
-            <h2>Čomu sa venujeme</h2>
-            <div class="services">
-                <div class="service"><span class="icon">🚚</span> Rozvoz zásielok</div>
-                <div class="service"><span class="icon">🚛</span> Kamiónová preprava</div>
-                <div class="service"><span class="icon">🛡️</span> Ochrana areálov</div>
-            </div>
-        </section>
-        
-        <section id="competitions">
-            <h2>Informácie o súťažiach</h2>
-            <p>Momentálne neprebieha žiadna súťaž.</p>
-        </section>
-        
-        <section id="vacation">
-            <h2>Nahlásenie dovolenky</h2>
-            <p>Nahláste dovolenku formou SMS na číslo: <strong>430574</strong></p>
-            <p><strong>Vzor:</strong> Meno: ..., Od: ..., Do: ...</p>
-        </section>
-        
-        <section id="maintenance">
-            <h2>Zapisovanie opráv a tankovania firemných vozidiel</h2>
-            <p>Po preskúškach aj preplácame.</p>
-        </section>
-    </main>
-    
-    <footer>
-        <p>&copy; 2025 NOVETRA - Firemný web</p>
-    </footer>
+  <header>
+    <h1>Game Product Search Engine</h1>
+    <p>Moderný agregátor hier s kategorizáciou a jednoduchým pridávaním produktov</p>
+    <!-- Filter podľa kategórie -->
+    <div class="filter">
+      <select id="categoryFilter">
+        <option value="all">Všetky kategórie</option>
+        <option value="pc">PC Hry</option>
+        <option value="console">Console Hry</option>
+        <option value="other">Iné</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- Grid produktov -->
+  <section id="productSection">
+    <div id="product-grid" class="grid-container">
+      <!-- Produkty budú dynamicky generované -->
+    </div>
+  </section>
+
+  <!-- Modal pre detail produktu -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <img id="modalImage" src="" alt="Obrázok produktu" width="350" height="350">
+      <a id="productLink" class="product-link" href="" target="_blank" rel="nofollow">Prejsť na produktovú stránku</a>
+    </div>
+  </div>
+
+  <!-- Sekcia pre pridávanie nového produktu -->
+  <section id="addProductSection">
+    <h2>Pridať nový produkt</h2>
+    <form id="addProductForm">
+      <input type="text" id="newProductName" placeholder="Názov produktu" required>
+      <input type="url" id="newProductImage" placeholder="URL obrázku" required>
+      <input type="url" id="newProductURL" placeholder="URL produktu" required>
+      <select id="newProductCategory" required>
+        <option value="pc">PC Hry</option>
+        <option value="console">Console Hry</option>
+        <option value="other">Iné</option>
+      </select>
+      <button type="submit">Pridať produkt</button>
+    </form>
+  </section>
+
+  <script>
+    // Ukážkové dáta produktov s vlastnosťou 'category'
+    const products = [
+      {
+        id: 1,
+        title: "Hra 1",
+        image: "https://via.placeholder.com/350",
+        url: "https://example.com/product1",
+        category: "pc"
+      },
+      {
+        id: 2,
+        title: "Hra 2",
+        image: "https://via.placeholder.com/350",
+        url: "https://example.com/product2",
+        category: "console"
+      },
+      {
+        id: 3,
+        title: "Hra 3",
+        image: "https://via.placeholder.com/350",
+        url: "https://example.com/product3",
+        category: "pc"
+      }
+    ];
+
+    // Funkcia na vykreslenie gridu s produktmi podľa zvolenej kategórie
+    function renderProducts(filter = "all") {
+      const grid = document.getElementById("product-grid");
+      grid.innerHTML = "";
+      products.forEach(product => {
+        if (filter === "all" || product.category === filter) {
+          const div = document.createElement("div");
+          div.classList.add("grid-item");
+          div.innerHTML = `
+            <div class="product-card">
+              <img src="${product.image}" alt="${product.title}">
+              <h3>${product.title}</h3>
+            </div>`;
+          div.addEventListener("click", () => openModal(product));
+          grid.appendChild(div);
+        }
+      });
+    }
+
+    // Filter podľa kategórie
+    document.getElementById("categoryFilter").addEventListener("change", function() {
+      renderProducts(this.value);
+    });
+
+    renderProducts();
+
+    // Modal okno a jeho funkčnosť
+    const modal = document.getElementById("modal");
+    const modalImage = document.getElementById("modalImage");
+    const productLink = document.getElementById("productLink");
+    const closeModal = document.getElementById("closeModal");
+
+    function openModal(product) {
+      modalImage.src = product.image;
+      productLink.href = product.url;
+      productLink.textContent = "Prejsť na produktovú stránku";
+      modal.style.display = "block";
+    }
+
+    closeModal.onclick = () => {
+      modal.style.display = "none";
+    };
+
+    window.onclick = event => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+
+    // Pridávanie nového produktu cez formulár
+    document.getElementById("addProductForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("newProductName").value;
+      const image = document.getElementById("newProductImage").value;
+      const url = document.getElementById("newProductURL").value;
+      const category = document.getElementById("newProductCategory").value;
+
+      const newProduct = {
+        id: products.length + 1,
+        title: name,
+        image: image,
+        url: url,
+        category: category
+      };
+
+      products.push(newProduct);
+      // Obnovenie gridu podľa aktuálne zvolenej kategórie
+      renderProducts(document.getElementById("categoryFilter").value);
+      this.reset();
+    });
+
+    // Príklad funkcie pre scraping pomocou JavaScriptu (v prípade použitia proxy a CORS)
+    function scrapeProductData(targetUrl) {
+      // Pomocou proxy servera, napríklad cors-anywhere (iba na testovacie účely)
+      const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+      fetch(proxyUrl + targetUrl)
+        .then(response => response.text())
+        .then(htmlString => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(htmlString, 'text/html');
+          // Sem pridaj logiku parsovania, napr. načítanie názvu, obrázku, odkazu atď.
+          // Napríklad:
+          // let title = doc.querySelector('.product-title')?.textContent.trim();
+          // let image = doc.querySelector('.product-image img')?.src;
+          // ... a pod.
+          console.log("Parsované dáta:", doc);
+        })
+        .catch(error => {
+          console.error("Chyba pri scrapovaní:", error);
+        });
+    }
+
+    // Ukážkové volanie scrape funkcie
+    // scrapeProductData('https://example.com/target-product-page');
+  </script>
 </body>
 </html>
-
-
