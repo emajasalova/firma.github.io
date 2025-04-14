@@ -4,56 +4,101 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Game Product Search Engine</title>
-  <meta name="description" content="Agregátor hier s kategorizáciou, moderným vzhľadom a jednoduchým pridávaním produktov.">
+  <meta name="description" content="Moderný agregátor hier s vyhľadávaním, kategorizáciou a SEO optimalizáciou.">
   <style>
-    /* Základný styling */
+    /* Základný reset a štýly */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
       background: #f4f4f4;
+      padding: 20px;
       color: #333;
+      line-height: 1.6;
     }
     header {
       text-align: center;
       margin-bottom: 20px;
     }
     h1 {
-      font-size: 2em;
-      margin: 10px 0;
+      margin-bottom: 10px;
+      font-size: 2.5em;
     }
-    p {
-      margin: 5px 0;
+    p.description {
+      margin-bottom: 20px;
+      color: #555;
     }
+    /* Vyhľadávanie */
+    .search-container {
+      max-width: 500px;
+      margin: 0 auto 20px auto;
+      text-align: center;
+    }
+    .search-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    /* Filter – vyber kategórie */
     .filter {
-      margin-top: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .filter select {
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1em;
     }
     /* Grid zoznam produktov */
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 15px;
     }
     .grid-item {
       background: #fff;
       border: 1px solid #ddd;
       border-radius: 5px;
-      padding: 10px;
-      cursor: pointer;
+      overflow: hidden;
       transition: box-shadow 0.3s ease;
     }
     .grid-item:hover {
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
-    .product-card img {
+    .product-card {
+      display: flex;
+      flex-direction: column;
+    }
+    .product-image {
       width: 100%;
-      height: auto;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 10px;
+      height: 200px;
+      overflow: hidden;
+      background: #eee;
     }
-    .product-card h3 {
-      font-size: 1.2em;
-      margin: 10px 0;
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .product-info {
+      padding: 15px;
+    }
+    .product-info h3 {
+      margin-bottom: 10px;
+      font-size: 1.3em;
+      text-align: center;
+    }
+    .product-info p {
+      font-size: 0.9em;
+      color: #666;
+      margin-bottom: 10px;
       text-align: center;
     }
     /* Modal okno */
@@ -70,7 +115,7 @@
     }
     .modal-content {
       background: #fff;
-      margin: 10% auto;
+      margin: 5% auto;
       padding: 20px;
       border-radius: 8px;
       width: 90%;
@@ -98,18 +143,18 @@
       background: #fff;
       border: 1px solid #ddd;
       padding: 15px;
-      margin-top: 30px;
+      margin: 30px auto;
       border-radius: 5px;
       max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
     }
-    #addProductSection input, #addProductSection select {
+    #addProductSection input,
+    #addProductSection select {
       width: 100%;
       padding: 8px;
       margin: 8px 0;
       border: 1px solid #ccc;
       border-radius: 4px;
+      font-size: 1em;
     }
     #addProductSection button {
       padding: 10px 20px;
@@ -119,6 +164,7 @@
       border-radius: 4px;
       cursor: pointer;
       width: 100%;
+      font-size: 1em;
     }
     #addProductSection button:hover {
       background: #0056b3;
@@ -128,7 +174,11 @@
 <body>
   <header>
     <h1>Game Product Search Engine</h1>
-    <p>Moderný agregátor hier s kategorizáciou a jednoduchým pridávaním produktov</p>
+    <p class="description">Prehľad hier s vyhľadávaním, kategorizáciou a moderným dizajnom</p>
+    <!-- Vyhľadávanie -->
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Vyhľadaj produkt...">
+    </div>
     <!-- Filter podľa kategórie -->
     <div class="filter">
       <select id="categoryFilter">
@@ -143,7 +193,7 @@
   <!-- Grid produktov -->
   <section id="productSection">
     <div id="product-grid" class="grid-container">
-      <!-- Produkty budú dynamicky generované -->
+      <!-- Produkty sa dynamicky generujú -->
     </div>
   </section>
 
@@ -152,7 +202,9 @@
     <div class="modal-content">
       <span id="closeModal" class="close">&times;</span>
       <img id="modalImage" src="" alt="Obrázok produktu" width="350" height="350">
-      <a id="productLink" class="product-link" href="" target="_blank" rel="nofollow">Prejsť na produktovú stránku</a>
+      <a id="productLink" class="product-link" href="" target="_blank" rel="nofollow">
+        Prejsť na produktovú stránku
+      </a>
     </div>
   </div>
 
@@ -163,6 +215,7 @@
       <input type="text" id="newProductName" placeholder="Názov produktu" required>
       <input type="url" id="newProductImage" placeholder="URL obrázku" required>
       <input type="url" id="newProductURL" placeholder="URL produktu" required>
+      <input type="text" id="newProductDesc" placeholder="Krátky popis produktu" required>
       <select id="newProductCategory" required>
         <option value="pc">PC Hry</option>
         <option value="console">Console Hry</option>
@@ -173,58 +226,73 @@
   </section>
 
   <script>
-    // Ukážkové dáta produktov s vlastnosťou 'category'
+    // Ukážkové dáta produktov s krátkym popisom a kategóriou
     const products = [
       {
         id: 1,
         title: "Hra 1",
         image: "https://via.placeholder.com/350",
         url: "https://example.com/product1",
-        category: "pc"
+        category: "pc",
+        description: "Krátky popis hry 1 pre rýchly prehľad."
       },
       {
         id: 2,
         title: "Hra 2",
         image: "https://via.placeholder.com/350",
         url: "https://example.com/product2",
-        category: "console"
+        category: "console",
+        description: "Krátky popis hry 2 s dôležitými informáciami."
       },
       {
         id: 3,
         title: "Hra 3",
         image: "https://via.placeholder.com/350",
         url: "https://example.com/product3",
-        category: "pc"
+        category: "pc",
+        description: "Krátky popis hry 3, stručný a výstižný."
       }
     ];
 
-    // Funkcia na vykreslenie gridu s produktmi podľa zvolenej kategórie
-    function renderProducts(filter = "all") {
+    // Vykreslenie produktov do gridu (s filtrom a vyhľadávaním)
+    function renderProducts(filter = "all", searchText = "") {
       const grid = document.getElementById("product-grid");
       grid.innerHTML = "";
+      const lowerSearch = searchText.toLowerCase();
       products.forEach(product => {
-        if (filter === "all" || product.category === filter) {
-          const div = document.createElement("div");
-          div.classList.add("grid-item");
-          div.innerHTML = `
+        if ((filter === "all" || product.category === filter) &&
+            (product.title.toLowerCase().includes(lowerSearch) ||
+             product.description.toLowerCase().includes(lowerSearch))) {
+          const card = document.createElement("div");
+          card.classList.add("grid-item");
+          card.innerHTML = `
             <div class="product-card">
-              <img src="${product.image}" alt="${product.title}">
-              <h3>${product.title}</h3>
+              <div class="product-image">
+                <img src="${product.image}" alt="${product.title}">
+              </div>
+              <div class="product-info">
+                <h3>${product.title}</h3>
+                <p>${product.description}</p>
+              </div>
             </div>`;
-          div.addEventListener("click", () => openModal(product));
-          grid.appendChild(div);
+          card.addEventListener("click", () => openModal(product));
+          grid.appendChild(card);
         }
       });
     }
 
-    // Filter podľa kategórie
+    // Inicializácia vyhľadávania a filtra
+    document.getElementById("searchInput").addEventListener("input", function() {
+      renderProducts(document.getElementById("categoryFilter").value, this.value);
+    });
+
     document.getElementById("categoryFilter").addEventListener("change", function() {
-      renderProducts(this.value);
+      renderProducts(this.value, document.getElementById("searchInput").value);
     });
 
     renderProducts();
 
-    // Modal okno a jeho funkčnosť
+    // Modal – zobrazí detail produktu
     const modal = document.getElementById("modal");
     const modalImage = document.getElementById("modalImage");
     const productLink = document.getElementById("productLink");
@@ -253,6 +321,7 @@
       const name = document.getElementById("newProductName").value;
       const image = document.getElementById("newProductImage").value;
       const url = document.getElementById("newProductURL").value;
+      const desc = document.getElementById("newProductDesc").value;
       const category = document.getElementById("newProductCategory").value;
 
       const newProduct = {
@@ -260,38 +329,15 @@
         title: name,
         image: image,
         url: url,
-        category: category
+        category: category,
+        description: desc
       };
 
       products.push(newProduct);
-      // Obnovenie gridu podľa aktuálne zvolenej kategórie
-      renderProducts(document.getElementById("categoryFilter").value);
+      renderProducts(document.getElementById("categoryFilter").value,
+                     document.getElementById("searchInput").value);
       this.reset();
     });
-
-    // Príklad funkcie pre scraping pomocou JavaScriptu (v prípade použitia proxy a CORS)
-    function scrapeProductData(targetUrl) {
-      // Pomocou proxy servera, napríklad cors-anywhere (iba na testovacie účely)
-      const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-      fetch(proxyUrl + targetUrl)
-        .then(response => response.text())
-        .then(htmlString => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(htmlString, 'text/html');
-          // Sem pridaj logiku parsovania, napr. načítanie názvu, obrázku, odkazu atď.
-          // Napríklad:
-          // let title = doc.querySelector('.product-title')?.textContent.trim();
-          // let image = doc.querySelector('.product-image img')?.src;
-          // ... a pod.
-          console.log("Parsované dáta:", doc);
-        })
-        .catch(error => {
-          console.error("Chyba pri scrapovaní:", error);
-        });
-    }
-
-    // Ukážkové volanie scrape funkcie
-    // scrapeProductData('https://example.com/target-product-page');
   </script>
 </body>
 </html>
