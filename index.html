@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Game Product Search Engine</title>
   <meta name="description" content="Moderný agregátor hier s vyhľadávaním, kategorizáciou a SEO optimalizáciou.">
+  <!-- Tieto časti (napr. formuláre a API volania) nie sú zahrnuté do indexovateľného obsahu -->
   <style>
-    /* Základný reset a štýly */
+    /* Základný reset */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -27,35 +28,25 @@
       margin-bottom: 10px;
       font-size: 2.5em;
     }
-    p.description {
-      margin-bottom: 20px;
+    .description {
       color: #555;
+      margin-bottom: 20px;
     }
-    /* Vyhľadávanie */
-    .search-container {
+    /* Vyhľadávanie a filter */
+    .search-container, .filter {
       max-width: 500px;
       margin: 0 auto 20px auto;
       text-align: center;
     }
-    .search-container input[type="text"] {
+    .search-container input[type="text"],
+    .filter select {
       width: 100%;
       padding: 10px;
       border-radius: 4px;
       border: 1px solid #ccc;
       font-size: 1em;
     }
-    /* Filter – vyber kategórie */
-    .filter {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .filter select {
-      padding: 10px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      font-size: 1em;
-    }
-    /* Grid zoznam produktov */
+    /* Grid */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -67,6 +58,7 @@
       border-radius: 5px;
       overflow: hidden;
       transition: box-shadow 0.3s ease;
+      cursor: pointer;
     }
     .grid-item:hover {
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -89,54 +81,75 @@
     }
     .product-info {
       padding: 15px;
+      text-align: center;
     }
     .product-info h3 {
       margin-bottom: 10px;
       font-size: 1.3em;
-      text-align: center;
     }
     .product-info p {
       font-size: 0.9em;
       color: #666;
-      margin-bottom: 10px;
-      text-align: center;
     }
-    /* Modal okno */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.6);
-    }
-    .modal-content {
+    /* Detail produktu (samostatná "stránka") */
+    .product-detail {
+      max-width: 600px;
+      margin: 20px auto;
       background: #fff;
-      margin: 5% auto;
       padding: 20px;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 500px;
-      position: relative;
-      text-align: center;
+      border-radius: 5px;
+      border: 1px solid #ddd;
     }
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
+    .product-detail img {
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px auto;
     }
-    .product-link {
+    .product-detail a.product-link {
       display: inline-block;
-      margin: 15px 0;
+      margin-bottom: 20px;
       text-decoration: none;
       color: #007BFF;
       font-weight: bold;
+    }
+    .product-detail form {
+      margin-top: 20px;
+    }
+    .product-detail textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+      min-height: 80px;
+      font-size: 1em;
+    }
+    .product-detail button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1em;
+      display: block;
+      width: 100%;
+    }
+    .product-detail button:hover {
+      background: #0056b3;
+    }
+    /* Odkaz na návrat späť do zoznamu */
+    .back-link {
+      display: block;
+      margin: 20px auto;
+      text-align: center;
+      text-decoration: none;
+      color: #007BFF;
+      font-weight: bold;
+      max-width: 500px;
     }
     /* Sekcia pre pridávanie nového produktu */
     #addProductSection {
@@ -174,13 +187,13 @@
 <body>
   <header>
     <h1>Game Product Search Engine</h1>
-    <p class="description">Prehľad hier s vyhľadávaním, kategorizáciou a moderným dizajnom</p>
+    <p class="description">Moderný agregátor hier s vyhľadávaním, kategorizáciou a SEO optimalizáciou.</p>
     <!-- Vyhľadávanie -->
-    <div class="search-container">
+    <div class="search-container" id="searchContainer">
       <input type="text" id="searchInput" placeholder="Vyhľadaj produkt...">
     </div>
-    <!-- Filter podľa kategórie -->
-    <div class="filter">
+    <!-- Filter kategórií -->
+    <div class="filter" id="filterContainer">
       <select id="categoryFilter">
         <option value="all">Všetky kategórie</option>
         <option value="pc">PC Hry</option>
@@ -190,22 +203,8 @@
     </div>
   </header>
 
-  <!-- Grid produktov -->
-  <section id="productSection">
-    <div id="product-grid" class="grid-container">
-      <!-- Produkty sa dynamicky generujú -->
-    </div>
-  </section>
-
-  <!-- Modal pre detail produktu -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span id="closeModal" class="close">&times;</span>
-      <img id="modalImage" src="" alt="Obrázok produktu" width="350" height="350">
-      <a id="productLink" class="product-link" href="" target="_blank" rel="nofollow">
-        Prejsť na produktovú stránku
-      </a>
-    </div>
+  <div id="app">
+    <!-- Dynamicky generovaný obsah: zoznam produktov alebo detail -->
   </div>
 
   <!-- Sekcia pre pridávanie nového produktu -->
@@ -226,7 +225,7 @@
   </section>
 
   <script>
-    // Ukážkové dáta produktov s krátkym popisom a kategóriou
+    // Ukážkové dáta produktov (môžeš neskôr nahradiť dynamickým načítavaním)
     const products = [
       {
         id: 1,
@@ -254,15 +253,27 @@
       }
     ];
 
-    // Vykreslenie produktov do gridu (s filtrom a vyhľadávaním)
-    function renderProducts(filter = "all", searchText = "") {
+    const app = document.getElementById("app");
+
+    // Funkcia pre vykreslenie zoznamu produktov
+    function renderProductList() {
+      // Zobrazenie vyhľadávania a filtra pre zoznam (pomocou CSS, nezahrnujú sa do "detailu")
+      document.getElementById("searchContainer").style.display = "block";
+      document.getElementById("filterContainer").style.display = "block";
+
+      app.innerHTML = `
+        <section id="productSection">
+          <div id="product-grid" class="grid-container"></div>
+        </section>
+      `;
       const grid = document.getElementById("product-grid");
-      grid.innerHTML = "";
-      const lowerSearch = searchText.toLowerCase();
+      const searchText = document.getElementById("searchInput").value.toLowerCase();
+      const filter = document.getElementById("categoryFilter").value;
+
       products.forEach(product => {
         if ((filter === "all" || product.category === filter) &&
-            (product.title.toLowerCase().includes(lowerSearch) ||
-             product.description.toLowerCase().includes(lowerSearch))) {
+            (product.title.toLowerCase().includes(searchText) ||
+             product.description.toLowerCase().includes(searchText))) {
           const card = document.createElement("div");
           card.classList.add("grid-item");
           card.innerHTML = `
@@ -274,48 +285,107 @@
                 <h3>${product.title}</h3>
                 <p>${product.description}</p>
               </div>
-            </div>`;
-          card.addEventListener("click", () => openModal(product));
+            </div>
+          `;
+          // Po kliknutí prepni na detail s hash-based routovaním
+          card.addEventListener("click", () => {
+            window.location.hash = "product-" + product.id;
+          });
           grid.appendChild(card);
         }
       });
     }
 
-    // Inicializácia vyhľadávania a filtra
-    document.getElementById("searchInput").addEventListener("input", function() {
-      renderProducts(document.getElementById("categoryFilter").value, this.value);
-    });
+    // Funkcia pre vykreslenie detailu produktu
+    function renderProductDetail(productId) {
+      // Skrytie vyhľadávania a filtra, aby detailová stránka bola čistejšia pre SEO
+      document.getElementById("searchContainer").style.display = "none";
+      document.getElementById("filterContainer").style.display = "none";
 
-    document.getElementById("categoryFilter").addEventListener("change", function() {
-      renderProducts(this.value, document.getElementById("searchInput").value);
-    });
+      const product = products.find(p => p.id === productId);
+      if (!product) {
+        app.innerHTML = `<p>Produkt sa nenašiel.</p><a class="back-link" href="#">Naspäť</a>`;
+        return;
+      }
+      app.innerHTML = `
+        <div class="product-detail">
+          <a class="back-link" href="#">← Naspäť na zoznam</a>
+          <h2>${product.title}</h2>
+          <div class="product-image">
+            <img src="${product.image}" alt="${product.title}">
+          </div>
+          <p>${product.description}</p>
+          <a class="product-link" href="${product.url}" target="_blank" rel="nofollow">
+            Prejsť na produktovú stránku
+          </a>
+          <form id="descForm">
+            <label for="userDesc">Aktualizovať popis:</label>
+            <textarea id="userDesc" placeholder="Zmeň popis produktu...">${product.description}</textarea>
+            <button type="submit">Uložiť zmeny</button>
+          </form>
+        </div>
+      `;
 
-    renderProducts();
-
-    // Modal – zobrazí detail produktu
-    const modal = document.getElementById("modal");
-    const modalImage = document.getElementById("modalImage");
-    const productLink = document.getElementById("productLink");
-    const closeModal = document.getElementById("closeModal");
-
-    function openModal(product) {
-      modalImage.src = product.image;
-      productLink.href = product.url;
-      productLink.textContent = "Prejsť na produktovú stránku";
-      modal.style.display = "block";
+      // Spracovanie formulára na aktualizáciu popisu
+      document.getElementById("descForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const newDesc = document.getElementById("userDesc").value.trim();
+        if (!newDesc) {
+          alert("Prosím, zadaj nový popis.");
+          return;
+        }
+        // POST požiadavka na mock API, obsah nie je indexovaný
+        fetch('https://674600bf512ddbd807fa7e9e.mockapi.io/etsst', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ productId: product.id, description: newDesc })
+        })
+        .then(response => response.json())
+        .then(data => {
+          alert("Popis bol úspešne uložený!");
+          // Aktualizujeme lokálne dáta a znovu zobrazíme detail
+          product.description = newDesc;
+          renderProductDetail(product.id);
+        })
+        .catch(error => {
+          console.error('Chyba:', error);
+          alert("Nastala chyba pri ukladaní popisu.");
+        });
+      });
     }
 
-    closeModal.onclick = () => {
-      modal.style.display = "none";
-    };
-
-    window.onclick = event => {
-      if (event.target === modal) {
-        modal.style.display = "none";
+    // Hash-based router: ak je hash začínajúci na "product-", zobraz detail, inak zobraz zoznam
+    function router() {
+      const hash = window.location.hash;
+      if (hash.startsWith("#product-")) {
+        const productId = parseInt(hash.split("-")[1], 10);
+        renderProductDetail(productId);
+      } else {
+        renderProductList();
       }
-    };
+    }
 
-    // Pridávanie nového produktu cez formulár
+    // Inicializácia routera a event listener na zmenu hashu
+    window.addEventListener("hashchange", router);
+    window.addEventListener("load", () => {
+      // Ak používateľ prichádza na hlavnú stránku, vymaže sa hash
+      if (!window.location.hash) {
+        history.replaceState("", document.title, window.location.pathname + window.location.search);
+      }
+      router();
+    });
+
+    // Vyhľadávanie a filter pre zoznam produktov
+    document.getElementById("searchInput").addEventListener("input", () => {
+      renderProductList();
+    });
+    document.getElementById("categoryFilter").addEventListener("change", () => {
+      renderProductList();
+    });
+
+    // Funkcionalita pre pridávanie nového produktu
     document.getElementById("addProductForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const name = document.getElementById("newProductName").value;
@@ -334,8 +404,8 @@
       };
 
       products.push(newProduct);
-      renderProducts(document.getElementById("categoryFilter").value,
-                     document.getElementById("searchInput").value);
+      // Obnovíme zobrazenie podľa aktuálne zvoleného filtra a vyhľadávania
+      renderProductList();
       this.reset();
     });
   </script>
